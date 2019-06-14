@@ -2,8 +2,8 @@
     <?
 
 //recent posts
-$query_allPosts= "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned from fik_posts p left outer join fik_contributions c on p.id=c.postId group by c.postId order by p.id desc"; 
-$result_allPosts = $con->query($query_allPosts); 
+$query_allBlogs= "select * from fik_blogs"; 
+$result_allBlogs = $con->query($query_allBlogs); 
 
 ?>
 <!doctype html>
@@ -21,8 +21,8 @@ $result_allPosts = $con->query($query_allPosts);
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
             <div class="container">
                 <div class="banner_content text-center">
-                    <h2>Projects</h2>
-                    <p>Donate to some of the best ideas in your hometown</p>
+                    <h2>Blogs</h2>
+                    <p>Read of 100s of blogs</p>
                 </div>
             </div>
         </div>
@@ -38,16 +38,16 @@ $result_allPosts = $con->query($query_allPosts);
 	<section class="features_causes" style="margin-top:40px;">
         <div class="container">
             <div class="main_title">
-                <h2>All Projects</h2>
-                <p>Donate to some of the best ideas in your hometown</p>
+                <h2>Blogs</h2>
+                    <p>Read of 100s of blogs</p>
             </div>
 
             <div class="row">
 			    <?
-                    $result_allPosts = $con->query($query_allPosts); 
-                    if ($result_allPosts->num_rows > 0)
+                    $result_allBlogs = $con->query($query_allBlogs); 
+                    if ($result_allBlogs->num_rows > 0)
                     { 
-                        while($row = $result_allPosts->fetch_assoc()) 
+                        while($row = $result_allBlogs->fetch_assoc()) 
                         { 
                 ?>
                             
@@ -62,13 +62,9 @@ $result_allPosts = $con->query($query_allPosts);
             								<p class="card-text">
             									<?echo $row['excerpt']?>
             								</p>
-            								<div class="d-flex justify-content-between raised_goal">
-            									<p>Raised: $<?echo $row['amountEarned']?></p>
-            									<p><span>Goal: $<?echo $row['goal']?></span></p>
-            								</div>
             								<div class="d-flex justify-content-between donation align-items-center">
-            									<a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn">donate</a>
-            									<p><span class="lnr lnr-heart"></span> <?echo $row['nContributors']?> Donors</p>
+            									<a href="./blogPage.php?id=<?echo $row['id']?>" class="primary_btn">Read</a>
+            									<p><span class="lnr lnr-heart"></span> <?echo $row['views']?> Views</p>
             								</div>
             							</div>
             						</div>

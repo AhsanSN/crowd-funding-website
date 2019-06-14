@@ -14,19 +14,26 @@ if(isset($_GET['id'])){
             $image = $row['image'];
         }
     }
-  
+
 }
 else{
     1;
 }
+//recent posts
+$query_allPosts= "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned from fik_posts p left outer join fik_contributions c on p.id=c.postId group by c.postId order by p.id desc"; 
+$result_allPosts = $con->query($query_allPosts); 
 
 //contributed posts
-$query_supportedProjects= "SELECT c.postId,	c.userId,	c.contribution,	c.quantity,	p.title,s.name,	p.excerpt,	p.description	,p.goal	,p.image	,p.category,	p.datePosted FROM `fik_contributions` c inner join fik_posts p on c.postId = p.id inner join fik_shopItems s on c.contribution=s.id where c.userId='$session_userId' order by c.id desc"; 
+$query_supportedProjects= "SELECT p.id, c.postId,	c.userId,	c.contribution,	c.quantity,	p.title,s.name,	p.excerpt,	p.description	,p.goal	,p.image	,p.category,	p.datePosted FROM `fik_contributions` c inner join fik_posts p on c.postId = p.id inner join fik_shopItems s on c.contribution=s.id where c.userId='$session_userId' order by c.id desc"; 
 $result_supportedProjects = $con->query($query_supportedProjects);
-    
+
 //your created posts
-$query_createdPosts= "SELECT * FROM `fik_posts` p where p.userId='$session_userId' order by p.id desc"; 
+$query_createdPosts= "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned from fik_posts p left outer join fik_contributions c on p.id=c.postId where p.userId ='1' group by p.id order by p.id desc"; 
 $result_createdPosts = $con->query($query_createdPosts);
+
+//your created blogs
+$query_createdBlogs= "select * from fik_blogs where userId='$session_userId'"; 
+$result_createdBlogs = $con->query($query_createdBlogs);
 
 //recent posts
 $query_recentPosts= "select * from fik_posts order by id desc limit 4"; 
@@ -40,317 +47,224 @@ $result_cartItems = $con->query($query_cartItems);
 $query_inventory= "select * from fik_inventory c inner join fik_shopItems s on c.object=s.id where userId='$session_userId' order by c.id desc"; //for now
 $result_inventory = $con->query($query_inventory); 
 ?>
-        <!DOCTYPE html>
-        <html class="yes-js js_active js vc_desktop vc_transform gr__charity_demo1_wpdance_com" lang="en-US">
-        <!--<![endif]-->
+        <!doctype html>
+        <html lang="en">
         <?php include_once("./phpComponents/header.php")?>
 
-            <body class="single single-cause postid-6618 custom-background wpb-js-composer js-comp-ver-4.11.1 vc_responsive">
+            <body>
 
-                <div class="body-wrapper">
-                    <div class="page-gray-box"></div>
+                <!--================ Start Header Menu Area =================-->
+                <?php include_once("./phpComponents/navbar.php")?>
+                    <!--================ End Header Menu Area =================-->
 
-                    <?php include_once("./phpComponents/navbarMobile.php")?>
+                    <!--================ Home Banner Area =================-->
+                    <section class="banner_area">
+                        <div class="banner_inner d-flex align-items-center">
+                            <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
+                            <div class="container">
+                                <div class="banner_content text-center">
+                                    <h2>Dashboard</h2>
+                                    <p>Hey
+                                        <?echo $session_name?>! This is your personal dashboard where you can manage your projects and donations in the best possible way.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--================ End Home Banner Area =================-->
 
-                    <div id="template-wrapper" class="hfeed site" style="">
-                        <div class="wd-control-panel-gray"></div>
+                    <!--================ Start Causes Area =================-->
 
-                        <div id="sticket-scroll-header-point"></div>
-                        <?php include_once("./phpComponents/navbar.php")?>
+                    <!--================ End Causes Area =================-->
 
-                            <div id="main-module-container" class="site-main ">
-                                <br><br>
-                                <div id="container">
-                                    <div id="content" class="container single-blog">
+                    <!--================ Start Features Cause section =================-->
 
-                                        <div id="main-content" class="col-sm-18">
-                                            <div class="main-content">
-                                                <div class="single-content">
-                                                    <div class="single-post post-6618 cause type-cause status-publish has-post-thumbnail hentry cause_category-africa cause_category-cause-slider cause_category-food cause_category-middle-east cause_category-cause-syria cause_category-urgent-cause">
+                    <section class="features_causes" style="margin-top:40px;">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-8 posts-list">
+                                    <div class="main_title">
+                                        <h2>Dashboard</h2>
+                                        <p>Hey
+                                            <?echo $session_name?>! This is your personal dashboard where you can manage your projects and donations in the best possible way.</p>
+                                    </div>
 
-                                                        <div class="post-info-content">
-                                                            <div class="wd-title">
-                                                                <h3>Dashboard</h3></div>
-                                                            <div class="wd-short-content">
-                                                                <p>Hey <?echo $session_name?>! This is your personal dashboard where you can manage your projects and donations in the best possible way.</p>
+                                    <div class="row justify-content-center">
+                                        <h3>Start a [<a href="./newProject.php" class="rounded" style="color:green;">NEW PROJECT</a>]</h3>
+                                        <br>
+                                        <hr>
+                                        <h4>OR</h4>
+                                        <hr>
+                                        <br>
+                                        <h3>Write a [<a href="./newBlog.php" class="rounded" style="color:green;">NEW BLOG</a>]</h3>
+                                        <p>The best way to make your project a success is by telling more people about it. Post a new project and get people interested about your idea.</p>
+                                    </div>
+
+                                    <div class="row justify-content-center">
+                                        <h3>Your Contributions</h3>
+                                    </div>
+                                    <br>
+
+                                    <div class="row">
+                                        <?
+                    $result_supportedProjects = $con->query($query_supportedProjects); 
+                    if ($result_supportedProjects->num_rows > 0)
+                    { 
+                        while($row = $result_supportedProjects->fetch_assoc()) 
+                        { 
+                ?>
+
+                                            <div class="col-lg-4 col-md-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <figure>
+                                                            <img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>" alt="<?echo $row['title']?>">
+                                                        </figure>
+                                                        <div class="card_inner_body">
+                                                            <h4 class="card-title"><?echo $row['title']?></h4>
+                                                            <p class="card-text">
+                                                                <?echo $row['excerpt']?>
+                                                            </p>
+                                                            <div class="d-flex justify-content-between raised_goal">
+                                                                <p><span>You donated:  <?echo $row['name']?> (<?echo $row['quantity']?>)</span></p>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between donation align-items-center">
+                                                                <a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn">View</a>
                                                             </div>
                                                         </div>
-
                                                     </div>
-                                                    <div class="clear"></div>
-                                                    
-                                                    <h5>Your Supported Projects</h5>
-                                                    <div class="block-cause-detail" style="padding-top:10px;margin-top:10px;padding-bottom:10px;margin-bottom:10px;">
-                                                        <?
-                                                        if ($result_supportedProjects->num_rows > 0)
-                                                        { 
-                                                            while($row = $result_supportedProjects->fetch_assoc()) 
-                                                            { 
-                                                                ?>
-                                                                <div>
-                                                                    <div class="icon_circle"><img class="thumbnail-effect-1 wp-post-image" src="./uploads/postImages/<?echo $row['image']?>" style="height:100%; width:100%"></div>
-                                                                    <div class="detail_block">
-                                                                        <h4><?echo $row['title']?></h4>
-                                                                        <div class="line line-50"></div>
-                                                                        <?echo $row['excerpt']?>
-                                                                        <br>
-                                                                        <p style="color:green;">You donated: <?echo $row['name']?> (<?echo $row['quantity']?>)</p>
-                                                                    </div>
-                                                                </div>
-                                                                <?
-                                                            }
-                                                        }
-                                                        ?>
-
-                                                    </div>
-                                                    
-                                                    
-                                                    <h5>Your Projects</h5>
-                                                    <div class="block-cause-detail" style="padding-top:10px;margin-top:10px;padding-bottom:10px;margin-bottom:10px;">
-                                                        <?
-                                                        if ($result_createdPosts->num_rows > 0)
-                                                        { 
-                                                            while($row = $result_createdPosts->fetch_assoc()) 
-                                                            { 
-                                                                ?>
-                                                                <div>
-                                                                    <div class="icon_circle"><img class="thumbnail-effect-1 wp-post-image" src="./uploads/postImages/<?echo $row['image']?>" style="height:100%; width:100%"></div>
-                                                                    <div class="detail_block">
-                                                                        <h4><?echo $row['title']?></h4>
-                                                                        <div class="line line-50"></div>
-                                                                        <?echo $row['excerpt']?>
-                                                                        <br>
-                                                                        <p style="color:green;">You donated: <?echo $row['name']?> (<?echo $row['quantity']?>)</p>
-                                                                    </div>
-                                                                </div>
-                                                                <?
-                                                            }
-                                                        }
-                                                        ?>
-
-                                                    </div>
-                                                    
-                                                    <h5>Contributors</h5>
-                                                                <table class="detail_table">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <td>consectetur</td>
-                                                                            <td>adipiscing</td>
-                                                                            <td>consectetur</td>
-                                                                            <td>natoque</td>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>Pharetra</td>
-                                                                            <td>Malesuada</td>
-                                                                            <td>Cursus</td>
-                                                                            <td>Euismod</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Pharetra</td>
-                                                                            <td>Malesuada</td>
-                                                                            <td>Cursus</td>
-                                                                            <td>Euismod</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Pharetra</td>
-                                                                            <td>Malesuada</td>
-                                                                            <td>Cursus</td>
-                                                                            <td>Euismod</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Pharetra</td>
-                                                                            <td>Malesuada</td>
-                                                                            <td>Cursus</td>
-                                                                            <td>Euismod</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Pharetra</td>
-                                                                            <td>Malesuada</td>
-                                                                            <td>Cursus</td>
-                                                                            <td>Euismod</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-
-                                                    <div class="tags_social">
-
-                                                    </div>
-
                                                 </div>
-
                                             </div>
-                                        </div>
-                                        <div id="right-content" class="col-sm-6">
-                                            <div class="sidebar-content wd-sidebar">
-                                                <ul class="xoxo">
-                                                  <li id="text-29" class="style-def widget-container widget_text">
-                                                        <div class="widget_title_wrapper">
-                                                            <a class="block-control" href="javascript:void(0)"></a>
-                                                            <h3 class="widget-title heading-title">Your Cart</h3></div>
-                                                        <div class="textwidget">
-                                                            <ul>
-                                                                <li id="woocommerce_product_categories-8" class="style-def widget-container woocommerce widget_product_categories">
-                                                                <ul class="product-categories">
-                                                                    <?
-                                                                        if ($result_cartItems->num_rows > 0)
-                                                                        { 
-                                                                            while($row = $result_cartItems->fetch_assoc()) 
-                                                                            { 
-                                                                                ?>
-                                                                                    <li class="cat-item cat-item-175"><a><?echo $row['name']?></a> <span class="count">(<?echo $row['quantity']?>)</span></li>
-                                                                                <?
-                                                                            }
-                                                                        }
-                                                                    ?>
-                                                                </ul>
-                                                            </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    
-                                                    <li id="text-29" class="style-def widget-container widget_text">
-                                                        <div class="widget_title_wrapper">
-                                                            <a class="block-control" href="javascript:void(0)"></a>
-                                                            <h3 class="widget-title heading-title">Your Bucket</h3></div>
-                                                        <div class="textwidget">
-                                                            <ul>
-                                                                <li id="woocommerce_product_categories-8" class="style-def widget-container woocommerce widget_product_categories">
-                                                                <ul class="product-categories">
-                                                                    <?
-                                                                        if ($result_inventory->num_rows > 0)
-                                                                        { 
-                                                                            while($row = $result_inventory->fetch_assoc()) 
-                                                                            { 
-                                                                                ?>
-                                                                                    <li class="cat-item cat-item-175"><a><?echo $row['name']?></a> <span class="count">(<?echo $row['quantity']?>)</span></li>
-                                                                                <?
-                                                                            }
-                                                                        }
-                                                                    ?>
-                                                                </ul>
-                                                            </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                    
-                                                    <li id="causesrecent-2" class="style-def widget-container widget_causesrecent">
-                                                        <div class="widget_title_wrapper">
-                                                            <a class="block-control" href="void(0)"></a>
-                                                            <h3 class="widget-title heading-title">Recent Causes</h3></div>
-                                                        <ul class="recentcauses" id="recent-428">
-                                                            
-                                                            <?
-                                                            if ($result_recentPosts->num_rows > 0)
-                                                            { 
-                                                                while($row = $result_recentPosts->fetch_assoc()) 
-                                                                { 
-                                                                    ?>
-                                                                    <li class="item style-1">
-                                                                        <div class="media">
-                                                                            <div class="wd_post_thumbnail">
-                                                                                <a href="./postPage.php?id=<?echo $row['id']?>" class="effect_color">
-                                                                                    <img width="100" height="70" src="./uploads/postImages/<?echo $row['image']?>" class="attachment-tvl_wpdance_blog_recent size-tvl_wpdance_blog_recent wp-post-image" alt="Integer vel accumsan est" /> </a>
-                                                                            </div>
-                                                                            <div class="detail">
-                                                                                <div class="entry-title">
-                                                                                    <a href="./postPage.php?id=<?echo $row['id']?>" title=" <?echo $row['title']?>" rel="bookmark">
-        										                                    <?echo $row['title']?>								</a>
-                                                                                </div>
-                                                                                <p class="entry-meta">
-                                                                                     <?echo $row['datePosted']?></p>
-        
-                                                                            </div>
-                                                                            <!-- .detail -->
-                                                                        </div>
-                                                                    </li>
-                                                                    <?
-                                                                }
-                                                            }
-                                                            
-                                                            ?>
-                                                        </ul>
-                                                    </li>
-                                                   
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <!-- end right sidebar -->
-
+                                            <?
+                        }
+                    }
+				?>
                                     </div>
-                                    <!-- #content -->
+
+                                    <div class="row justify-content-center">
+                                        <h3>Your Projects</h3>
+                                    </div>
+                                    <br>
+
+                                    <div class="row">
+                                        <?
+                    $result_createdPosts = $con->query($query_createdPosts); 
+                    if ($result_createdPosts->num_rows > 0)
+                    { 
+                        while($row = $result_createdPosts->fetch_assoc()) 
+                        { 
+                ?>
+
+                                            <div class="col-lg-4 col-md-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <figure>
+                                                            <img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>" alt="<?echo $row['title']?>" >
+                                                        </figure>
+                                                        <div class="card_inner_body">
+                                                            <h4 class="card-title"><?echo $row['title']?></h4>
+                                                            <p class="card-text">
+                                                                <?echo $row['excerpt']?>
+                                                            </p>
+                                                            <div class="d-flex justify-content-between raised_goal">
+                                                                <p>Raised: $<?echo $row['amountEarned']?>
+                                                                </p>
+                                                                <p><span>Goal: $<?echo $row['goal']?></span></p>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between donation align-items-center">
+                                                                <a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn">View</a>
+                                                                <p><span class="lnr lnr-heart"></span>
+                                                                    <?echo $row['nContributors']?> Donors</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?
+                        }
+                    }
+				?>
+                                    </div>
+                                    
+                                    <div class="row justify-content-center">
+                                        <h3>Your Blogs</h3>
+                                    </div>
+                                    <br>
+
+                                    <div class="row">
+                                        <?
+                                            $result_createdBlogs = $con->query($query_createdBlogs); 
+                                            if ($result_createdBlogs->num_rows > 0)
+                                            { 
+                                                while($row = $result_createdBlogs->fetch_assoc()) 
+                                                { 
+                                        ?>
+
+                                            <div class="col-lg-4 col-md-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <figure>
+                                                            <img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>" alt="<?echo $row['title']?>" >
+                                                        </figure>
+                                                        <div class="card_inner_body">
+                                                            <h4 class="card-title"><?echo $row['title']?></h4>
+                                                            <p class="card-text">
+                                                                <?echo $row['excerpt']?>
+                                                            </p>
+                                                            
+                                                            <div class="d-flex justify-content-between donation align-items-center">
+                                                                <a href="./blogPage.php?id=<?echo $row['id']?>" class="primary_btn">View</a>
+                                                                <p><span class="lnr lnr-heart"></span>
+                                                                    <?echo $row['views']?> Views</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?
+                        }
+                    }
+				?>
+                                    </div>
 
                                 </div>
-                                <!-- #container -->
+                                <div class="col-lg-4">
+                                    <div class="blog_right_sidebar">
+                                        <aside class="single_sidebar_widget author_widget">
+                                            <img width="100" height="100" class="author_img rounded-circle" src="./uploads/postImages/<?echo $session_image?>" alt="">
+                                            <h4><?echo $session_name?></h4>
+                                            <p>
+                                                <?echo $session_about?>
+                                            </p>
 
-                                <div class="container">
-                                    <div class="body-end-widget-area">
-
+                                        </aside>
+                                        <hr>
+                                        <?php include_once("./phpComponents/cartWidget.php")?>
                                     </div>
-                                    <!-- end #footer-first-area -->
                                 </div>
 
                             </div>
-                            <!-- #main -->
+                        </div>
+                    </section>
 
-                            <footer id="footer" style="background: url('http://charity.demo1.wpdance.com/turquoise/wp-content/themes/wp_charity/images/footer_bottom_bkg.png') no-repeat center bottom">
+                    <!--================ Start footer Area  =================-->
+                    <?php include_once("./phpComponents/footer.php")?>
+                        <!--================ End footer Area  =================-->
+                        <!--================ End footer Area  =================-->
 
-                                <div class="footer-container">
-
-                                    <div class="fourth-footer-area">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div id="copy-right" class="copy-right">
-                                                    <div class="copyright col-sm-12">
-                                                        © 2015 Charity Store . All Rights Reserved. </div>
-
-                                                    <div class="menu-footer col-sm-12">
-                                                        <div class="menu-footer-page-container">
-                                                            <ul id="menu-footer-page" class="menu">
-                                                                <li id="menu-item-6347" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6347"><a href="http://charity.demo1.wpdance.com/turquoise/shortcode-faq/">FAQ</a></li>
-                                                                <li id="menu-item-6601" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6601"><a href="http://charity.demo1.wpdance.com/turquoise/about-us/">Our Story</a></li>
-                                                                <li id="menu-item-6560" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6560"><a href="http://charity.demo1.wpdance.com/turquoise/be-a-volunteer/">Be a Volunteer</a></li>
-                                                                <li id="menu-item-6559" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6559"><a href="http://charity.demo1.wpdance.com/turquoise/what-we-do/">What we do</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <!-- end #copyright -->
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </footer>
-                            <!-- #colophon -->
-
-                            <div id="to-top" class="scroll-button">
-                                <a class="scroll-button" href="javascript:void(0)" title="Back to Top"></a>
-                            </div>
-
-                            <!--<div class="loading-mark-up">
-			<span class="loading-image"></span>
-		</div>
-		<span class="loading-text"></span>-->
-
-                    </div>
-                    <!-- #page -->
-
-                </div>
-                <!-- #body-wrapper -->
-
+                        <!-- Optional JavaScript -->
+                        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                        <script src="js/jquery-3.2.1.min.js"></script>
+                        <script src="js/popper.js"></script>
+                        <script src="js/bootstrap.min.js"></script>
+                        <script src="js/stellar.js"></script>
+                        <script src="vendors/lightbox/simpleLightbox.min.js"></script>
+                        <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
+                        <script src="js/jquery.ajaxchimp.min.js"></script>
+                        <script src="js/mail-script.js"></script>
+                        <!--gmaps Js-->
+                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+                        <script src="js/gmaps.min.js"></script>
+                        <script src="js/theme.js"></script>
             </body>
 
-            <?php include_once("./phpComponents/footerJs.php")?>
-
         </html>
-        <!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
-
-Page Caching using disk: enhanced
-Database Caching 92/159 queries in 0.303 seconds using disk
-Object Caching 7919/8037 objects using disk
-
- Served from: charity.demo1.wpdance.com @ 2019-06-11 07:37:01 by W3 Total Cache -->
