@@ -3,7 +3,7 @@
 if(isset($_POST['email'])&&isset($_POST['password'])){
     $errMsg="none";
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $password = md5($_POST['password'].'hey1');
     $query_selectedPost= "select * from fik_users where email= '$email' and password='$password'"; 
     $result_selectedPost = $con->query($query_selectedPost); 
     if ($result_selectedPost->num_rows > 0)
@@ -35,7 +35,7 @@ if(isset($_POST['email'])&&isset($_POST['password'])){
         }else{
             //emaail not taken. create new account
             $dateTime = time();
-            $sql="insert into fik_users (`email`, `password`) values ('$email', '$password')";
+            $sql="insert into fik_users (`name`,`email`, `password`, 'userImd') values ('User','$email', '$password', 'profilePic.png')";
             if(!mysqli_query($con,$sql))
             {
                 echo "err";
@@ -62,9 +62,9 @@ else{
    <?php include_once("./phpComponents/header.php")?>
 <body>
         
-	<!--================ Start Header Menu Area =================-->
-	<?php include_once("./phpComponents/navbar.php")?>
-	
+    <!--================ Start Header Menu Area =================-->
+    <?php include_once("./phpComponents/navbar.php")?>
+    
     <!--================ End Header Menu Area =================-->
         
     <!--================Home Banner Area =================-->
@@ -106,7 +106,7 @@ else{
     </section>
   
         
-    <!--================ Start footer Area  =================-->	
+    <!--================ Start footer Area  =================-->    
     <?php include_once("./phpComponents/footer.php")?>
     <!--================ End footer Area  =================-->
     
