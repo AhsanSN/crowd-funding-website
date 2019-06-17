@@ -2,7 +2,24 @@
     <?
 
 //recent posts
-$query_allPosts= "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned from fik_posts p left outer join fik_contributions c on p.id=c.postId group by c.postId order by p.id desc"; 
+if(isset($_GET['sort'])){
+    $sortBy = $_GET['sort'];
+    if($sortBy=='popularity'){
+        $query_allPosts= "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned from fik_posts p left outer join fik_contributions c on p.id=c.postId group by p.id order by p.views desc"; 
+    }
+    if($sortBy=='name'){
+        $query_allPosts= "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned from fik_posts p left outer join fik_contributions c on p.id=c.postId group by p.id order by p.title desc"; 
+    }
+    if($sortBy=='date'){
+        $query_allPosts= "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned from fik_posts p left outer join fik_contributions c on p.id=c.postId group by p.id order by p.datePosted desc"; 
+    }
+    else{
+        $query_allPosts= "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned from fik_posts p left outer join fik_contributions c on p.id=c.postId group by p.id order by p.views desc"; 
+    }
+}
+else{
+        $query_allPosts= "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned from fik_posts p left outer join fik_contributions c on p.id=c.postId group by p.id order by p.views desc"; 
+    }
 $result_allPosts = $con->query($query_allPosts); 
 
 ?>
@@ -40,6 +57,17 @@ $result_allPosts = $con->query($query_allPosts);
             <div class="main_title">
                 <h2>All Projects</h2>
                 <p>Donate to some of the best ideas in your hometown</p>
+                <select name="project_category"  placeholder="asdsad" onchange="javascript:handleSelect(this)">
+                    <option value="popularity">Popularity</option>
+                    <option value="name" >Name</option>
+                    <option value="date" >Date</option>
+                </select>
+                <script type="text/javascript">
+                    function handleSelect(elm)
+                    {
+                    window.location = "./allPosts.php?sort="+elm.value;
+                    }
+                </script>
             </div>
 
             <div class="row">
@@ -51,13 +79,22 @@ $result_allPosts = $con->query($query_allPosts);
                         { 
                 ?>
                             
-				            <div class="col-lg-4 col-md-6">
+				            <div class="col-lg-3 col-md-6">
             					<div class="card">
             						<div class="card-body">
             							<figure>
-            								<img class="card-img-top img-fluid"src="./uploads/postImages/<?echo $row['image']?>" alt="<?echo $row['title']?>">
+            							    <?
+            							    if(substr($row['image'],-3)=="mp4"){
+                                            ?>
+                                            <video class="videoImg card-img-top img-fluid" controls loop autoplay>
+                                              <source src="./uploads/postImages/<?echo $row['image']?>" type="video/mp4">
+                                            </video>
+                                            <?}else{?>
+                                            
+                                            <img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>" alt="">
+                                            <?}?>
             							</figure>
-            							<div class="card_inner_body">
+            							<div class="card_inner_body" style="padding: 5px 5px;">
             								<h4 class="card-title"><?echo $row['title']?></h4>
             								<p class="card-text">
             									<?echo $row['excerpt']?>

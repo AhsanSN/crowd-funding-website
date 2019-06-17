@@ -18,25 +18,23 @@
 						<div class="single-footer-widget tp_widgets">
 							<h4 class="footer_title">Quick Links</h4>
 							<ul class="list">
-								<li><a href="#">Home</a></li>
-								<li><a href="#">About</a></li>
-								<li><a href="#">Causes</a></li>
-								<li><a href="#">Event</a></li>
-								<li><a href="#">News</a></li>
-								<li><a href="#">Contact</a></li>
+								<li><a href="./">Home</a></li>
+								<li><a href="./about.php">About</a></li>
+								<li><a href="./allPosts.php">Projects</a></li>
+								<li><a href="./allBlogs.php">Blogs</a></li>
+								<li><a href="./shop.php">Shop</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="col-lg-2 col-md-6 col-sm-6">
-						<div class="single-footer-widget instafeed">
-							<h4 class="footer_title">Gallery</h6>
-							<ul class="list instafeed d-flex flex-wrap">
-								<li><img src="img/gallery/g1.jpg" alt=""></li>
-								<li><img src="img/gallery/g2.jpg" alt=""></li>
-								<li><img src="img/gallery/g3.jpg" alt=""></li>
-								<li><img src="img/gallery/g4.jpg" alt=""></li>
-								<li><img src="img/gallery/g5.jpg" alt=""></li>
-								<li><img src="img/gallery/g6.jpg" alt=""></li>
+						<div class="single-footer-widget tp_widgets">
+							<h4 class="footer_title">Social Media</h4>
+							<ul class="list">
+								<li><a href="#">Facebook</a></li>
+								<li><a href="#">Youtube</a></li>
+								<li><a href="#">Instagram</a></li>
+								<li><a href="#">Twitter</a></li>
+								<li><a href="#">Snapchat</a></li>
 							</ul>
 						</div>
 					</div>
@@ -79,7 +77,7 @@
 				<div class="row d-flex">
 					<p class="col-lg-12 footer-text text-center">
 						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Built by <a href="https://anomoz.com" target="_blank">Anomoz Softwares</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
 				</div>
 			</div>

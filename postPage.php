@@ -269,15 +269,14 @@ else{
                     <div class="col-lg-8 posts-list">
                         <div class="single-post row">
                             <div class="col-lg-12">
-                                <div class="feature-img">
-                                    <img class="img-fluid" src="./uploads/postImages/<?echo $image?>" alt="">
-                                </div>									
+                                									
                             </div>
                             <div class="col-lg-3  col-md-3">
                                 <div class="blog_info text-right">
+                                    <?if($logged==0){echo '<p style="color:red;">Signup required to donate.</p>';}?>
                                     <div class="col-lg-7">
                                         
-                                        <button type="button" class="btn btn-primary primary_btn rounded" data-toggle="modal" data-target="#exampleModalCenter">
+                                        <button type="button" class="btn btn-primary primary_btn rounded" <?if($logged==1){echo 'data-toggle="modal"';}?>  data-target="#exampleModalCenter">
                                           Donate
                                         </button>
                                         
@@ -302,6 +301,17 @@ else{
                                 </div>
                             </div>
                             <div class="col-lg-9 col-md-9 blog_details">
+                                <?
+            							    if(substr($image,-3)=="mp4"){
+                                            ?>
+                                            <video class="videoImg card-img-top img-fluid" controls loop autoplay>
+                                              <source src="./uploads/postImages/<?echo $image?>" type="video/mp4">
+                                            </video>
+                                            <?}else{?>
+                                            
+                                            <img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $image?>" alt="">
+                                            <?}?>
+                                            <hr>
                                 <h2><?echo $title?> <?if($donationStatus=="success"){echo"<div style='background-color:green;'>Donation of Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='background-color:red;'>Donation failed!</div>";}?></h2>
                                 <p class="excert">
                                     <?echo $excerpt?>
@@ -317,7 +327,15 @@ else{
                                 <?if($previd!=null){?>
                                 <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
                                     <div class="thumb">
-                                        <a href="./postPage.php?id=<?echo $previd?>"><img width="100" height="100" class="img-fluid" src="./uploads/postImages/<?echo $previmage?>"alt=""></a>
+                                                                                    <?if(substr($previmage,-3)=="mp4"){
+                                            ?>
+                                            <a href="./postPage.php?id=<?echo $previd?>"><img width="100" height="100" class="img-fluid" src="./uploads/postImages/videoIcon.png"alt=""></a>
+                                            <?}else{?>
+                                            
+                                            <a href="./postPage.php?id=<?echo $previd?>"><img width="100" height="100" class="img-fluid" src="./uploads/postImages/<?echo $previmage?>"alt=""></a>
+                                            <?}?>
+                                            
+                                        
                                     </div>
                                     <div class="arrow">
                                         <a href="./postPage.php?id=<?echo $previd?>"><span class="lnr text-white lnr-arrow-left"></span></a>
@@ -338,7 +356,17 @@ else{
                                         <a href="./postPage.php?id=<?echo $nextid?>"><span class="lnr text-white lnr-arrow-right"></span></a>
                                     </div>
                                     <div class="thumb">
-                                        <a href="./postPage.php?id=<?echo $nextid?>"><img width="100" height="100" class="img-fluid" src="./uploads/postImages/<?echo $nextimage?>" class="img-fluid" src="img/blog/next.jpg" alt=""></a>
+                                        <a href="./postPage.php?id=<?echo $nextid?>">
+                                            <?if(substr($nextimage,-3)=="mp4"){
+                                            ?>
+                                            <img width="100" height="100" class="img-fluid" src="./uploads/postImages/videoIcon.png" class="img-fluid" src="img/blog/next.jpg" alt="">
+                                            <?}else{?>
+                                            
+                                            <img width="100" height="100" class="img-fluid" src="./uploads/postImages/<?echo $nextimage?>" class="img-fluid" src="img/blog/next.jpg" alt="">
+                                            <?}?>
+                                            
+                                            
+                                            </a>
                                     </div>										
                                 </div>
                                 <?}?>

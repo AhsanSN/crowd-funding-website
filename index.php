@@ -10,6 +10,7 @@ $query_recent3Posts = "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(
 <!doctype html>
 <html lang="en">
     <?php include_once("./phpComponents/header.php")?>
+    <link rel="stylesheet" href="css/videoBanner.css">
 <body>
         
 	<!--================ Start Header Menu Area =================-->
@@ -18,12 +19,18 @@ $query_recent3Posts = "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(
 	<!--================ End Header Menu Area =================-->
 	
 	<!--================ Home Banner Area =================-->
-	<section class="home_banner_area">
-		<div class="banner_inner">
+	
+	<section>
+		
+
+<video autoplay muted loop id="myVideo">
+  <source src="./uploads/bannerVideo.mp4" type="video/mp4">
+</video>
+<div class="content">
+  <div class="banner_inner">
 			<div class="container">
 				<div class="banner_content">
-					<p class="upper_text">Give a hand</p>
-					<h2>to make the world better</h2>
+					<h2>Create a better world</h2>
 					<p>
 						That don't lights. Blessed land spirit creature divide our made two 
 						itself upon you'll dominion waters man second good you they're divided upon winged were replenish night
@@ -32,6 +39,8 @@ $query_recent3Posts = "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(
 				</div>
 			</div>
 		</div>
+</div>
+
 	</section>
 	<!--================ End Home Banner Area =================-->
 	

@@ -1,5 +1,6 @@
 <?include_once("global.php");?>
 <?
+include_once("./phpComponents/checkSignupStatus.php");
 //taking form action
 if(isset($_POST["buttonAction"]))
 {
@@ -10,7 +11,8 @@ if(isset($_POST["buttonAction"]))
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
     // Check if image file is a actual image or fake image
-    if(isset($_POST["submit"])) {
+    if($_FILES["fileToUpload"]["tmp_name"]!="") {
+        
         $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
         if($check !== false) {
             //echo "File is an image - " . $check["mime"] . ".";
@@ -19,7 +21,7 @@ if(isset($_POST["buttonAction"]))
             echo "File is not an image.";
             $uploadOk = 0;
         }
-    }
+    
     // Check if file already exists
     if (file_exists($target_file)) {
         //echo "Sorry, file already exists.";
@@ -27,14 +29,14 @@ if(isset($_POST["buttonAction"]))
         $uploadOk = 0;
     }
     // Check file size
-    if ($_FILES["fileToUpload"]["size"] > 500000) {
+    if ($_FILES["fileToUpload"]["size"] > 50000000) {
         echo "Sorry, your file is too large.";
         $uploadOk = 0;
     }
     // Allow certain file formats
     if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-    && $imageFileType != "gif" ) {
-        //echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+    && $imageFileType != "gif" && $imageFileType != "mp4" && $imageFileType != "avi") {
+        echo "Sorry, only JPG, JPEG, PNG, MP4 & GIF files are allowed.";
         $uploadOk = 0;
     }
     // Check if $uploadOk is set to 0 by an error
@@ -49,7 +51,7 @@ if(isset($_POST["buttonAction"]))
             echo "Sorry, there was an error uploading your file.";
         }
     }
-    
+    }
     
     
     $buttonAction = $_POST["buttonAction"];
@@ -153,6 +155,13 @@ $result_categories = $con->query($query_categories);
 <html lang="en">
      <?php include_once("./phpComponents/header.php")?>
      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+     <style>
+            video {
+    object-fit: fill;
+}
+        </style>
+        <script src="https://cdn.tiny.cloud/1/z49z7oesd1o4zsd2aezi3iygbwfdekjodcuap61hnbynefqf/tinymce/5/tinymce.min.js"></script>
+  <script>tinymce.init({selector:'#hello'});</script>
 <body>
 
         <!--================ Start Header Menu Area =================-->
@@ -184,16 +193,19 @@ $result_categories = $con->query($query_categories);
 
                                 <div class="feature-img" >
                                     <input class="btn btn-primary primary_btn rounded" style="background-color:#777;" type="file" name="fileToUpload" id="fileToUpload">
-                                    <img class="img-fluid" src="./uploads/postImages/<?echo $coverPhoto?>" alt="">
+                                    
+                                    
                                 </div>		
                             </div>
                             <div class="col-lg-3  col-md-3">
                                 <div class="blog_info text-right">
                                     <div class="col-lg-7">
-                                        
+                                        <?if(($title=="")||($excerpt=="")||($description=="")||($coverPhoto=="")){
+                                        }else{?>
                                         <button type="submit" name="buttonAction" value="post" class="btn btn-primary primary_btn rounded" data-toggle="modal" >
                                           Post
                                         </button>
+                                        <?}?>
                                         
                     				</div>
                     				<div class="col-lg-7" style="padding-top:7px;">
@@ -218,7 +230,7 @@ $result_categories = $con->query($query_categories);
                                         </select>
                                     <br>
                                     <p>Goal?</p>
-                                    <input class="form-control mb-10" type="number" rows="5" name="project_goal" id="new_comment"  value="<?echo $goal?>" placeholder="Cash goal? ($)"  required="">
+                                    <input class="form-control mb-10" type="number" rows="5" name="project_goal" value="<?echo $goal?>" placeholder="Cash goal? ($)"  required="">
                                     <hr>
                                     <ul class="blog_meta list">
                                         <li><a href="#"><?echo $session_name?><i class="lnr lnr-user"></i></a></li>
@@ -227,9 +239,32 @@ $result_categories = $con->query($query_categories);
                                     
                                 </div>
                             </div>
+                            <style>
+                                .videoImg {
+                                    position: relative;
+                                    z-index: 0;
+                                    background: url(mel.jpg) no-repeat;
+                                    background-size: 100% 100%;
+                                    top: 0px;
+                                    left: 0px; /* fixed to left. Replace it by right if you want.*/
+                                    width: 100%;
+                                    height: auto;
+                                }
+                            </style>
                             <div class="col-lg-9 col-md-9 blog_details">
+                                <?
+                                    if(substr($coverPhoto,-3)=="mp4"){
+                                    ?>
+                                    <video class="videoImg" controls loop autoplay>
+                                      <source src="./uploads/postImages/<?echo $coverPhoto?>" type="video/mp4">
+                                    </video>
+                                    <?}else{?>
+                                    
+                                    <img class="img-fluid videoImg" src="./uploads/postImages/<?echo $coverPhoto?>" alt="">
+                                    <?}?>
+                                    <hr>
                                 <h2>
-                                    <input class="form-control mb-10" rows="5" name="project_title" id="new_comment" value="<?echo $title?>" placeholder="Title of your project?"  required="">
+                                    <input class="form-control mb-10" rows="5" name="project_title"  value="<?echo $title?>" placeholder="Title of your project?"  required="">
                                 </h2>
                                 <style>
                                     .excerpt-textarea {
@@ -240,7 +275,7 @@ $result_categories = $con->query($query_categories);
                                    <textarea class="form-control mb-10 excerpt-textarea" rows="5" name="project_excerpt" placeholder="Describe your project in few words for the readers."  required=""><?echo $excerpt?></textarea>
                                 </p>
                                 <p>
-                                    <textarea class="form-control mb-10" rows="5" name="project_description" id="new_comment"  placeholder="Describe your project in detail.&#10;Tell your reader, what is your prject all about?&#10;What work does your startup do?"  required=""><?echo $description?></textarea>
+                                    <textarea class="form-control mb-10" rows="5" name="project_description"  placeholder="Describe your project in detail.&#10;Tell your reader, what is your prject all about?&#10;What work does your startup do?"  required=""><?echo $description?></textarea>
                                 </p>
                                 
                             </div>

@@ -42,4 +42,23 @@ else
         $logged=0;
 }
 
+
+//for translation
+if(isset($_GET['lang'])){
+    $lang = $_GET['lang'];
+    $_SESSION['language'] = $lang;
+}
+
+if(!isset($_SESSION['language'])){
+    $_SESSION['language'] = 'TK';
+}
+$session_language = $_SESSION['language'];
+function translate($english, $turkish){
+    if($_SESSION['language']=="TK"){
+        echo $turkish;
+    }
+    else{
+        echo $english;
+    }
+}
 ?>

@@ -54,7 +54,15 @@
                     { 
                         ?>
                         <div class="media post_item">
-                            <img width="100" height="70" src="./uploads/postImages/<?echo $row['image']?>"  alt="post">
+                            <?
+            							    if(substr($row['image'],-3)=="mp4"){
+                                            ?>
+                                            <img width="100" height="70" src="./uploads/postImages/videoIcon.png"  alt="post">
+                                            <?}else{?>
+                                            
+                                            <img width="100" height="70" src="./uploads/postImages/<?echo $row['image']?>"  alt="post">
+                                            <?}?>
+                                            
                             <div class="media-body">
                                 <a href="./postPage.php?id=<?echo $row['id']?>"><h3><?echo $row['title']?></h3></a>
                                 <p><?echo $row['excerpt']?></p>

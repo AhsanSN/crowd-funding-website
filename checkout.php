@@ -1,5 +1,6 @@
 <?include_once("global.php");?>
     <?
+    include_once("./phpComponents/checkSignupStatus.php");
 
 if(isset($_GET['removeItem'])){
     $remItem = $_GET['removeItem'];

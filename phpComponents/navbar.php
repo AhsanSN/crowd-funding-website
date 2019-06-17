@@ -14,19 +14,24 @@
 						<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 							<ul class="nav navbar-nav menu_nav ml-auto">
 								<li class="nav-item active"><a class="nav-link" href="./">Home</a></li> 
-								<li class="nav-item"><a class="nav-link" href="allPosts.php">Projects</a>
-								<li class="nav-item"><a class="nav-link" href="shop.php">Shop</a>
-								<li class="nav-item"><a class="nav-link" href="allBlogs.php">Blogs</a>
-								<li class="nav-item"><a class="nav-link" href="about.php">About</a>
+								<li class="nav-item"><a class="nav-link" href="allPosts.php">Projects</a></li> 
+								<li class="nav-item"><a class="nav-link" href="shop.php">Shop</a></li> 
+								<li class="nav-item"><a class="nav-link" href="allBlogs.php">Blogs</a></li> 
+								<li class="nav-item"><a class="nav-link" href="about.php">About</a></li> 
 								<?
 								if($logged==1){
-								    echo '<li class="nav-item" style="background-color: green; padding-right:10px;padding-left:10px;"><a class="nav-link" href="home.php">Dashboard</a>';
+								    echo '<li class="nav-item" style="background-color: #60bc0f; padding-right:10px;padding-left:10px;"><a class="nav-link" href="home.php">Dashboard</a>';
 								}
 								else{
-								    echo '<li class="nav-item" style="background-color: green; padding-right:10px;padding-left:10px;"><a class="nav-link" href="signup.php">Join</a>';
+								    echo '<li class="nav-item" style="background-color: #60bc0f; padding-right:10px;padding-left:10px;"><a class="nav-link" href="signup.php">Join</a>';
 								}
 								?>
-								
+								<li class="nav-item submenu dropdown">
+                                    <a href="<?if($session_language=='EN'){echo "?lang=TK";}else{echo "?lang=EN";}?>" class="nav-link">
+                                        <img height="15" width="25" src="./img/<?if($session_language=='TK'){echo 'turkishFlag.png';}else{echo 'englishFlag.jpg';}?>" style="margin-right:5px;">
+                                        <?echo $session_language?>
+                                    </a>
+                                </li>
 							</ul>
 						</div> 
 					</div>

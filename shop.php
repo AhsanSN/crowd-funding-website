@@ -104,6 +104,7 @@ $result_inventory = $con->query($query_inventory);
                 <div class="banner_content text-center">
                     <h2>Shop <?if($donationStatus=="success"){echo"<div style='background-color:green;'>Purchase was Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='background-color:red;'>Purchase failed!</div>";}?></h2>
                     <p>Buy items to donate to world-class ideas.</p>
+                    <?if($logged==0){echo '<p style="color:red;">You need to signin to buy from the market.</p>';}?>
                 </div>
             </div>
         </div>
@@ -121,6 +122,7 @@ $result_inventory = $con->query($query_inventory);
             <div class="main_title">
                 <h2>Shop<?if($donationStatus=="success"){echo"<div style='color:green;'>Purchase was Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='color:red;'>Purchase failed!</div>";}?></h2>
                 <p>Buy items to donate to world-class ideas.</p>
+                 <?if($logged==0){echo '<p style="color:red;">You need to signin to buy from the market.</p>';}?>
             </div>
 
             <div class="row">
@@ -141,14 +143,14 @@ $result_inventory = $con->query($query_inventory);
             							<figure>
             								<img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>"  alt="<?echo $row['name']?>">
             							</figure>
-            							<div class="card_inner_body">
+            							<div class="card_inner_body" style="padding: 5px 5px;">
             								<h4 class="card-title"><?echo $row['name']?> - $<?echo $row['price']?></h4>
             								<p class="card-text">
             									<?echo $row['description']?>
             								</p>
             								
             								<div class="d-flex justify-content-between donation align-items-center">
-            									<button type="button" class="btn btn-primary primary_btn rounded" data-toggle="modal" data-whatever="<?echo $row['id']?>" data-target="#exampleModalCenter">
+            									<button type="button" class="btn btn-primary primary_btn rounded" <?if($logged==1){echo 'data-toggle="modal"';}?> data-whatever="<?echo $row['id']?>" data-target="#exampleModalCenter">
                                                     Buy
                                                 </button>
             								</div>

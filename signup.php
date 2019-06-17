@@ -3,7 +3,7 @@
 if(isset($_POST['email'])&&isset($_POST['password'])){
     $errMsg="none";
     $email = $_POST['email'];
-    $password = md5($_POST['password'].'hey1');
+    $password = strtoupper(md5($_POST['password'].'hey1'));
     $query_selectedPost= "select * from fik_users where email= '$email' and password='$password'"; 
     $result_selectedPost = $con->query($query_selectedPost); 
     if ($result_selectedPost->num_rows > 0)
@@ -35,16 +35,22 @@ if(isset($_POST['email'])&&isset($_POST['password'])){
         }else{
             //emaail not taken. create new account
             $dateTime = time();
-            $sql="insert into fik_users (`name`,`email`, `password`, 'userImd') values ('User','$email', '$password', 'profilePic.png')";
+            $sql="insert into fik_users (`name`,`email`, `password`, `userImg`) values ('User','$email', '$password', 'profilePic.png')";
             if(!mysqli_query($con,$sql))
             {
                 echo "err";
             }
-            ?>
+            else{
+                 $_SESSION['email'] = $email;
+                $_SESSION['password'] = $password;
+            
+                ?>
             <script type="text/javascript">
                 window.location = "./home.php";
             </script>
             <?
+            }
+            
         }
         
         
@@ -60,14 +66,19 @@ else{
 <!doctype html>
 <html lang="en">
    <?php include_once("./phpComponents/header.php")?>
+   <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="1040613922228-irlsol6bncj8m8v83s95aaconj3gahh7.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
 <body>
         
-    <!--================ Start Header Menu Area =================-->
-    <?php include_once("./phpComponents/navbar.php")?>
-    
+	<!--================ Start Header Menu Area =================-->
+	<?php include_once("./phpComponents/navbar.php")?>
+	
     <!--================ End Header Menu Area =================-->
         
     <!--================Home Banner Area =================-->
+    
     <section class="banner_area">
         <div class="banner_inner d-flex align-items-center">
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
@@ -101,12 +112,16 @@ else{
                             <button type="submit" value="submit" class="btn primary_btn">Login/Signup</button>
                         </div>
                     </form>
+                    <!--
+                    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark">hasdlkasd</div>
+                    -->
+
             </div>
         </div>
     </section>
   
         
-    <!--================ Start footer Area  =================-->    
+    <!--================ Start footer Area  =================-->	
     <?php include_once("./phpComponents/footer.php")?>
     <!--================ End footer Area  =================-->
     
@@ -131,8 +146,24 @@ else{
         <script src="js/jquery.validate.min.js"></script>
         <script src="js/contact.js"></script>
         <!--gmaps Js-->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
         <script src="js/gmaps.min.js"></script>
         <script src="js/theme.js"></script>
+        <script>
+      function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log('Full Name: ' + profile.getName());
+        console.log('Given Name: ' + profile.getGivenName());
+        console.log('Family Name: ' + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+      }
+    </script>
+
     </body>
 </html>

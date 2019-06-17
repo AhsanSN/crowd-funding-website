@@ -1,5 +1,6 @@
 <?include_once("global.php");?>
 <?
+include_once("./phpComponents/checkSignupStatus.php");
 //taking form action
 if(isset($_POST["buttonAction"]))
 {
@@ -10,7 +11,7 @@ if(isset($_POST["buttonAction"]))
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
     // Check if image file is a actual image or fake image
-    if(isset($_POST["submit"])) {
+    if($_FILES["fileToUpload"]["tmp_name"]!="") {
         $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
         if($check !== false) {
             //echo "File is an image - " . $check["mime"] . ".";
@@ -19,7 +20,7 @@ if(isset($_POST["buttonAction"]))
             echo "File is not an image.";
             $uploadOk = 0;
         }
-    }
+    
     // Check if file already exists
     if (file_exists($target_file)) {
         //echo "Sorry, file already exists.";
@@ -49,7 +50,7 @@ if(isset($_POST["buttonAction"]))
             echo "Sorry, there was an error uploading your file.";
         }
     }
-    
+    }
     
     
     $buttonAction = $_POST["buttonAction"];
@@ -58,13 +59,16 @@ if(isset($_POST["buttonAction"]))
     $description= $_POST['project_description'];
     $aboutMe = $_POST['project_aboutMe'];
     $category = $_POST['project_category'];
+    
+    
         
     if($buttonAction=="save"){
         if($filename!="none"){
+            
             $sql="UPDATE `fik_draftBlogs` SET `title`='$title',`excerpt`='$excerpt',`description`='$description',`aboutMe`='$aboutMe',`category`='$category', `coverPhoto`='$filename' WHERE userId='$session_userId'";
         }
         else{
-            $sql="UPDATE `fik_draftProjects` SET `title`='$title',`excerpt`='$excerpt',`description`='$description',`aboutMe`='$aboutMe',`category`='$category' WHERE userId='$session_userId'";
+            $sql="UPDATE `fik_draftBlogs` SET `title`='$title',`excerpt`='$excerpt',`description`='$description',`aboutMe`='$aboutMe',`category`='$category' WHERE userId='$session_userId'";
         }
         if(!mysqli_query($con,$sql))
         {
@@ -181,16 +185,19 @@ $result_categories = $con->query($query_categories);
 
                                 <div class="feature-img" >
                                     <input class="btn btn-primary primary_btn rounded" style="background-color:#777;" type="file" name="fileToUpload" id="fileToUpload">
-                                    <img class="img-fluid" src="./uploads/postImages/<?echo $coverPhoto?>" alt="">
                                 </div>		
                             </div>
                             <div class="col-lg-3  col-md-3">
                                 <div class="blog_info text-right">
                                     <div class="col-lg-7">
                                         
+                                        <?if(($title=="")||($excerpt=="")||($description=="")||($coverPhoto=="")){
+                                        }else{?>
                                         <button type="submit" name="buttonAction" value="post" class="btn btn-primary primary_btn rounded" data-toggle="modal" >
                                           Post
                                         </button>
+                                        <?}?>
+                                  
                                         
                     				</div>
                     				<div class="col-lg-7" style="padding-top:7px;">
@@ -223,6 +230,20 @@ $result_categories = $con->query($query_categories);
                                 </div>
                             </div>
                             <div class="col-lg-9 col-md-9 blog_details">
+                                <style>
+                                .videoImg {
+                                    position: relative;
+                                    z-index: 0;
+                                    background: url(mel.jpg) no-repeat;
+                                    background-size: 100% 100%;
+                                    top: 0px;
+                                    left: 0px; /* fixed to left. Replace it by right if you want.*/
+                                    width: 100%;
+                                    height: auto;
+                                }
+                            </style>
+                                <img class="img-fluid videoImg" src="./uploads/postImages/<?echo $coverPhoto?>" alt="">
+                                <hr>
                                 <h2>
                                     <input class="form-control mb-10" rows="5" name="project_title" id="new_comment" value="<?echo $title?>" placeholder="Blog title?"  required="">
                                 </h2>

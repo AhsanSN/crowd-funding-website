@@ -2,7 +2,25 @@
     <?
 
 //recent posts
-$query_allBlogs= "select * from fik_blogs"; 
+if(isset($_GET['sort'])){
+    $sortBy = $_GET['sort'];
+    if($sortBy=='popularity'){
+        $query_allBlogs= "select * from fik_blogs order by views desc"; 
+    }
+    if($sortBy=='name'){
+        $query_allBlogs= "select * from fik_blogs order by title desc";         
+    }
+    if($sortBy=='date'){
+        $query_allBlogs= "select * from fik_blogs order by datePosted desc"; 
+        }
+    else{
+        $query_allBlogs= "select * from fik_blogs order by views desc";     }
+}
+else{
+        $query_allBlogs= "select * from fik_blogs order by views desc"; 
+        }
+    
+//recent posts
 $result_allBlogs = $con->query($query_allBlogs); 
 
 ?>
@@ -40,6 +58,17 @@ $result_allBlogs = $con->query($query_allBlogs);
             <div class="main_title">
                 <h2>Blogs</h2>
                     <p>Read of 100s of blogs</p>
+                    <select name="project_category"  placeholder="asdsad" onchange="javascript:handleSelect(this)">
+                    <option value="popularity">Popularity</option>
+                    <option value="name" >Name</option>
+                    <option value="date" >Date</option>
+                </select>
+                <script type="text/javascript">
+                    function handleSelect(elm)
+                    {
+                    window.location = "./allBlogs.php?sort="+elm.value;
+                    }
+                </script>
             </div>
 
             <div class="row">
@@ -51,13 +80,13 @@ $result_allBlogs = $con->query($query_allBlogs);
                         { 
                 ?>
                             
-				            <div class="col-lg-4 col-md-6">
+				            <div class="col-lg-3 col-md-6">
             					<div class="card">
             						<div class="card-body">
             							<figure>
             								<img class="card-img-top img-fluid"src="./uploads/postImages/<?echo $row['image']?>" alt="<?echo $row['title']?>">
             							</figure>
-            							<div class="card_inner_body">
+            							<div class="card_inner_body" style="padding: 5px 5px;">
             								<h4 class="card-title"><?echo $row['title']?></h4>
             								<p class="card-text">
             									<?echo $row['excerpt']?>

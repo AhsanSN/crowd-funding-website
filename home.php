@@ -1,5 +1,6 @@
 <?include_once("global.php");?>
     <?
+    include_once("./phpComponents/checkLoginStatus.php");
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
@@ -19,7 +20,7 @@ if(isset($_GET['id'])){
 else{
     1;
 }
-//recent posts
+//your posts
 $query_allPosts= "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned from fik_posts p left outer join fik_contributions c on p.id=c.postId group by c.postId order by p.id desc"; 
 $result_allPosts = $con->query($query_allPosts); 
 
@@ -28,7 +29,7 @@ $query_supportedProjects= "SELECT p.id, c.postId,	c.userId,	c.contribution,	c.qu
 $result_supportedProjects = $con->query($query_supportedProjects);
 
 //your created posts
-$query_createdPosts= "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned from fik_posts p left outer join fik_contributions c on p.id=c.postId where p.userId ='1' group by p.id order by p.id desc"; 
+$query_createdPosts= "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned from fik_posts p left outer join fik_contributions c on p.id=c.postId where p.userId ='$session_userId' group by p.id order by p.id desc"; 
 $result_createdPosts = $con->query($query_createdPosts);
 
 //your created blogs
@@ -36,7 +37,7 @@ $query_createdBlogs= "select * from fik_blogs where userId='$session_userId'";
 $result_createdBlogs = $con->query($query_createdBlogs);
 
 //recent posts
-$query_recentPosts= "select * from fik_posts order by id desc limit 4"; 
+$query_recentPosts= "select * from fik_posts order by views desc limit 4"; 
 $result_recentPosts = $con->query($query_recentPosts); 
 
 //cart items
@@ -117,9 +118,18 @@ $result_inventory = $con->query($query_inventory);
                                                 <div class="card">
                                                     <div class="card-body">
                                                         <figure>
-                                                            <img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>" alt="<?echo $row['title']?>">
+                                                            <?
+            							    if(substr($row['image'],-3)=="mp4"){
+                                            ?>
+                                            <video class="videoImg card-img-top img-fluid" controls loop autoplay>
+                                              <source src="./uploads/postImages/<?echo $row['image']?>" type="video/mp4">
+                                            </video>
+                                            <?}else{?>
+                                            
+                                            <img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>" alt="">
+                                            <?}?>
                                                         </figure>
-                                                        <div class="card_inner_body">
+                                                        <div class="card_inner_body" style="padding: 5px 5px;">
                                                             <h4 class="card-title"><?echo $row['title']?></h4>
                                                             <p class="card-text">
                                                                 <?echo $row['excerpt']?>
@@ -158,9 +168,19 @@ $result_inventory = $con->query($query_inventory);
                                                 <div class="card">
                                                     <div class="card-body">
                                                         <figure>
-                                                            <img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>" alt="<?echo $row['title']?>" >
+                                                            <?
+            							    if(substr($row['image'],-3)=="mp4"){
+                                            ?>
+                                            <video class="videoImg card-img-top img-fluid" controls loop autoplay>
+                                              <source src="./uploads/postImages/<?echo $row['image']?>" type="video/mp4">
+                                            </video>
+                                            <?}else{?>
+                                            
+                                            <img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>" alt="">
+                                            <?}?>
+                                            
                                                         </figure>
-                                                        <div class="card_inner_body">
+                                                        <div class="card_inner_body" style="padding: 5px 5px;">
                                                             <h4 class="card-title"><?echo $row['title']?></h4>
                                                             <p class="card-text">
                                                                 <?echo $row['excerpt']?>
@@ -205,7 +225,7 @@ $result_inventory = $con->query($query_inventory);
                                                         <figure>
                                                             <img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>" alt="<?echo $row['title']?>" >
                                                         </figure>
-                                                        <div class="card_inner_body">
+                                                        <div class="card_inner_body" style="padding: 5px 5px;">
                                                             <h4 class="card-title"><?echo $row['title']?></h4>
                                                             <p class="card-text">
                                                                 <?echo $row['excerpt']?>
@@ -235,6 +255,7 @@ $result_inventory = $con->query($query_inventory);
                                             <p>
                                                 <?echo $session_about?>
                                             </p>
+                                            <a href="./settings.php" class="primary_btn" style="background-color:#22a7b1;">Settings</a>
 
                                         </aside>
                                         <hr>
