@@ -1,6 +1,6 @@
 <?include_once("global.php");?>
 <?
-include_once("./phpComponents/checkSignupStatus.php");
+include_once("./phpComponents/checkLoginStatus.php");
 //taking form action
 if(isset($_POST["buttonAction"]))
 {
@@ -77,6 +77,20 @@ if(isset($_POST["buttonAction"]))
         
     }
     if($buttonAction=="post"){
+        
+        //save first
+        if($filename!="none"){
+            
+            $sql="UPDATE `fik_draftBlogs` SET `title`='$title',`excerpt`='$excerpt',`description`='$description',`aboutMe`='$aboutMe',`category`='$category', `coverPhoto`='$filename' WHERE userId='$session_userId'";
+        }
+        else{
+            $sql="UPDATE `fik_draftBlogs` SET `title`='$title',`excerpt`='$excerpt',`description`='$description',`aboutMe`='$aboutMe',`category`='$category' WHERE userId='$session_userId'";
+        }
+        if(!mysqli_query($con,$sql))
+        {
+            echo "err";
+        }
+        
         //creating new post
         
         $query_savedProject= "select * from fik_draftBlogs where userId='$session_userId' order by id asc limit 1"; 
@@ -154,6 +168,18 @@ $result_categories = $con->query($query_categories);
 <html lang="en">
      <?php include_once("./phpComponents/header.php")?>
      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+     <script type="text/javascript" src="scripts/wysiwyg.js"></script>
+		<script type="text/javascript" src="scripts/wysiwyg-settings.js"></script>
+		<script type="text/javascript">
+			// Use it to attach the editor to all textareas with full featured setup
+			//WYSIWYG.attach('all', full);
+			
+			// Use it to attach the editor directly to a defined textarea
+			WYSIWYG.attach('textarea2', full); // full featured setup
+			
+			// Use it to display an iframes instead of a textareas
+			//WYSIWYG.display('all', full);  
+		</script>
 <body>
 
         <!--================ Start Header Menu Area =================-->
@@ -166,8 +192,8 @@ $result_categories = $con->query($query_categories);
                 <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
                 <div class="container">
                     <div class="banner_content text-center">
-                        <h2>New Blog</h2>
-                        <p>Tell the world about your idea and gain a huge community support</p>
+                        <h2><?translate("New Blog","Yeni Blog")?></h2>
+                        <p><?translate("Tell the world about your idea and gain a huge community support","Dünyaya fikrinizden bahsedin ve büyük bir topluluk desteği edinin")?></p>
                     </div>
                 </div>
             </div>
@@ -194,7 +220,7 @@ $result_categories = $con->query($query_categories);
                                         <?if(($title=="")||($excerpt=="")||($description=="")||($coverPhoto=="")){
                                         }else{?>
                                         <button type="submit" name="buttonAction" value="post" class="btn btn-primary primary_btn rounded" data-toggle="modal" >
-                                          Post
+                                          <?translate("Post","gönderi")?>
                                         </button>
                                         <?}?>
                                   
@@ -203,18 +229,18 @@ $result_categories = $con->query($query_categories);
                     				<div class="col-lg-7" style="padding-top:7px;">
                                         
                                         <button type="submit" name="buttonAction" value="save" class="btn btn-primary primary_btn rounded" style="background-color:#22a7b1;" data-toggle="modal" >
-                                          Save
+                                          <?translate("Save","Kaydet")?>
                                         </button>
                                         
                     				</div>
                     				<hr>
-                                       <select name="project_category" class="form-control" id="exampleFormControlSelect1" style="width:1000px;">
+                                       <select name="project_category" class="form-control mb-10" id="exampleFormControlSelect1" style="width:100%;">
                                            <?
                                            if ($result_categories->num_rows > 0)
                                             { 
                                                 while($row = $result_categories->fetch_assoc()) 
                                                 { 
-                                                    ?><option value="<?echo $row['name']?>" style="width:1000px;"><?echo $row['name']?></option><?
+                                                    ?><option value="<?echo $row['name']?>" ><?echo $row['name']?></option><?
                                                 }
                                             }
                                            ?>
@@ -245,7 +271,7 @@ $result_categories = $con->query($query_categories);
                                 <img class="img-fluid videoImg" src="./uploads/postImages/<?echo $coverPhoto?>" alt="">
                                 <hr>
                                 <h2>
-                                    <input class="form-control mb-10" rows="5" name="project_title" id="new_comment" value="<?echo $title?>" placeholder="Blog title?"  required="">
+                                    <input class="form-control mb-10" rows="5" name="project_title" id="new_comment" value="<?echo $title?>" placeholder="<?translate("Blog title?","Blog başlığı?")?>"  required="">
                                 </h2>
                                 <style>
                                     .excerpt-textarea {
@@ -253,11 +279,9 @@ $result_categories = $con->query($query_categories);
                                     }
                                 </style>
                                 <p class="excert">
-                                   <textarea class="form-control mb-10 excerpt-textarea" rows="5" name="project_excerpt" placeholder="Describe your blog in few words for the readers."  required=""><?echo $excerpt?></textarea>
+                                   <textarea class="form-control mb-10 excerpt-textarea" rows="5" name="project_excerpt" placeholder="<?translate("Describe your blog in few words for the readers.","Blogunuzu okuyucular için birkaç kelimeyle açıklayın.")?>"  required=""><?echo $excerpt?></textarea>
                                 </p>
-                                <p>
-                                    <textarea class="form-control mb-10" rows="5" name="project_description" id="new_comment"  placeholder="Blog content."  required=""><?echo $description?></textarea>
-                                </p>
+                                
                                 
                             </div>
                         </div>
@@ -271,11 +295,15 @@ $result_categories = $con->query($query_categories);
                             </aside>
                             <hr>
                             <div class="form-group">
-                                    <textarea class="form-control mb-10" rows="5" name="project_aboutMe" placeholder="Tell people about yourself." required=""><?echo $aboutMe?></textarea>
+                                    <textarea class="form-control mb-10" rows="5" name="project_aboutMe" placeholder="<?translate("Tell people about yourself.","İnsanlara kendinden bahset.")?>" required=""><?echo $aboutMe?></textarea>
                                 </div>
                         </div>
                     </div>
                 </div>
+                <p style="width=100%" >
+                    <?translate("Write your blog here.","Blogunuzu buraya yazın.")?>
+                                    <textarea style="width=100%" class="form-control mb-10" rows="5" name="project_description" id="textarea2" placeholder="Blog here."  ><?echo $description?></textarea>
+                                </p>
             </div>
             </form>
         </section>
@@ -292,19 +320,7 @@ $result_categories = $con->query($query_categories);
         <!--================ End footer Area  =================--> 
         
         
-        
-        
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="js/popper.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/stellar.js"></script>
-        <script src="vendors/lightbox/simpleLightbox.min.js"></script>
-        <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
-        <script src="js/jquery.ajaxchimp.min.js"></script>
-        <script src="js/mail-script.js"></script>
-        <script src="js/theme.js"></script>
+   
         
     </body>
 </html>

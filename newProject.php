@@ -1,6 +1,6 @@
 <?include_once("global.php");?>
 <?
-include_once("./phpComponents/checkSignupStatus.php");
+include_once("./phpComponents/checkLoginStatus.php");
 //taking form action
 if(isset($_POST["buttonAction"]))
 {
@@ -76,6 +76,20 @@ if(isset($_POST["buttonAction"]))
         
     }
     if($buttonAction=="post"){
+        //save first
+        
+        if($filename!="none"){
+            $sql="UPDATE `fik_draftProjects` SET `title`='$title',`excerpt`='$excerpt',`description`='$description',`goal`='$goal',`aboutMe`='$aboutMe',`category`='$category', `coverPhoto`='$filename' WHERE userId='$session_userId'";
+        }
+        else{
+            $sql="UPDATE `fik_draftProjects` SET `title`='$title',`excerpt`='$excerpt',`description`='$description',`goal`='$goal',`aboutMe`='$aboutMe',`category`='$category' WHERE userId='$session_userId'";
+        }
+        if(!mysqli_query($con,$sql))
+        {
+            echo "err";
+        }
+        
+        
         //creating new post
         
         $query_savedProject= "select * from fik_draftProjects where userId='$session_userId' order by id asc limit 1"; 
@@ -94,7 +108,7 @@ if(isset($_POST["buttonAction"]))
         }
         
         $datePosted = time();
-        $sql="insert into fik_posts (`title`, `excerpt`, `description`, `goal`, `image`, `category`, `datePosted`, `userId`, `aboutMe`) values ('$title', '$excerpt', '$description', '$goal', '$coverPhoto', '$category', '$datePosted', '$session_userId', '$aboutMe')";
+        $sql="insert into fik_postApproval (`title`, `excerpt`, `description`, `goal`, `image`, `category`, `datePosted`, `userId`, `aboutMe`) values ('$title', '$excerpt', '$description', '$goal', '$coverPhoto', '$category', '$datePosted', '$session_userId', '$aboutMe')";
         if(!mysqli_query($con,$sql))
         {
             echo "err";
@@ -109,7 +123,7 @@ if(isset($_POST["buttonAction"]))
         
         ?>
         <script type="text/javascript">
-            window.location = "./home.php";
+            window.location = "./home.php?pendingApproval=1";
         </script>
         <?
         
@@ -151,7 +165,7 @@ $query_categories = "select * from fik_postCategories order by name desc";
 $result_categories = $con->query($query_categories); 
 
 ?>
-<!doctype html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="en">
      <?php include_once("./phpComponents/header.php")?>
      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -160,8 +174,18 @@ $result_categories = $con->query($query_categories);
     object-fit: fill;
 }
         </style>
-        <script src="https://cdn.tiny.cloud/1/z49z7oesd1o4zsd2aezi3iygbwfdekjodcuap61hnbynefqf/tinymce/5/tinymce.min.js"></script>
-  <script>tinymce.init({selector:'#hello'});</script>
+        <script type="text/javascript" src="scripts/wysiwyg.js"></script>
+		<script type="text/javascript" src="scripts/wysiwyg-settings.js"></script>
+		<script type="text/javascript">
+			// Use it to attach the editor to all textareas with full featured setup
+			//WYSIWYG.attach('all', full);
+			
+			// Use it to attach the editor directly to a defined textarea
+			WYSIWYG.attach('textarea2', full); // full featured setup
+			
+			// Use it to display an iframes instead of a textareas
+			//WYSIWYG.display('all', full);  
+		</script>
 <body>
 
         <!--================ Start Header Menu Area =================-->
@@ -174,8 +198,8 @@ $result_categories = $con->query($query_categories);
                 <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
                 <div class="container">
                     <div class="banner_content text-center">
-                        <h2>New Project</h2>
-                        <p>Tell the world about your idea and gain a huge community support</p>
+                        <h2><?translate("New Project","Yeni proje")?></h2>
+                        <p><?translate("Tell the world about your idea and gain a huge community support","Dünyaya fikrinizden bahsedin ve büyük bir topluluk desteği edinin")?></p>
                     </div>
                 </div>
             </div>
@@ -193,8 +217,6 @@ $result_categories = $con->query($query_categories);
 
                                 <div class="feature-img" >
                                     <input class="btn btn-primary primary_btn rounded" style="background-color:#777;" type="file" name="fileToUpload" id="fileToUpload">
-                                    
-                                    
                                 </div>		
                             </div>
                             <div class="col-lg-3  col-md-3">
@@ -203,7 +225,7 @@ $result_categories = $con->query($query_categories);
                                         <?if(($title=="")||($excerpt=="")||($description=="")||($coverPhoto=="")){
                                         }else{?>
                                         <button type="submit" name="buttonAction" value="post" class="btn btn-primary primary_btn rounded" data-toggle="modal" >
-                                          Post
+                                          <?translate("Post","gönderi")?>
                                         </button>
                                         <?}?>
                                         
@@ -211,26 +233,26 @@ $result_categories = $con->query($query_categories);
                     				<div class="col-lg-7" style="padding-top:7px;">
                                         
                                         <button type="submit" name="buttonAction" value="save" class="btn btn-primary primary_btn rounded" style="background-color:#22a7b1;" data-toggle="modal" >
-                                          Save
+                                          <?translate("Save","Kaydet")?>
                                         </button>
                                         
                     				</div>
                     				<hr>
-                                       <select name="project_category" class="form-control" id="exampleFormControlSelect1" style="width:1000px;">
+                                       <select name="project_category" class="form-control mb-10" id="exampleFormControlSelect1" style="width:100%;">
                                            <?
                                            if ($result_categories->num_rows > 0)
                                             { 
                                                 while($row = $result_categories->fetch_assoc()) 
                                                 { 
-                                                    ?><option value="<?echo $row['name']?>" style="width:1000px;"><?echo $row['name']?></option><?
+                                                    ?><option value="<?echo $row['name']?>" ><?echo $row['name']?></option><?
                                                 }
                                             }
                                            ?>
                                           
                                         </select>
                                     <br>
-                                    <p>Goal?</p>
-                                    <input class="form-control mb-10" type="number" rows="5" name="project_goal" value="<?echo $goal?>" placeholder="Cash goal? ($)"  required="">
+                                    <p><?translate("Goal?","Hedef")?></p>
+                                    <input class="form-control mb-10" type="number" rows="5" name="project_goal" value="<?echo $goal?>" placeholder="<?translate('Cash goal?','Nakit hedefi?')?> (&#8378;)"  required="">
                                     <hr>
                                     <ul class="blog_meta list">
                                         <li><a href="#"><?echo $session_name?><i class="lnr lnr-user"></i></a></li>
@@ -264,7 +286,7 @@ $result_categories = $con->query($query_categories);
                                     <?}?>
                                     <hr>
                                 <h2>
-                                    <input class="form-control mb-10" rows="5" name="project_title"  value="<?echo $title?>" placeholder="Title of your project?"  required="">
+                                    <input class="form-control mb-10" rows="5" name="project_title"  value="<?echo $title?>" placeholder="<?translate('Title of your project?','projenin başlığı?')?>"  required="">
                                 </h2>
                                 <style>
                                     .excerpt-textarea {
@@ -272,15 +294,16 @@ $result_categories = $con->query($query_categories);
                                     }
                                 </style>
                                 <p class="excert">
-                                   <textarea class="form-control mb-10 excerpt-textarea" rows="5" name="project_excerpt" placeholder="Describe your project in few words for the readers."  required=""><?echo $excerpt?></textarea>
-                                </p>
-                                <p>
-                                    <textarea class="form-control mb-10" rows="5" name="project_description"  placeholder="Describe your project in detail.&#10;Tell your reader, what is your prject all about?&#10;What work does your startup do?"  required=""><?echo $description?></textarea>
+                                   <textarea class="form-control mb-10 excerpt-textarea" rows="5" name="project_excerpt" placeholder="<?translate('Describe your project in few words for the readers.','okuyucular için bir kaç kelimeyle bloğunu tanımla')?>"  required=""><?echo $excerpt?></textarea>
                                 </p>
                                 
+                                
                             </div>
+                            
                         </div>
+                        
                     </div>
+                    
                     <div class="col-lg-4">
                         <div class="blog_right_sidebar">
                             <aside class="single_sidebar_widget author_widget">
@@ -290,13 +313,19 @@ $result_categories = $con->query($query_categories);
                             </aside>
                             <hr>
                             <div class="form-group">
-                                    <textarea class="form-control mb-10" rows="5" name="project_aboutMe" placeholder="Tell people about yourself." required=""><?echo $aboutMe?></textarea>
+                                    <textarea class="form-control mb-10" rows="5"  name="project_aboutMe" placeholder="<?translate('Tell people about yourself.','İnsanlara kendinden bahset.')?>" required=""><?echo $aboutMe?></textarea>
                                 </div>
                         </div>
                     </div>
                 </div>
+                <p style="width=100%" >
+                    <?translate('Describe your project in detail.','Projenizi ayrıntılı olarak tanımlayın.')?>
+                                    <textarea style="width=100%" class="form-control mb-10" rows="5" name="project_description" id="textarea2" ><?echo $description?></textarea>
+                                </p>
             </div>
             </form>
+        
+
         </section>
         <!--================Blog Area =================-->
         
@@ -312,18 +341,6 @@ $result_categories = $con->query($query_categories);
         
         
         
-        
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="js/popper.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/stellar.js"></script>
-        <script src="vendors/lightbox/simpleLightbox.min.js"></script>
-        <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
-        <script src="js/jquery.ajaxchimp.min.js"></script>
-        <script src="js/mail-script.js"></script>
-        <script src="js/theme.js"></script>
-        
+     
     </body>
 </html>

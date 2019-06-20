@@ -1,7 +1,7 @@
 <?include_once("global.php");?>
     <?
 
-
+$noPageFound = true;
 if(isset($_GET['id'])){
     $id = $_GET['id'];
     $query_selectedPost= "
@@ -26,6 +26,7 @@ if(isset($_GET['id'])){
             $about = $row['about'];
             $personImg = $row['pImg'];
             $aboutMe= $row['aboutMe'];
+            $noPageFound = false;
         }
     }
     
@@ -154,63 +155,12 @@ else{
 <html lang="en">
      <?php include_once("./phpComponents/header.php")?>
      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+     <!—- ShareThis BEGIN -—>
+<script async src="https://platform-api.sharethis.com/js/sharethis.js#property=5d0a4c705b432800123988e3&product=sticky-share-buttons"></script>
+<!—- ShareThis END -—>
 <body>
         
         <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Make Donation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                  
-                  <div class="container">
-                      <div class="row">
-                        <div class="col-sm">
-                          <h5>Item</h5>
-                            <select class="custom-select">
-                                <?
-                                if ($result_inventoryForDonation->num_rows > 0)
-                                { 
-                                    while($row = $result_inventoryForDonation->fetch_assoc()) 
-                                    { 
-                                    ?>
-                                      <option value="<?echo $row['object']?>"><?echo $row['name']?></option>
-                                      <?
-                                    }
-                                }
-                              ?>
-                            </select>
-                        </div>
-                        <div class="col-sm">
-                          <h5>Quantity</h5>
-                            <select class="custom-select">
-                              <?
-                                for($i=1; $i<11; $i++)
-                                { 
-                                ?>
-                                  <option value="<?echo $i?>"><?echo $i?></option>
-                                  <?
-                                }
-                              ?>
-                            </select>
-                        </div>
-                        
-                      </div>
-                    </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Donate</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
         <!--================ Start Header Menu Area =================-->
          <?php include_once("./phpComponents/navbar.php")?>
         <!--================ End Header Menu Area =================-->
@@ -221,7 +171,7 @@ else{
                 <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
                 <div class="container">
                     <div class="banner_content text-center">
-                        <h2><?echo $title?></h2>
+                        <h2><?echo $title?><?if($noPageFound){echo "No page Found!";}?></h2>
                         <p><?echo $excerpt?></p>
                     </div>
                 </div>
@@ -234,6 +184,9 @@ else{
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 posts-list">
+                        <?
+                            if(!$noPageFound){
+                                ?>
                         <div class="single-post row">
                             <div class="col-lg-12">
                                 <div class="feature-img">
@@ -248,8 +201,8 @@ else{
                                     <ul class="blog_meta list">
                                         <li><a href="#"><?echo $name?><i class="lnr lnr-user"></i></a></li>
                                         <li><a href="#"><?echo date('Y/m/d H:i',$date)?><i class="lnr lnr-calendar-full"></i></a></li>
-                                        <li><a href="#"><?echo $views?> Views<i class="lnr lnr-eye"></i></a></li>
-                                        <li><a href="#"><?echo $nComments?> Comments<i class="lnr lnr-bubble"></i></a></li>
+                                        <li><a href="#"><?echo $views?> <?translate("Views","Görünümler")?><i class="lnr lnr-eye"></i></a></li>
+                                        <li><a href="#"><?echo $nComments?> <?translate("Comments","Yorumlar")?><i class="lnr lnr-bubble"></i></a></li>
                                     </ul>
                                     
                                 </div>
@@ -265,6 +218,8 @@ else{
                                 
                             </div>
                         </div>
+                        <div class="sharethis-inline-reaction-buttons"></div>
+                        <?}?>
                         <div class="navigation-area">
                             <div class="row">
                                 <?if($previd!=null){?>
@@ -276,14 +231,14 @@ else{
                                         <a href="./blogPage.php?id=<?echo $previd?>"><span class="lnr text-white lnr-arrow-left"></span></a>
                                     </div>
                                     <div class="detials">
-                                        <p>Prev Post</p>
+                                        <p><?translate("Prev Post","Önceki yazı")?></p>
                                         <a href="./blogPage.php?id=<?echo $previd?>"><h4><?echo $prevtitle?></h4></a>
                                     </div>
                                 </div>
                                 <?}if($nextid!=null){?>
                                 <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
                                     <div class="detials">
-                                        <p>Next Post</p>
+                                        <p><?translate("Next Post","Sonraki gönderi")?></p>
                                         <a href="./blogPage.php?id=<?echo $nextid?>"><h4><?echo $nexttitle?></h4></a>
                                     </div>
                                     <div class="arrow">
@@ -296,8 +251,12 @@ else{
                                 <?}?>
                             </div>
                         </div>
+                        <?
+                            if(!$noPageFound){
+                                ?>
+                                
                         <div class="comments-area" id="commentArea">
-                            <h4><?echo $nComments?> Comments</h4>
+                            <h4><?echo $nComments?> <?translate("Comments","Yorumlar")?></h4>
                             
                             <?
                                 if ($result_postComments->num_rows > 0)
@@ -329,19 +288,23 @@ else{
                         </div>
                         <?if($logged==1){?>
                         <div class="comment-form">
-                            <h4>Leave a Comment</h4>
+                            <h4><?translate("Leave a Comment","Yorum yap")?></h4>
                             <form method="get">
                                 <input name="postId" hidden value="<?echo $id?>">
                                 <div class="form-group">
-                                    <textarea class="form-control mb-10" rows="5" name="new_comment" id="new_comment" placeholder="Type your comment here." onfocus="this.placeholder = ''" onblur="this.placeholder = 'Type your comment here.'" required=""></textarea>
+                                    <textarea class="form-control mb-10" rows="5" name="new_comment" id="new_comment" placeholder="<?translate("Type your comment here.","Yorumunuzu buraya yazın.")?>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<?translate("Type your comment here.","Yorumunuzu buraya yazın.")?>'" required=""></textarea>
                                 </div>
-                                <button href="#" class="primary-btn primary_btn">Post Comment</button>	
+                                <button href="#" class="primary-btn primary_btn"><?translate("Post Comment","Yorum gönder")?></button>	
                             </form>
                         </div>
+                        <?}?>
                         <?}?>
                     </div>
                     <div class="col-lg-4">
                         <div class="blog_right_sidebar">
+                            <?
+                            if(!$noPageFound){
+                                ?>
                             <aside class="single_sidebar_widget author_widget">
                                 <img width="100" height="100" class="author_img rounded-circle" src="./uploads/postImages/<?echo $personImg?>" alt="">
                                 <h4><?echo $name?></h4>
@@ -349,6 +312,7 @@ else{
                                 <p><?echo $aboutMe?></p>
                             </aside>
                             <hr>
+                            <?}?>
                             <?php include_once("./phpComponents/cartWidget.php")?>
                         </div>
                     </div>

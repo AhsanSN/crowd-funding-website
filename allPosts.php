@@ -38,8 +38,8 @@ $result_allPosts = $con->query($query_allPosts);
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
             <div class="container">
                 <div class="banner_content text-center">
-                    <h2>Projects</h2>
-                    <p>Donate to some of the best ideas in your hometown</p>
+                    <h2><?translate("All Projects","Tüm projeler")?></h2>
+                    <p><?translate("Donate to some of the best ideas in your hometown","veya Memleketinizdeki en iyi fikirlerden bazılarına bağış yapın")?></p>
                 </div>
             </div>
         </div>
@@ -55,12 +55,12 @@ $result_allPosts = $con->query($query_allPosts);
 	<section class="features_causes" style="margin-top:40px;">
         <div class="container">
             <div class="main_title">
-                <h2>All Projects</h2>
-                <p>Donate to some of the best ideas in your hometown</p>
+                <h2><?translate("All Projects","Tüm projeler")?></h2>
+                <p><?translate("Donate to some of the best ideas in your hometown","veya Memleketinizdeki en iyi fikirlerden bazılarına bağış yapın")?></p>
                 <select name="project_category"  placeholder="asdsad" onchange="javascript:handleSelect(this)">
-                    <option value="popularity">Popularity</option>
-                    <option value="name" >Name</option>
-                    <option value="date" >Date</option>
+                    <option value="popularity"><?translate("Popularity","Popülerlik")?></option>
+                    <option value="name" ><?translate("Name","isim")?></option>
+                    <option value="date" ><?translate("Date","tarih")?></option>
                 </select>
                 <script type="text/javascript">
                     function handleSelect(elm)
@@ -100,12 +100,12 @@ $result_allPosts = $con->query($query_allPosts);
             									<?echo $row['excerpt']?>
             								</p>
             								<div class="d-flex justify-content-between raised_goal">
-            									<p>Raised: $<?echo $row['amountEarned']?></p>
-            									<p><span>Goal: $<?echo $row['goal']?></span></p>
+            									<p><?translate("Raised","Biriken")?>:  &#8378; <?echo $row['amountEarned']?></p>
+            									<p><span><?translate("Goal","Hedef")?>:  &#8378; <?echo $row['goal']?></span></p>
             								</div>
             								<div class="d-flex justify-content-between donation align-items-center">
-            									<a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn">donate</a>
-            									<p><span class="lnr lnr-heart"></span> <?echo $row['nContributors']?> Donors</p>
+            									<a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("donate","Destekle")?></a>
+            									<p><span class="lnr lnr-heart"></span> <?echo $row['nContributors']?> <?translate("Donors","Destekçiler")?></p>
             								</div>
             							</div>
             						</div>

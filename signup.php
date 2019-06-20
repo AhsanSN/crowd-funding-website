@@ -92,20 +92,23 @@ else{
                         <p class="title-heading" style="color: red;"><?echo $errMsg?></p>
                         <?
                     }
+                    if($_GET['loginRequired']){echo
+                        ' <p style="color:#ffc600;margin:2px;font-weight: bold;">You need to login first.</p>';
+                    }
                     ?>
                 </div>
                 <br><br>
                 <form class="row contact_form"  method="post">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="email" class="form-control" id="name" name="email" placeholder="Email">
+                                <input type="email" class="form-control" id="name" name="email" placeholder="Email" required>
                             </div>
                             
                         </div>
                         <div class="col-md-6">
                             
                             <div class="form-group">
-                                <input type="password" class="form-control" id="name" name="password" placeholder="Password">
+                                <input type="password" class="form-control" id="name" name="password" placeholder="Password" required>
                             </div>
                         </div>
                         <div class="col-md-12 text-right">

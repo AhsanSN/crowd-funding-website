@@ -65,7 +65,7 @@ $result_inventory = $con->query($query_inventory);
              <form action="" method="post">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Quantity?</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle"><?translate("Quantity","Miktar")?>?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -78,14 +78,14 @@ $result_inventory = $con->query($query_inventory);
 
                             </div>
                             <div class="form-group">
-                                <input class="custom-select quantitySelectMenu" name="quantitySelect" type="number">
+                                <input class="custom-select quantitySelectMenu" name="quantitySelect" type="number" value="3">
                             </div>
                             
                         </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="submit">Buy</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><?translate("Close","Kapat")?></button>
+                    <button class="btn btn-primary" type="submit"><?translate("Buy","satın almak")?></button>
                   </div>
                 </div>
             </form>
@@ -102,9 +102,9 @@ $result_inventory = $con->query($query_inventory);
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
             <div class="container">
                 <div class="banner_content text-center">
-                    <h2>Shop <?if($donationStatus=="success"){echo"<div style='background-color:green;'>Purchase was Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='background-color:red;'>Purchase failed!</div>";}?></h2>
-                    <p>Buy items to donate to world-class ideas.</p>
-                    <?if($logged==0){echo '<p style="color:red;">You need to signin to buy from the market.</p>';}?>
+                    <h2><?translate("Shop","Dükkan")?> <?if($donationStatus=="success"){echo"<div style='background-color:green;'>Purchase was Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='background-color:red;'>Purchase failed!</div>";}?></h2>
+                    <p><?translate("Buy items to donate to world-class ideas.","ShopBuy ürünlerini dünya standartlarında fikirlere bağışlamak için satın alın.")?></p>
+                    <?if($logged==0){echo '<p style="color:red;">'.translateRet("You need to signin to buy from the market.","Piyasadan satın almak için imza atmanız gerekir.").'</p>';}?>
                 </div>
             </div>
         </div>
@@ -120,9 +120,9 @@ $result_inventory = $con->query($query_inventory);
 	<section class="features_causes" style="margin-top:40px;">
         <div class="container">
             <div class="main_title">
-                <h2>Shop<?if($donationStatus=="success"){echo"<div style='color:green;'>Purchase was Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='color:red;'>Purchase failed!</div>";}?></h2>
-                <p>Buy items to donate to world-class ideas.</p>
-                 <?if($logged==0){echo '<p style="color:red;">You need to signin to buy from the market.</p>';}?>
+                <h2><?translate("Shop","Dükkan")?><?if($donationStatus=="success"){echo"<div style='color:green;'>Purchase was Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='color:red;'>Purchase failed!</div>";}?></h2>
+                <p><?translate("Buy items to donate to world-class ideas.","ShopBuy ürünlerini dünya standartlarında fikirlere bağışlamak için satın alın.")?></p>
+                 <?if($logged==0){echo '<p style="color:red;">'.translateRet("You need to signin to buy from the market.","Piyasadan satın almak için imza atmanız gerekir.").'</p>';}?>
             </div>
 
             <div class="row">
@@ -144,14 +144,14 @@ $result_inventory = $con->query($query_inventory);
             								<img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>"  alt="<?echo $row['name']?>">
             							</figure>
             							<div class="card_inner_body" style="padding: 5px 5px;">
-            								<h4 class="card-title"><?echo $row['name']?> - $<?echo $row['price']?></h4>
+            								<h4 class="card-title"><?echo $row['name']?> -  &#8378; <?echo $row['price']?></h4>
             								<p class="card-text">
             									<?echo $row['description']?>
             								</p>
             								
             								<div class="d-flex justify-content-between donation align-items-center">
             									<button type="button" class="btn btn-primary primary_btn rounded" <?if($logged==1){echo 'data-toggle="modal"';}?> data-whatever="<?echo $row['id']?>" data-target="#exampleModalCenter">
-                                                    Buy
+                                                    <?translate("Buy","satın almak")?>
                                                 </button>
             								</div>
             							</div>

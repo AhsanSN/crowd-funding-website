@@ -1,6 +1,6 @@
 <?include_once("global.php");?>
     <?
-    include_once("./phpComponents/checkSignupStatus.php");
+    include_once("./phpComponents/checkLoginStatus.php");
 
 if(isset($_GET['removeItem'])){
     $remItem = $_GET['removeItem'];
@@ -41,8 +41,8 @@ if ($result_totalBill->num_rows > 0)
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
             <div class="container">
                 <div class="banner_content text-center">
-                    <h2>Checkout</h2>
-                    <p>Use your most trusted payment methods to make the payment.</p>
+                    <h2><?translate("Checkout","Çıkış yapmak")?></h2>
+                    <p><?translate("Use your most trusted payment methods to make the payment.","Ödeme yapmak için en güvenilir ödeme yöntemlerinizi kullanın.")?></p>
                 </div>
             </div>
         </div>
@@ -52,8 +52,8 @@ if ($result_totalBill->num_rows > 0)
 	<section class="features_causes" style="margin-top:40px;">
         <div class="container">
             <div class="main_title">
-                <h2>Checkout</h2>
-                <p>Use your most trusted payment methods to make the payment.</p>
+                <h2><?translate("Checkout","Çıkış yapmak")?></h2>
+                    <p><?translate("Use your most trusted payment methods to make the payment.","Ödeme yapmak için en güvenilir ödeme yöntemlerinizi kullanın.")?></p>
             </div>
 
             <div class="row">
@@ -64,10 +64,10 @@ if ($result_totalBill->num_rows > 0)
 							<div class="progress-table">
 								<div class="table-head">
 									<div class="serial">#</div>
-									<div class="country">Item</div>
-									<div class="visit">Quantity</div>
-									<div class="percentage">Total Cost</div>
-									<div class="percentage">Action</div>
+									<div class="country"><?translate("Item","Madde")?></div>
+									<div class="visit"><?translate("Quantity","miktar")?></div>
+									<div class="percentage"><?translate("Total Cost","Toplam tutar")?></div>
+									<div class="percentage"><?translate("Action","Aksiyon")?></div>
 								</div>
 								<?
 								if ($result_cartItemsCheckout->num_rows > 0)
@@ -76,15 +76,15 @@ if ($result_totalBill->num_rows > 0)
                                     { 
     								?>
     								    <div class="table-row">
-        									<div class="serial">01</div>
+        									<div class="serial">-</div>
         									<div class="country"> <img  width="70" height="50"  src="./uploads/postImages/<?echo $row['image']?>" alt="flag"><?echo $row['name']?></div>
         									<div class="visit"><?echo $row['quantity']?></div>
         									<div class="percentage">
-        										$<?echo $row['quantity']* $row['price']?>
+        										 &#8378; <?echo $row['quantity']* $row['price']?>
         									</div>
         									<div class="percentage">
         										<a href="?removeItem=<?echo $row['id']?>" style="background-color:red;" class="btn btn-primary">
-                                                    Remove
+                                                    <?translate("Remove","Kaldır")?>
                                                 </a>
         									</div>
         								</div>
@@ -93,11 +93,11 @@ if ($result_totalBill->num_rows > 0)
                                 }
 								?>
 								<div class="table-row" style="background-color:#b6ff5c;">
-    									<div class="serial"><b style="font-weight:bold;color:black;">Total</b></div>
+    									<div class="serial"><b style="font-weight:bold;color:black;"><?translate("Total","Genel Toplam")?></b></div>
     									<div class="country"></div>
     									<div class="visit"></div>
     									<div class="percentage">
-    										<b style="font-weight:bold;color:black;">$<?echo $total?></b>
+    										<b style="font-weight:bold;color:black;"> &#8378; <?echo $total?></b>
     									</div>
     							</div>
 					
@@ -114,14 +114,14 @@ if ($result_totalBill->num_rows > 0)
 				<div class="col-lg-4">
                         <div class="blog_right_sidebar">
                             <aside class="single_sidebar_widget post_category_widget">
-                <h4 class="widget_title">Payment Options</h4>
+                <h4 class="widget_title"><?translate("Payment Options","Ödeme seçenekleri")?></h4>
                 <ul class="list cat-list">
                     <li>
                                 <a class="d-flex justify-content-between">
                                     <p>PayTr</p>
                                     <p>
                                        <button type="button" class="btn btn-primary">
-                                                    Pay
+                                                    <?translate("","")?>Pay
                                                 </button>
                                     </p>
                                 </a>

@@ -1,6 +1,6 @@
 <?if($logged==1){?>
 <aside class="single_sidebar_widget post_category_widget">
-                <h4 class="widget_title">Your Basket [<a href="./shop.php" style="color:#075777;">Add More</a>]</h4>
+                <h4 class="widget_title"><?translate("Your Basket","Sepetin")?> [<a href="./shop.php" style="color:#075777;"><?translate("Add More","Daha fazla")?></a>]</h4>
                 <ul class="list cat-list">
                     <?
                     if ($result_inventory->num_rows > 0)
@@ -23,7 +23,7 @@
             </aside>
             <br>
             <aside class="single_sidebar_widget post_category_widget">
-                <h4 class="widget_title">Your Cart [<a href="./checkout.php" style="color:#075777;">Check out</a>]</h4>
+                <h4 class="widget_title"><?translate("Your Cart","Alış veriş kartın")?> [<a href="./checkout.php" style="color:#075777;"><?translate("Check out","Kontrol edin")?></a>]</h4>
                 <ul class="list cat-list">
                     <?
                     if ($result_cartItems->num_rows > 0)
@@ -47,7 +47,7 @@
             <br>
             <?}?>
             <aside class="single_sidebar_widget popular_post_widget">
-                <h3 class="widget_title">Popular Posts</h3>
+                <h3 class="widget_title"><?translate("Popular Posts","Popüler gönderi")?></h3>
                 <?if ($result_recentPosts->num_rows > 0)
                 { 
                     while($row = $result_recentPosts->fetch_assoc()) 

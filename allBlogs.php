@@ -39,8 +39,8 @@ $result_allBlogs = $con->query($query_allBlogs);
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
             <div class="container">
                 <div class="banner_content text-center">
-                    <h2>Blogs</h2>
-                    <p>Read of 100s of blogs</p>
+                    <h2><?translate("Blogs","Bloglar")?></h2>
+                    <p><?translate("Read from hundered of blogs written by people like you.","Sizin gibi insanların yazdığı blogların derinliklerinden okuyun.")?></p>
                 </div>
             </div>
         </div>
@@ -56,12 +56,12 @@ $result_allBlogs = $con->query($query_allBlogs);
 	<section class="features_causes" style="margin-top:40px;">
         <div class="container">
             <div class="main_title">
-                <h2>Blogs</h2>
-                    <p>Read of 100s of blogs</p>
+                <h2><?translate("Blogs","Bloglar")?></h2>
+                    <p><?translate("Read from hundered of blogs written by people like you.","Sizin gibi insanların yazdığı blogların derinliklerinden okuyun.")?></p>
                     <select name="project_category"  placeholder="asdsad" onchange="javascript:handleSelect(this)">
-                    <option value="popularity">Popularity</option>
-                    <option value="name" >Name</option>
-                    <option value="date" >Date</option>
+                    <option value="popularity"><?translate("Popularity","Popülerlik")?></option>
+                    <option value="name" ><?translate("Name","isim")?></option>
+                    <option value="date" ><?translate("Date","tarih")?></option>
                 </select>
                 <script type="text/javascript">
                     function handleSelect(elm)
@@ -92,8 +92,8 @@ $result_allBlogs = $con->query($query_allBlogs);
             									<?echo $row['excerpt']?>
             								</p>
             								<div class="d-flex justify-content-between donation align-items-center">
-            									<a href="./blogPage.php?id=<?echo $row['id']?>" class="primary_btn">Read</a>
-            									<p><span class="lnr lnr-heart"></span> <?echo $row['views']?> Views</p>
+            									<a href="./blogPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("Read","okumak")?></a>
+            									<p><span class="lnr lnr-heart"></span> <?echo $row['views']?> <?translate("Views","Görünümler")?></p>
             								</div>
             							</div>
             						</div>

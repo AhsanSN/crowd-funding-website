@@ -8,7 +8,8 @@ if(isset($_POST["buttonAction"]))
     //image handeling
     $filename = "none";
     $target_dir = "./uploads/postImages/";
-    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+    $randomNo = md5(time().$session_name);
+    $target_file = $target_dir . "Anomoz_"."$randomNo".basename($_FILES["fileToUpload"]["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
     // Check if image file is a actual image or fake image
@@ -76,13 +77,11 @@ if(isset($_POST["buttonAction"]))
         }
     
     //chagne password
-    if($new_password1==$new_password2){
+    if(($new_password1==$new_password2)&&($new_password2!="")){
         $new_password = $new_password1;
         $new_password = strtoupper(md5($new_password.'hey1'));
         $old_password = strtoupper(md5($old_password.'hey1'));
-        echo $session_password."--".$old_password;
         if($old_password==$session_password){
-            echo "asd";
             $sql="UPDATE `fik_users` SET `password`='$new_password' WHERE id='$session_userId' and email='$email' and password='$old_password'";
             if(!mysqli_query($con,$sql))
                 {
@@ -126,9 +125,9 @@ if(isset($_POST["buttonAction"]))
                             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
                             <div class="container">
                                 <div class="banner_content text-center">
-                                    <h2>Settings</h2>
+                                    <h2><?translate("Settings","Ayarlar")?></h2>
                                     <p>
-                                        Change your account settings here.
+                                        <?translate("Change your account settings here.","Hesap ayarlarını değiştir.")?>
                                     </p>
                                 </div>
                             </div>
@@ -147,48 +146,48 @@ if(isset($_POST["buttonAction"]))
                             <div class="row">
                                 <div class="col-lg-8 posts-list">
                                     <div class="main_title">
-                                        <h2>Settings</h2>
+                                        <h2><?translate("Settings","Ayarlar")?></h2>
                                     <p>
-                                        Change your account settings here.
+                                        <?translate("Change your account settings here.","Hesap ayarlarını değiştir.")?>
                                     </p>
                                     </div>
 
                                <form class="row contact_form" action="" method="post" id="contactForm" enctype="multipart/form-data">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="subject" name="email" value="<?echo $session_email?>" placeholder="Email" readonly>
+                                            <input type="text" class="form-control" id="subject" name="email" value="<?echo $session_email?>" placeholder="<?translate("","")?>Email" readonly>
                                         </div>
                                         <div class="form-group">
-                                            <h6>Name:</h6>
-                                            <input type="text" class="form-control" id="name" name="name" value="<?echo $session_name?>" placeholder="Enter your name">
+                                            <h6><?translate("Name","Isim")?>:</h6>
+                                            <input type="text" class="form-control" id="name" name="name" value="<?echo $session_name?>" placeholder="<?translate("Name","Isim")?>">
                                         </div>
                                         <div class="form-group">
-                                            <h6>About [eg. Software Engineer]</h6>
-                                            <input type="text" class="form-control" id="email" name="about" value="<?echo $session_about?>" placeholder="What do you do?">
+                                            <h6><?translate("About [eg. Software Engineer]","Hakkımızda [örnek, Yazılım Muhendisi]")?></h6>
+                                            <input type="text" class="form-control" id="email" name="about" value="<?echo $session_about?>" placeholder="<?translate("About [eg. Software Engineer]","Hakkımızda [örnek, Yazılım Muhendisi]")?>">
                                         </div>
                                         <div class="form-group">
-                                            <h6>Change Profile Picture</h6>
+                                            <h6><?translate("Change Profile Picture","Profil resmini değiştir")?></h6>
                                             <input class="btn btn-primary primary_btn rounded" style="background-color:#777;" type="file" name="fileToUpload" id="fileToUpload">
                                         </div>
                                         
                                     </div>
                                     <div class="col-md-6" style="background-color:#ffd9d9;">
-                                        <h4 style="padding:10px;text-align: center;">Change Password</h4>
+                                        <h4 style="padding:10px;text-align: center;"><?translate("Change Password","Şifre değiştir")?></h4>
                                         <div class="form-group">
-                                            <h6>Old Password</h6>
-                                            <input type="password" class="form-control" id="password" name="old_password" placeholder="Enter old Password">
+                                            <h6><?translate("Enter Old Password","Eski şifre giriniz")?></h6>
+                                            <input type="password" class="form-control" id="password" name="old_password" placeholder="<?translate("Enter Old Password","Eski şifre giriniz")?>">
                                         </div>
                                         <div class="form-group">
-                                            <h6>New Password</h6>
-                                            <input type="password" class="form-control" id="email" name="new_password1" placeholder="Enter new Password">
+                                            <h6><?translate("Enter new Password","Yeni şifreyi giriniz")?></h6>
+                                            <input type="password" class="form-control" id="email" name="new_password1" placeholder="<?translate("Enter new Password","Yeni şifreyi giriniz")?>">
                                         </div>
                                         <div class="form-group">
-                                            <h6>Re-type New Password</h6>
-                                            <input type="password" class="form-control" id="email" name="new_password2" placeholder="Re-enter new Password">
+                                            <h6><?translate("Re-type New Password","Yeni şifreyi tekrar giriniz")?></h6>
+                                            <input type="password" class="form-control" id="email" name="new_password2" placeholder="<?translate("Re-type New Password","Yeni şifreyi tekrar giriniz")?>">
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-right">
-                                        <button type="submit" name="buttonAction" value="submit" class="btn primary_btn">Save</button>
+                                        <button type="submit" name="buttonAction" value="submit" class="btn primary_btn"><?translate("Save","Kaydet")?></button>
                                     </div>
                                 </form>
                                 </div>

@@ -1,9 +1,11 @@
 <?include_once("global.php");?>
     <?
 
-
+$noPageFound = true;
 if(isset($_GET['id'])){
     $id = $_GET['id'];
+
+
     $query_selectedPost= "
     select p.views, u.userImg as pImg, u.about, p.id, p.title, p.excerpt, p.goal,p.aboutMe, p.image ,p.description, p.category, p.datePosted ,COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned , u.name from fik_posts p left outer join fik_contributions c on p.id=c.postId inner join fik_users u on u.id = p.userId where p.id='$id' group by c.postId
     "; 
@@ -26,7 +28,45 @@ if(isset($_GET['id'])){
             $about = $row['about'];
             $personImg = $row['pImg'];
             $aboutMe= $row['aboutMe'];
+            $noPageFound = false;
         }
+        
+        //see if enough
+        if(isset($_POST["itemSelect"])&&isset($_POST["quantitySelect"]))
+        {
+            $donationStatus= "failed";
+            $item = $_POST["itemSelect"];
+            $quantity = $_POST["quantitySelect"];
+            $quantity =$quantity-1;
+            $query_seeIfEnough= "select * from fik_inventory where userId='$session_userId' and object='$item' and quantity>'$quantity'"; 
+            $result_seeIfEnough = $con->query($query_seeIfEnough);
+            if ($result_seeIfEnough->num_rows > 0)
+            { 
+                //success
+                $donationStatus= "success";
+                //update
+                $quantity = $quantity+1;
+                $sql="update fik_inventory set quantity=quantity-'$quantity' where userId='$session_userId' and object='$item'";
+                if(!mysqli_query($con,$sql))
+                {
+                    echo "err 1";
+                }
+                else{
+                    //make donation
+                    $timeNow = time();
+                    $sql="insert into fik_contributions(`postId`, `userId`, `timeDone`, `contribution`, `quantity`) values ('$id', '$session_userId', '$timeNow', '$item', '$quantity')";
+                    if(!mysqli_query($con,$sql))
+                    {
+                        echo "err 1";
+                    }
+                }
+            }
+            else{
+                //failed
+                1;
+            }
+        }
+    
     }
     
 
@@ -94,32 +134,6 @@ if(isset($_POST["new_comment"]))
     <?
 }
 
-//see if enough
-if(isset($_POST["itemSelect"])&&isset($_POST["quantitySelect"]))
-{
-    $donationStatus= "failed";
-    $item = $_POST["itemSelect"];
-    $quantity = $_POST["quantitySelect"];
-    $quantity =$quantity-1;
-    $query_seeIfEnough= "select * from fik_inventory where userId='$session_userId' and object='$item' and quantity>'$quantity'"; 
-    $result_seeIfEnough = $con->query($query_seeIfEnough);
-    if ($result_seeIfEnough->num_rows > 0)
-    { 
-        //success
-        $donationStatus= "success";
-        //update
-        $quantity = $quantity+1;
-        $sql="update fik_inventory set quantity=quantity-'$quantity' where userId='$session_userId' and object='$item'";
-        if(!mysqli_query($con,$sql))
-        {
-            echo "err 1";
-        }
-    }
-    else{
-        //failed
-        1;
-    }
-}
 
 //recent posts
 $query_recentPosts= "select * from fik_posts order by views desc limit 4"; 
@@ -185,6 +199,9 @@ else{
 <html lang="en">
      <?php include_once("./phpComponents/header.php")?>
      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+     <!—- ShareThis BEGIN -—>
+<script async src="https://platform-api.sharethis.com/js/sharethis.js#property=5d0a4c705b432800123988e3&product=sticky-share-buttons"></script>
+<!—- ShareThis END -—>
 <body>
         
         <!-- Modal -->
@@ -193,7 +210,7 @@ else{
              <form action="" method="post">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Make Donation</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle"><?translate("Make Donation","Bağış Yap")?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -203,7 +220,7 @@ else{
                       <div class="container">
                           <div class="row">
                             <div class="col-sm">
-                              <h5>Item</h5>
+                              <h5><?translate("Item","madde")?></h5>
                                 <select class="custom-select" name="itemSelect">
                                     <?
                                     if ($result_inventoryForDonation->num_rows > 0)
@@ -219,7 +236,7 @@ else{
                                 </select>
                             </div>
                             <div class="col-sm">
-                              <h5>Quantity</h5>
+                              <h5><?translate("Quantity","miktar")?></h5>
                                 <select class="custom-select quantitySelectMenu" name="quantitySelect">
                                   <?
                                     for($i=1; $i<11; $i++)
@@ -236,8 +253,8 @@ else{
                         </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="submit">Donate</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><?translate("Close","Kapat")?></button>
+                    <button class="btn btn-primary" type="submit"><?translate("Donate","bağışlamak")?></button>
                   </div>
                 </div>
             </form>
@@ -254,7 +271,7 @@ else{
                 <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
                 <div class="container">
                     <div class="banner_content text-center">
-                        <h2><?echo $title?> <?if($donationStatus=="success"){echo"<div style='background-color:green;'>Donation of Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='background-color:red;'>Donation failed!</div>";}?></h2>
+                        <h2><?echo $title?> <?if($noPageFound){echo "No page Found!";}?><?if($donationStatus=="success"){echo"<div style='background-color:green;'>Donation was Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='background-color:red;'>Donation failed!</div>";}?></h2>
                         <p><?echo $excerpt?></p>
                     </div>
                 </div>
@@ -271,13 +288,16 @@ else{
                             <div class="col-lg-12">
                                 									
                             </div>
-                            <div class="col-lg-3  col-md-3">
+                            <?
+                            if(!$noPageFound){
+                                ?>
+                                <div class="col-lg-3  col-md-3">
                                 <div class="blog_info text-right">
-                                    <?if($logged==0){echo '<p style="color:red;">Signup required to donate.</p>';}?>
+                                    <?if($logged==0){echo '<p style="color:red;">'.translateRet("Signup required to donate.","Bağış yapmak için kayıt olmanız gerekiyor.").'</p>';}?>
                                     <div class="col-lg-7">
                                         
                                         <button type="button" class="btn btn-primary primary_btn rounded" <?if($logged==1){echo 'data-toggle="modal"';}?>  data-target="#exampleModalCenter">
-                                          Donate
+                                          <?translate("Donate","bağışlamak")?>
                                         </button>
                                         
                     				</div>
@@ -286,16 +306,16 @@ else{
                                         <a href="./allPosts.php?cat=<?echo $category?>"><?echo $category?></a>
                                     </div>
                                     <ul class="blog_meta list">
-                                        <li>Collected: $<?echo $donations?></li>
-                                        <li>Need: $<?echo $goal?></li>
-                                        <li>Donors: <?echo $nDonors?></li>
+                                        <li><?translate("Collected","Toplanmış")?>:  &#8378; <?echo $donations?></li>
+                                        <li><?translate("Need","gerek")?>:  &#8378; <?echo $goal?></li>
+                                        <li><?translate("Donors","Bağışçılar")?>: <?echo $nDonors?></li>
                                     </ul>
                                     <hr>
                                     <ul class="blog_meta list">
                                         <li><a href="#"><?echo $name?><i class="lnr lnr-user"></i></a></li>
                                         <li><a href="#"><?echo date('Y/m/d H:i',$date)?><i class="lnr lnr-calendar-full"></i></a></li>
-                                        <li><a href="#"><?echo $views?> Views<i class="lnr lnr-eye"></i></a></li>
-                                        <li><a href="#"><?echo $nComments?> Comments<i class="lnr lnr-bubble"></i></a></li>
+                                        <li><a href="#"><?echo $views?> <?translate("Views","Görünümler")?><i class="lnr lnr-eye"></i></a></li>
+                                        <li><a href="#"><?echo $nComments?> <?translate("Comments","Yorumlar")?><i class="lnr lnr-bubble"></i></a></li>
                                     </ul>
                                     
                                 </div>
@@ -312,7 +332,7 @@ else{
                                             <img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $image?>" alt="">
                                             <?}?>
                                             <hr>
-                                <h2><?echo $title?> <?if($donationStatus=="success"){echo"<div style='background-color:green;'>Donation of Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='background-color:red;'>Donation failed!</div>";}?></h2>
+                                <h2><?echo $title?> <?if($noPageFound){echo "No page Found";}?><?if($donationStatus=="success"){echo"<div style='background-color:green;'>Donation of Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='background-color:red;'>Donation failed!</div>";}?></h2>
                                 <p class="excert">
                                     <?echo $excerpt?>
                                 </p>
@@ -321,6 +341,11 @@ else{
                                 </p>
                                 
                             </div>
+                                <?
+                            }
+                            ?>
+                            
+                            
                         </div>
                         <div class="navigation-area">
                             <div class="row">
@@ -341,7 +366,7 @@ else{
                                         <a href="./postPage.php?id=<?echo $previd?>"><span class="lnr text-white lnr-arrow-left"></span></a>
                                     </div>
                                     <div class="detials">
-                                        <p>Prev Post</p>
+                                        <p><?translate("Prev Post","Önceki yazı")?></p>
                                         <a href="./postPage.php?id=<?echo $previd?>"><h4><?echo $prevtitle?></h4></a>
                                     </div>
                                 </div>
@@ -349,7 +374,7 @@ else{
                                 <?}if($nextid!=null){?>
                                 <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
                                     <div class="detials">
-                                        <p>Next Post</p>
+                                        <p><?translate("Next Post","Sonraki gönderi")?></p>
                                         <a href="./postPage.php?id=<?echo $nextid?>"><h4><?echo $nexttitle?></h4></a>
                                     </div>
                                     <div class="arrow">
@@ -372,8 +397,11 @@ else{
                                 <?}?>
                             </div>
                         </div>
+                        <?
+                            if(!$noPageFound){
+                                ?>
                         <div class="comments-area" id="commentArea">
-                            <h4><?echo $nComments?> Comments</h4>
+                            <h4><?echo $nComments?><?translate("Comments","Yorumlar")?> </h4>
                             
                             <?
                                 if ($result_postComments->num_rows > 0)
@@ -405,19 +433,23 @@ else{
                         </div>
                         <?if($logged==1){?>
                         <div class="comment-form">
-                            <h4>Leave a Comment</h4>
+                            <h4><?translate("Leave a Comment","Yorum yap")?></h4>
                             <form method="get" id="formComment">
                                 <input name="postId" hidden value="<?echo $id?>">
                                 <div class="form-group">
-                                    <textarea class="form-control mb-10" rows="5" name="new_comment" id="new_comment" placeholder="Type your comment here." onfocus="this.placeholder = ''" onblur="this.placeholder = 'Type your comment here.'" required=""></textarea>
+                                    <textarea class="form-control mb-10" rows="5" name="new_comment" id="new_comment" placeholder="<?translate("Type your comment here.","Yorumunuzu buraya yazın.")?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Type your comment here.'" required=""></textarea>
                                 </div>
-                                <button href="#" class="primary-btn primary_btn">Post Comment</button>	
+                                <button href="#" class="primary-btn primary_btn"><?translate("Post Comment","Yorum gönder")?></button>	
                             </form>
                         </div>
+                        <?}?>
                         <?}?>
                     </div>
                     <div class="col-lg-4">
                         <div class="blog_right_sidebar">
+                            <?
+                            if(!$noPageFound){
+                                ?>
                             <aside class="single_sidebar_widget author_widget">
                                 <img width="100" height="100" class="author_img rounded-circle" src="./uploads/postImages/<?echo $personImg?>" alt="">
                                 <h4><?echo $name?></h4>
@@ -425,6 +457,8 @@ else{
                                 <p><?echo $aboutMe?></p>
                             </aside>
                             <hr>
+                            <?}?>
+                            
                             <?php include_once("./phpComponents/cartWidget.php")?>
                         </div>
                     </div>

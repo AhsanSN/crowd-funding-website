@@ -5,7 +5,9 @@
 //booked rooms list
 $query_recent3Posts = "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned from fik_posts p left outer join fik_contributions c on p.id=c.postId group by c.postId order by p.views desc limit 3"; 
 
-
+require_once 'Mobile_Detect.php';
+$detect = new Mobile_Detect;
+ 
 ?>
 <!doctype html>
 <html lang="en">
@@ -30,12 +32,29 @@ $query_recent3Posts = "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(
   <div class="banner_inner">
 			<div class="container">
 				<div class="banner_content">
-					<h2>Create a better world</h2>
-					<p>
+				    <?
+				    if ( $detect->isMobile() ) {
+                        ?>
+                        <h3 style=" color: #f9f9ff;"><?translate("Create a better world","Daha iyi bir dünya yarat")?></h3>
+                        <p style="font-size:12px;line-height: 20px;">
 						That don't lights. Blessed land spirit creature divide our made two 
 						itself upon you'll dominion waters man second good you they're divided upon winged were replenish night
 					</p>
-					<a class="primary_btn mr-20" href="./allPosts.php">Donate Now</a>
+                        <?
+                    }
+                    else{
+                        ?>
+                        <h2><?translate("Create a better world","Daha iyi bir dünya yarat")?></h2>
+                        <p>
+						That don't lights. Blessed land spirit creature divide our made two 
+						itself upon you'll dominion waters man second good you they're divided upon winged were replenish night
+					</p>
+                        <?
+                    }
+				    ?>
+					
+					
+					<a class="primary_btn mr-20" href="./allPosts.php"><?translate("Donate Now","Şimdi Bağış yap")?></a>
 				</div>
 			</div>
 		</div>
@@ -50,8 +69,8 @@ $query_recent3Posts = "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(
 	<section class="features_causes">
 		<div class="container">
 			<div class="main_title">
-				<h2>Featured Projects</h2>
-				<p>Some of the featured projects.</p>
+				<h2><?translate("Featured Projects", "Öne çıkan projeler")?></h2>
+				<p><?translate("Some of the featured projects.","Öne çıkan projelerden bazıları.")?></p>
 			</div>
 
 			<div class="row">
@@ -74,12 +93,12 @@ $query_recent3Posts = "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(
             									<?echo $row['excerpt']?>
             								</p>
             								<div class="d-flex justify-content-between raised_goal">
-            									<p>Raised: $<?echo $row['amountEarned']?></p>
-            									<p><span>Goal: $<?echo $row['goal']?></span></p>
+            									<p><?translate("Raised","Biriken")?>:  &#8378; <?echo $row['amountEarned']?></p>
+            									<p><span><?translate("Goal","Hedef")?>:  &#8378; <?echo $row['goal']?></span></p>
             								</div>
             								<div class="d-flex justify-content-between donation align-items-center">
-            									<a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn">donate</a>
-            									<p><span class="lnr lnr-heart"></span> <?echo $row['nContributors']?> Donors</p>
+            									<a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("donate","Destekle")?></a>
+            									<p><span class="lnr lnr-heart"></span> <?echo $row['nContributors']?> <?translate("Donors","Destekçiler")?></p>
             								</div>
             							</div>
             						</div>

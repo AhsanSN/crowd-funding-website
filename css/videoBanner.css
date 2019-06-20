@@ -33,7 +33,7 @@
 .banner_inner h2{
     color: #ffffff;
 margin-top: 0px;
-font-size: 50px;
+font-size: 3em; /**50px**/
 font-weight: bold;
 font-family: "Poppins", sans-serif;
 line-height: 70px;
