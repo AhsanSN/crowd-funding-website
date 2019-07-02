@@ -1,0 +1,5 @@
+[24-Jun-2019 09:55:40 Europe/London] PHP Notice:  Undefined variable: _SESSION in /home/anomozco/projects.anomoz.com/sealife/phpComponents/header.php on line 3
+[24-Jun-2019 09:56:20 Europe/London] PHP Notice:  Undefined variable: _SESSION in /home/anomozco/projects.anomoz.com/sealife/phpComponents/header.php on line 60
+[24-Jun-2019 09:56:39 Europe/London] PHP Notice:  Undefined variable: _SESSION in /home/anomozco/projects.anomoz.com/sealife/phpComponents/header.php on line 61
+[24-Jun-2019 10:06:45 Europe/London] PHP Notice:  Undefined variable: title in /home/anomozco/projects.anomoz.com/sealife/phpComponents/header.php on line 43
+[24-Jun-2019 10:06:45 Europe/London] PHP Notice:  Undefined variable: title in /home/anomozco/projects.anomoz.com/sealife/phpComponents/header.php on line 44

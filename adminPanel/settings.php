@@ -63,13 +63,15 @@ if(isset($_POST["name"]))
     $name= $_POST['name'];
     $price= $_POST['price'];
     $description= $_POST['description'];
+    $longDescription= $_POST['longDescription'];
 
    
     if(true){
         //save first
         
         if($filename!="none"){
-            $sql="insert into fik_shopItems (`name`, `price`, `description`, `image`) values ('$name', '$price', '$description', '$filename')";
+            $itemId = md5(md5(sha1( mt_rand(111111111, 99999999999999999999999))).'Anomoz');
+            $sql="insert into fik_shopItems (`id`, `name`, `price`, `description`, `image`, `longDescription`) values ('$itemId','$name', '$price', '$description', '$filename', '$longDescription')";
             if(!mysqli_query($con,$sql))
             {
                 echo "err";
@@ -261,6 +263,7 @@ $query_shopList = "select * from fik_shopItems";
                                     <input name="name" type="text" class="form-control" placeholder="name" required>
                                     <input name="price" type="number" class="form-control" placeholder="price" required>
                                     <textarea name="description" type="text" class="form-control" placeholder="about" required></textarea>
+                                    <textarea name="longDescription" type="text" class="form-control" placeholder="long description" required></textarea>
                                     <input class="btn btn-primary primary_btn rounded" style="background-color:#777;" type="file" name="fileToUpload" id="fileToUpload" required>
                                     <button type="submit" class="btn btn-primary">Insert</button>
                                 </form>

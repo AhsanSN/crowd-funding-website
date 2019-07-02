@@ -7,7 +7,7 @@ if(isset($_POST["buttonAction"]))
     //image handeling
     $filename = "none";
     $target_dir = "./uploads/postImages/";
-    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+    $target_file = $target_dir . mb_htmlentities(basename($_FILES["fileToUpload"]["name"]));
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
     // Check if image file is a actual image or fake image
@@ -54,13 +54,13 @@ if(isset($_POST["buttonAction"]))
     }
     
     
-    $buttonAction = $_POST["buttonAction"];
-    $title= $_POST['project_title'];
-    $excerpt= $_POST['project_excerpt'];
-    $description= $_POST['project_description'];
-    $goal= $_POST['project_goal'];
-    $aboutMe = $_POST['project_aboutMe'];
-    $category = $_POST['project_category'];
+    $buttonAction = htmlspecialchars($_POST["buttonAction"]);
+    $title= mb_htmlentities($_POST['project_title']);
+    $excerpt= mb_htmlentities($_POST['project_excerpt']);
+    $description= mb_htmlentities($_POST['project_description']);
+    $goal= mb_htmlentities($_POST['project_goal']);
+    $aboutMe = mb_htmlentities($_POST['project_aboutMe']);
+    $category = mb_htmlentities($_POST['project_category']);
         
     if($buttonAction=="save"){
         if($filename!="none"){
@@ -175,17 +175,17 @@ $result_categories = $con->query($query_categories);
 }
         </style>
         <script type="text/javascript" src="scripts/wysiwyg.js"></script>
-		<script type="text/javascript" src="scripts/wysiwyg-settings.js"></script>
-		<script type="text/javascript">
-			// Use it to attach the editor to all textareas with full featured setup
-			//WYSIWYG.attach('all', full);
-			
-			// Use it to attach the editor directly to a defined textarea
-			WYSIWYG.attach('textarea2', full); // full featured setup
-			
-			// Use it to display an iframes instead of a textareas
-			//WYSIWYG.display('all', full);  
-		</script>
+        <script type="text/javascript" src="scripts/wysiwyg-settings.js"></script>
+        <script type="text/javascript">
+            // Use it to attach the editor to all textareas with full featured setup
+            //WYSIWYG.attach('all', full);
+            
+            // Use it to attach the editor directly to a defined textarea
+            WYSIWYG.attach('textarea2', full); // full featured setup
+            
+            // Use it to display an iframes instead of a textareas
+            //WYSIWYG.display('all', full);  
+        </script>
 <body>
 
         <!--================ Start Header Menu Area =================-->
@@ -195,11 +195,18 @@ $result_categories = $con->query($query_categories);
         <!--================ Home Banner Area =================-->
         <section class="banner_area">
             <div class="banner_inner d-flex align-items-center">
+                <style>
+        .banner_area .banner_inner .overlay{
+            
+            background: linear-gradient(0deg, rgba(6, 13, 1, 0.3), rgba(6, 13, 1, 0.3)), url(./img/garden.jpg) no-repeat scroll center center;
+            background-size:cover
+        }
+    </style>
                 <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
                 <div class="container">
                     <div class="banner_content text-center">
                         <h2><?translate("New Project","Yeni proje")?></h2>
-                        <p><?translate("Tell the world about your idea and gain a huge community support","Dünyaya fikrinizden bahsedin ve büyük bir topluluk desteği edinin")?></p>
+                        <p><?translate("Tell the world about your idea and gain a huge community support","D&#252;nyaya fikrinizden bahsedin ve b&#252;y&#252;k bir topluluk deste&#287;i edinin")?></p>
                     </div>
                 </div>
             </div>
@@ -217,7 +224,7 @@ $result_categories = $con->query($query_categories);
 
                                 <div class="feature-img" >
                                     <input class="btn btn-primary primary_btn rounded" style="background-color:#777;" type="file" name="fileToUpload" id="fileToUpload">
-                                </div>		
+                                </div>      
                             </div>
                             <div class="col-lg-3  col-md-3">
                                 <div class="blog_info text-right">
@@ -225,19 +232,19 @@ $result_categories = $con->query($query_categories);
                                         <?if(($title=="")||($excerpt=="")||($description=="")||($coverPhoto=="")){
                                         }else{?>
                                         <button type="submit" name="buttonAction" value="post" class="btn btn-primary primary_btn rounded" data-toggle="modal" >
-                                          <?translate("Post","gönderi")?>
+                                          <?translate("Post","g&#246;nderi")?>
                                         </button>
                                         <?}?>
                                         
-                    				</div>
-                    				<div class="col-lg-7" style="padding-top:7px;">
+                                    </div>
+                                    <div class="col-lg-7" style="padding-top:7px;">
                                         
                                         <button type="submit" name="buttonAction" value="save" class="btn btn-primary primary_btn rounded" style="background-color:#22a7b1;" data-toggle="modal" >
                                           <?translate("Save","Kaydet")?>
                                         </button>
                                         
-                    				</div>
-                    				<hr>
+                                    </div>
+                                    <hr>
                                        <select name="project_category" class="form-control mb-10" id="exampleFormControlSelect1" style="width:100%;">
                                            <?
                                            if ($result_categories->num_rows > 0)
@@ -286,7 +293,7 @@ $result_categories = $con->query($query_categories);
                                     <?}?>
                                     <hr>
                                 <h2>
-                                    <input class="form-control mb-10" rows="5" name="project_title"  value="<?echo $title?>" placeholder="<?translate('Title of your project?','projenin başlığı?')?>"  required="">
+                                    <input class="form-control mb-10" rows="5" name="project_title"  maxlength="65" value="<?echo $title?>" placeholder="<?translate('Title of your project?','projenin ba&#351;l&#305;&#287;&#305;?')?>"  required="">
                                 </h2>
                                 <style>
                                     .excerpt-textarea {
@@ -294,7 +301,7 @@ $result_categories = $con->query($query_categories);
                                     }
                                 </style>
                                 <p class="excert">
-                                   <textarea class="form-control mb-10 excerpt-textarea" rows="5" name="project_excerpt" placeholder="<?translate('Describe your project in few words for the readers.','okuyucular için bir kaç kelimeyle bloğunu tanımla')?>"  required=""><?echo $excerpt?></textarea>
+                                   <textarea class="form-control mb-10 excerpt-textarea" rows="5" maxlength="93" name="project_excerpt" placeholder="<?translate('Describe your project in few words for the readers.','okuyucular i&#231;in bir ka&#231; kelimeyle blo&#287;unu tan&#305;mla')?>"  required=""><?echo $excerpt?></textarea>
                                 </p>
                                 
                                 
@@ -313,13 +320,13 @@ $result_categories = $con->query($query_categories);
                             </aside>
                             <hr>
                             <div class="form-group">
-                                    <textarea class="form-control mb-10" rows="5"  name="project_aboutMe" placeholder="<?translate('Tell people about yourself.','İnsanlara kendinden bahset.')?>" required=""><?echo $aboutMe?></textarea>
+                                    <textarea class="form-control mb-10" rows="5"  name="project_aboutMe" maxlength="200" placeholder="<?translate('Tell people about yourself.','İnsanlara kendinden bahset.')?>" required=""><?echo $aboutMe?></textarea>
                                 </div>
                         </div>
                     </div>
                 </div>
                 <p style="width=100%" >
-                    <?translate('Describe your project in detail.','Projenizi ayrıntılı olarak tanımlayın.')?>
+                    <?translate('Describe your project in detail.','Projenizi ayr&#305;nt&#305;l&#305; olarak tan&#305;mlay&#305;n.')?>
                                     <textarea style="width=100%" class="form-control mb-10" rows="5" name="project_description" id="textarea2" ><?echo $description?></textarea>
                                 </p>
             </div>
@@ -331,10 +338,10 @@ $result_categories = $con->query($query_categories);
         
         <!--================ Start CTA Area =================-->
         
-	<?php if($logged==0)include_once("./phpComponents/volunteer.php")?>
-	<!--================ End CTA Area =================-->
+    <?php if($logged==0)include_once("./phpComponents/volunteer.php")?>
+    <!--================ End CTA Area =================-->
 
-	<!--================ Start footer Area  =================-->	
+    <!--================ Start footer Area  =================-->    
      <?php include_once("./phpComponents/footer.php")?>
      
         <!--================ End footer Area  =================--> 

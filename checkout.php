@@ -25,6 +25,44 @@ if ($result_totalBill->num_rows > 0)
         $total = $row['total'];
     }
 }
+
+$costWithoutKDV = round(($total*100)/(118),2);
+$kdv = $total - $costWithoutKDV;
+
+if(isset($_GET['insertOrder'])){
+    $orderId = md5(md5(sha1( mt_rand(111111111, 99999999999999999999999))).'Anomoz');
+    $country= mb_htmlentities($_POST['country']);
+    $state= mb_htmlentities($_POST['state']);
+    $city= mb_htmlentities($_POST['city']);
+    $streetAddress= mb_htmlentities($_POST['streetAddress']);
+    
+    $date = time();
+    $sql="insert into fik_orders (`orderId`, `datePlaced`, `totalAmount`, `KDV`, `withoutKDV`, `status`, `userId`, `country`, `state`, `city`, `streetAddress`) values ('$orderId', '$date', '$total', '$kdv', '$costWithoutKDV', 'waiting', '$session_userId', '$country', '$state', '$city', '$streetAddress')";
+    if(!mysqli_query($con,$sql))
+    {
+    echo"err";
+    }
+    
+    //add to cartitems
+    //cart items for check out
+    $query_cartItemstoDBOrders= "select c.id, c.userId,c.object,c.quantity,s.name,s.price,s.image,s.description,(s.price*c.quantity)as total from fik_cart c inner join fik_shopItems s on c.object=s.id where userId='$session_userId' order by c.id desc"; //for now
+    $result_cartItemstoDBOrders = $con->query($query_cartItemstoDBOrders); 
+    if ($result_cartItemstoDBOrders->num_rows > 0)
+    { 
+        while($row = $result_cartItemstoDBOrders->fetch_assoc()) 
+        { 
+            $item = $row['object'];
+            $quantity = $row['quantity'];
+            $sql="insert into fik_orderItems (`orderId`, `item`, `quantity`) values ('$orderId', '$item', '$quantity')";
+            if(!mysqli_query($con,$sql))
+            {
+            echo"err";
+            }
+            
+        }
+    }
+
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -34,26 +72,14 @@ if ($result_totalBill->num_rows > 0)
     <!--================ Start Header Menu Area =================-->
     <?php include_once("./phpComponents/navbar.php")?>
     <!--================ End Header Menu Area =================-->
-        
-    <!--================ Home Banner Area =================-->
-    <section class="banner_area">
-        <div class="banner_inner d-flex align-items-center">
-            <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
-            <div class="container">
-                <div class="banner_content text-center">
-                    <h2><?translate("Checkout","Çıkış yapmak")?></h2>
-                    <p><?translate("Use your most trusted payment methods to make the payment.","Ödeme yapmak için en güvenilir ödeme yöntemlerinizi kullanın.")?></p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-	
-	<section class="features_causes" style="margin-top:40px;">
+	<br>
+	<form action="" method="post">
+	    <section class="features_causes" style="margin-top:100px;">
         <div class="container">
             <div class="main_title">
-                <h2><?translate("Checkout","Çıkış yapmak")?></h2>
-                    <p><?translate("Use your most trusted payment methods to make the payment.","Ödeme yapmak için en güvenilir ödeme yöntemlerinizi kullanın.")?></p>
+                <h2><?translate("Checkout","&#199;&#305;k&#305;&#351; yapmak")?></h2>
+                    <p><?translate("Use your most trusted payment methods to make the payment.","&#246;deme yapmak &#231;in en g&#252;venilir &#246;deme y&#246;ntemlerinizi kullan&#305;n.")?></p>
             </div>
 
             <div class="row">
@@ -84,7 +110,7 @@ if ($result_totalBill->num_rows > 0)
         									</div>
         									<div class="percentage">
         										<a href="?removeItem=<?echo $row['id']?>" style="background-color:red;" class="btn btn-primary">
-                                                    <?translate("Remove","Kaldır")?>
+                                                    <?translate("Remove","Kald&#305;r")?>
                                                 </a>
         									</div>
         								</div>
@@ -100,6 +126,44 @@ if ($result_totalBill->num_rows > 0)
     										<b style="font-weight:bold;color:black;"> &#8378; <?echo $total?></b>
     									</div>
     							</div>
+    							<br>
+    							<h4><?translate("Address","Address")?></h4>
+    							<div class="table-row" >
+    							    <div class="row">
+    							        <div class="col-md-4">
+    							            <p>Country</p>
+                                                <select name="country" class="countries form-control" id="countryId" style="margin-bottom:5px;">
+                                                    <option value="<?echo $session_country?>"><?echo $session_country?></option>
+                                                </select>
+    							        </div>
+    							        <div class="col-md-4">
+    							           <p>State</p>
+                                                <select name="state" class="states form-control" id="stateId" style="margin-bottom:5px;">
+                                                    <option value="<?echo $session_state?>" ><?echo $session_state?></option>
+                                                </select>
+    							        </div>
+    							        <div class="col-md-4">
+    							            <p>City</p>
+                                                <select name="city" class="cities form-control" id="cityId" style="margin-bottom:5px;">
+                                                    <option value="<?echo $session_city?>"><?echo $session_city?></option>
+                                                </select>
+    							        </div>
+    							        
+    							    </div>
+    							    
+    							    
+    							</div>
+    							<div class="row">
+    							    <div class="col-md-12">
+    							            <p>Street Address</p>
+                                                <textarea style="width: 50vw;height:20vh;" name="streetAddress" class="form-control" placeholder="Describe yourself here..."><?if($session_streetAddress!=''){echo $session_streetAddress;}else{echo 'Street Address...';}?></textarea>
+
+    							        </div>
+    							        </div>
+    							<br>
+    							<h4><?translate("Agreements","Agreements")?></h4>
+    							
+    							
 					
 							</div>
 						</div>
@@ -114,21 +178,61 @@ if ($result_totalBill->num_rows > 0)
 				<div class="col-lg-4">
                         <div class="blog_right_sidebar">
                             <aside class="single_sidebar_widget post_category_widget">
-                <h4 class="widget_title"><?translate("Payment Options","Ödeme seçenekleri")?></h4>
-                <ul class="list cat-list">
-                    <li>
-                                <a class="d-flex justify-content-between">
-                                    <p>PayTr</p>
-                                    <p>
-                                       <button type="button" class="btn btn-primary">
-                                                    <?translate("","")?>Pay
-                                                </button>
-                                    </p>
-                                </a>
-                    </li>
-                    															
-                </ul>
-            </aside>
+                                <h4 class="widget_title"><?translate("Summary","&#246;zet")?></h4>
+                                <?
+                                
+                                ?>
+                                <ul class="list cat-list">
+                                    
+                                    <li>
+                                                <a class="d-flex justify-content-between">
+                                                    <p><?translate("Cost", "Maliyet")?></p>
+                                                    <p>
+                                                       &#8378; <?echo $costWithoutKDV?>
+                                                    </p>
+                                                </a>
+                                    </li>
+                                    <li>
+                                                <a class="d-flex justify-content-between">
+                                                    <p>KDV</p>
+                                                    <p>
+                                                       &#8378; <?echo $kdv?>
+                                                    </p>
+                                                </a>
+                                    </li>
+                                    <li>
+                                                <a class="d-flex justify-content-between">
+                                                    <h4><?translate("Total","Genel Toplam")?></h4>
+                                                    <h4>
+                                                        &#8378; <?echo $total?>
+                                                    </h4>
+                                                </a>
+                                    </li>
+                                    															
+                                </ul>
+                            </aside>
+                            
+                            <aside class="single_sidebar_widget post_category_widget">
+                                <h4 class="widget_title"><?translate("Payment Options","&#246;deme se&#231;enekleri")?></h4>
+                                <ul class="list cat-list">
+                                    <li>
+                                                <a class="d-flex justify-content-between">
+                                                    <p>PayTr</p>
+                                                    <p>
+                                                       <a href="./checkout.php?insertOrder=3s2d1s83v12f5cd1g7m3do6">
+                                                       <button type="submit" class="btn btn-primary" id="sendNewSms" >
+                                                                    <?translate("","")?>Pay
+                                                                </button></a>
+                                                    </p>
+                                                </a>
+                                    </li>
+                                    															
+                                </ul>
+                                <div class="form-group">
+                                    <br>
+                              <p class="text-center"><span><input type="checkbox" id="scales" name="scales"  onchange="document.getElementById('sendNewSms').disabled = !this.checked;" required> I agree with the <a href="./tnc.php">terms and conditions</a></span></p>
+                           </div>
+                            </aside>
             
         
 
@@ -138,6 +242,7 @@ if ($result_totalBill->num_rows > 0)
 			</div>
         </div>
     </section>
+    </form>
 
 	<?php if($logged==0)include_once("./phpComponents/volunteer.php")?>
 	<!--================ End CTA Area =================-->
@@ -147,19 +252,12 @@ if ($result_totalBill->num_rows > 0)
 	<!--================ End footer Area  =================-->
     <!--================ End footer Area  =================-->  
         
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="js/jquery-3.2.1.min.js"></script>
-        <script src="js/popper.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/stellar.js"></script>
-        <script src="vendors/lightbox/simpleLightbox.min.js"></script>
-        <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
-        <script src="js/jquery.ajaxchimp.min.js"></script>
-        <script src="js/mail-script.js"></script>
-        <!--gmaps Js-->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
-        <script src="js/gmaps.min.js"></script>
-        <script src="js/theme.js"></script>
+                       
+                        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+                        <script src="//geodata.solutions/includes/countrystatecity.js"></script>
+        <script>
+            document.getElementById('sendNewSms').disabled = true;
+        </script>
     </body>
 </html>

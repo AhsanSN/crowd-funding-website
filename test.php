@@ -1,13 +1,4 @@
 <?
-require_once 'Mobile_Detect.php';
-$detect = new Mobile_Detect;
- 
-// Any mobile device (phones or tablets).
-if ( $detect->isMobile() ) {
-    echo"mobile";
-}
-else{
-    echo "not mobile";
-}
-
+$enc = strtoupper(md5(md5(sha1( '123')).'Anomoz'));
+echo $enc;
 ?>

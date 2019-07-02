@@ -2,8 +2,8 @@
     <?
 if(isset($_POST['email'])&&isset($_POST['password'])){
     $errMsg="none";
-    $email = $_POST['email'];
-    $password = strtoupper(md5($_POST['password'].'hey1'));
+    $email = mb_htmlentities(($_POST['email']));
+    $password = mb_htmlentities( md5(md5(sha1( $_POST['password'])).'Anomoz'));
     $query_selectedPost= "select * from fik_users where email= '$email' and password='$password'"; 
     $result_selectedPost = $con->query($query_selectedPost); 
     if ($result_selectedPost->num_rows > 0)
@@ -31,11 +31,12 @@ if(isset($_POST['email'])&&isset($_POST['password'])){
         { 
             //problem diagnosed: email correct, incorrect pass
             $errMsg = "Incorrect password.";
-
         }else{
             //emaail not taken. create new account
+            /**
             $dateTime = time();
-            $sql="insert into fik_users (`name`,`email`, `password`, `userImg`) values ('User','$email', '$password', 'profilePic.png')";
+            $userId = intval((strval(1)).(strval(mt_rand(111111111, 999999999))));
+            $sql="insert into fik_users (`id`, `name`,`email`, `password`, `userImg`) values ('$userId', 'User','$email', '$password', 'profilePic.png')";
             if(!mysqli_query($con,$sql))
             {
                 echo "err";
@@ -49,7 +50,9 @@ if(isset($_POST['email'])&&isset($_POST['password'])){
                 window.location = "./home.php";
             </script>
             <?
+            
             }
+            **/
             
         }
         
@@ -66,65 +69,134 @@ else{
 <!doctype html>
 <html lang="en">
    <?php include_once("./phpComponents/header.php")?>
-   <meta name="google-signin-scope" content="profile email">
+   <meta name="google-signin-scope" content="profile email" >
     <meta name="google-signin-client_id" content="1040613922228-irlsol6bncj8m8v83s95aaconj3gahh7.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <style>
+        a{
+         text-decoration:none !important;
+         }
+         
+          .myform{
+              opacity: 0.94;
+              margin-top:140px;
+              margin-bottom:180px;
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        padding: 1rem;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        width: 100%;
+        pointer-events: auto;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0,0,0,.2);
+        border-radius: 1.1rem;
+        outline: 0;
+        max-width: 500px;
+         }
+         .tx-tfm{
+         text-transform:uppercase;
+         }
+         .mybtn{
+         border-radius:50px;
+         }
+        
+         .login-or {
+         position: relative;
+         color: #aaa;
+         margin-top: 10px;
+         margin-bottom: 10px;
+         padding-top: 10px;
+         padding-bottom: 10px;
+         }
+         .span-or {
+         display: block;
+         position: absolute;
+         left: 50%;
+         top: -2px;
+         margin-left: -25px;
+         background-color: #fff;
+         width: 50px;
+         text-align: center;
+         }
+         .hr-or {
+         height: 1px;
+         margin-top: 0px !important;
+         margin-bottom: 0px !important;
+         }
+         .google {
+         color:#666;
+         width:100%;
+         height:40px;
+         text-align:center;
+         outline:none;
+         border: 1px solid lightgrey;
+         }
+          form .error {
+         color: #ff0000;
+         }
+         #second{display:none;}
+    </style>
 
 <body>
         
-	<!--================ Start Header Menu Area =================-->
-	<?php include_once("./phpComponents/navbar.php")?>
-	
+    <!--================ Start Header Menu Area =================-->
+    <?php include_once("./phpComponents/navbar.php")?>
+    
     <!--================ End Header Menu Area =================-->
         
     <!--================Home Banner Area =================-->
-    
+    <style>
+        .banner_area .banner_inner .overlay{
+            
+            background: linear-gradient(0deg, rgba(6, 13, 1, 0.3), rgba(6, 13, 1, 0.3)), url(./img/loginbackground.jpg) no-repeat scroll center center;
+            background-size:cover
+        }
+    </style>
     <section class="banner_area">
         <div class="banner_inner d-flex align-items-center">
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
             <div class="container">
-                <div class="banner_content text-center">
-                    <h2>Login/Signup</h2>
-                    <p>Enter the global community.</p>
-                    <?
-                    if($errMsg!="none"){
-                        ?>
-                        <p class="title-heading" style="color: red;"><?echo $errMsg?></p>
-                        <?
-                    }
-                    if($_GET['loginRequired']){echo
-                        ' <p style="color:#ffc600;margin:2px;font-weight: bold;">You need to login first.</p>';
-                    }
-                    ?>
+                <div class="row">
+            <div class="col-md-5 mx-auto">
+            <div id="">
+                <div class="myform form ">
+                     <div class=" mb-3">
+                         <div class="col-md-12 text-center">
+                            <h1><?translate("Login", "Oturum a&#231;")?></h1>
+                         </div>
+                    </div>
+                   <form action="" method="post" name="login">
+                           <div class="form-group">
+                              <label for="exampleInputEmail1">E-mail</label>
+                              <input type="email" name="email"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail" required>
+                           </div>
+                           <div class="form-group">
+                              <label for="exampleInputEmail1"><?translate("Password", "Parola")?></label>
+                              <input type="password" name="password" id="password"  class="form-control" aria-describedby="emailHelp" placeholder="<?translate("Password", "Parola")?>" required>
+                           </div>
+                        
+                           <div class="col-md-12 text-center ">
+                              <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm"><?translate("Login", "Oturum a&#231;")?></button>
+                           </div>
+                              
+                           <div class="form-group">
+                              <p class="text-center"><?translate("Don't have account?", "Hesab&#305;n&#305;z yok mu?")?> <a href="./createAccount.php" id="signup"><?translate("Sign up here", "Buradan kaydolun")?></a></p>
+                           </div>
+                        </form>
+                 
                 </div>
-                <br><br>
-                <form class="row contact_form"  method="post">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="email" class="form-control" id="name" name="email" placeholder="Email" required>
-                            </div>
-                            
-                        </div>
-                        <div class="col-md-6">
-                            
-                            <div class="form-group">
-                                <input type="password" class="form-control" id="name" name="password" placeholder="Password" required>
-                            </div>
-                        </div>
-                        <div class="col-md-12 text-right">
-                            <button type="submit" value="submit" class="btn primary_btn">Login/Signup</button>
-                        </div>
-                    </form>
-                    <!--
-                    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark">hasdlkasd</div>
-                    -->
-
             </div>
+        </div>
+      </div>   
+                </div>
         </div>
     </section>
   
         
-    <!--================ Start footer Area  =================-->	
+    <!--================ Start footer Area  =================-->    
     <?php include_once("./phpComponents/footer.php")?>
     <!--================ End footer Area  =================-->
     

@@ -9,6 +9,7 @@ if(isset($_POST["buttonAction"]))
     $filename = "none";
     $target_dir = "./uploads/postImages/";
     $randomNo = md5(time().$session_name);
+    $fileName_db = "Anomoz_"."$randomNo".basename($_FILES["fileToUpload"]["name"]);
     $target_file = $target_dir . "Anomoz_"."$randomNo".basename($_FILES["fileToUpload"]["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -57,16 +58,22 @@ if(isset($_POST["buttonAction"]))
     }
 
     
-    $name= $_POST['name'];
-    $about= $_POST['about'];
-    $email= $_POST['email'];
-    $old_password= $_POST['old_password'];
-    $new_password1= $_POST['new_password1'];
-    $new_password2= $_POST['new_password2'];
+    $name= mb_htmlentities($_POST['name']);
+    $about= mb_htmlentities($_POST['about']);
+    $email= mb_htmlentities($_POST['email']);
+    $old_password= mb_htmlentities( md5(md5(sha1( $_POST['old_password'])).'Anomoz'));
+    $new_password1= mb_htmlentities( md5(md5(sha1( $_POST['new_password'])).'Anomoz'));
+    $new_password2= mb_htmlentities( md5(md5(sha1( $_POST['new_password2'])).'Anomoz'));
+    
+    $country= mb_htmlentities($_POST['country']);
+    $state= mb_htmlentities($_POST['state']);
+    $city= mb_htmlentities($_POST['city']);
+    $streetAddress= mb_htmlentities($_POST['streetAddress']);
+    
     //echo $name, $about, $email, $old_password, $new_password1, $new_password2;
     
     //change name and about
-    $sql="UPDATE `fik_users` SET `name`='$name',`about`='$about' WHERE id='$session_userId' and email='$email'";
+    $sql="UPDATE `fik_users` SET `name`='$name',`about`='$about', country='$country', state='$state', city='$city', streetAddress='$streetAddress' WHERE id='$session_userId' and email='$email'";
     if(!mysqli_query($con,$sql))
         {
             echo "err";
@@ -95,18 +102,21 @@ if(isset($_POST["buttonAction"]))
     
     //change picture
     if(($filename!="none") && ($uploadOk=='1')){
-            $sql="UPDATE `fik_users` SET `userImg`='$filename' WHERE id='$session_userId' and email='$email'";
+            $sql="UPDATE `fik_users` SET `userImg`='$fileName_db' WHERE id='$session_userId' and email='$email'";
         
         if(!mysqli_query($con,$sql))
         {
             echo "err";
         }else{
-            $session_image = $filename;
+            $session_image = $fileName_db;
         }
     }
-        
     
-    
+    ?>
+    <script type="text/javascript">
+                window.location = "./home.php";
+            </script>
+    <?
 }
 ?>
         <!doctype html>
@@ -122,12 +132,19 @@ if(isset($_POST["buttonAction"]))
                     <!--================ Home Banner Area =================-->
                     <section class="banner_area">
                         <div class="banner_inner d-flex align-items-center">
-                            <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
+                            <style>
+                #backImg{
+                    /**background: rgba(0, 0, 0, 0) url("https://img1.beachbodyimages.com/teambeachbody/image/upload/Teambeachbody/shared_assets/Shop/Nutrition/Shop-Nutrition-CDP/Hero/shop-nut-cdp-hero-bcb-launch-mbl-1920-500-en-us-030818.jpg") no-repeat scroll center center;position: absolute;**/
+                
+                    background: rgba(0, 0, 0, 0) url("./img/about.jpg") no-repeat scroll center center;position: absolute;
+                }
+            </style>
+                            <div class="overlay bg-parallax" id="backImg" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
                             <div class="container">
                                 <div class="banner_content text-center">
                                     <h2><?translate("Settings","Ayarlar")?></h2>
                                     <p>
-                                        <?translate("Change your account settings here.","Hesap ayarlarını değiştir.")?>
+                                        <?translate("Change your account settings here.","Hesap ayarlar&#305;n&#305; de&#287;i&#351;tir.")?>
                                     </p>
                                 </div>
                             </div>
@@ -148,7 +165,7 @@ if(isset($_POST["buttonAction"]))
                                     <div class="main_title">
                                         <h2><?translate("Settings","Ayarlar")?></h2>
                                     <p>
-                                        <?translate("Change your account settings here.","Hesap ayarlarını değiştir.")?>
+                                        <?translate("Change your account settings here.","Hesap ayarlar&#305;n&#305; de&#287;i&#351;tir.")?>
                                     </p>
                                     </div>
 
@@ -162,28 +179,47 @@ if(isset($_POST["buttonAction"]))
                                             <input type="text" class="form-control" id="name" name="name" value="<?echo $session_name?>" placeholder="<?translate("Name","Isim")?>">
                                         </div>
                                         <div class="form-group">
-                                            <h6><?translate("About [eg. Software Engineer]","Hakkımızda [örnek, Yazılım Muhendisi]")?></h6>
-                                            <input type="text" class="form-control" id="email" name="about" value="<?echo $session_about?>" placeholder="<?translate("About [eg. Software Engineer]","Hakkımızda [örnek, Yazılım Muhendisi]")?>">
+                                            <h6><?translate("About [eg. Software Engineer]","Hakk&#305;m&#305;zda [&#246;rnek, Yaz&#305;l&#305;m Muhendisi]")?></h6>
+                                            <input type="text" class="form-control" id="email" name="about" value="<?echo $session_about?>" placeholder="<?translate("About [eg. Software Engineer]","Hakk&#305;m&#305;zda [&#246;rnek, Yaz&#305;l&#305;m Muhendisi]")?>">
                                         </div>
                                         <div class="form-group">
-                                            <h6><?translate("Change Profile Picture","Profil resmini değiştir")?></h6>
+                                            <h6><?translate("Change Profile Picture","Profil resmini de&#287;i&#351;tir")?></h6>
                                             <input class="btn btn-primary primary_btn rounded" style="background-color:#777;" type="file" name="fileToUpload" id="fileToUpload">
                                         </div>
+                                        <div class="form-group">
+                                            <h6><?translate("Address","Address")?></h6>
+                                            <p>Country</p>
+                                                <select name="country" class="countries form-control" id="countryId" style="margin-bottom:5px;">
+                                                    <option value="<?echo $session_country?>"><?echo $session_country?></option>
+                                                </select>
+                                            <p>State</p>
+                                                <select name="state" class="states form-control" id="stateId" style="margin-bottom:5px;">
+                                                    <option value="<?echo $session_state?>" ><?echo $session_state?></option>
+                                                </select>
+                                            <p>City</p>
+                                                <select name="city" class="cities form-control" id="cityId" style="margin-bottom:5px;">
+                                                    <option value="<?echo $session_city?>"><?echo $session_city?></option>
+                                                </select>
+                                            <p>Street Address</p>
+                                                <textarea name="streetAddress" class="form-control" placeholder="Describe yourself here..."><?if($session_streetAddress!=''){echo $session_streetAddress;}else{echo 'Street Address...';}?></textarea>
+                                        </div>
+                                        
+
                                         
                                     </div>
                                     <div class="col-md-6" style="background-color:#ffd9d9;">
-                                        <h4 style="padding:10px;text-align: center;"><?translate("Change Password","Şifre değiştir")?></h4>
+                                        <h4 style="padding:10px;text-align: center;"><?translate("Change Password","&#351;ifre de&#287;i&#351;tir")?></h4>
                                         <div class="form-group">
-                                            <h6><?translate("Enter Old Password","Eski şifre giriniz")?></h6>
-                                            <input type="password" class="form-control" id="password" name="old_password" placeholder="<?translate("Enter Old Password","Eski şifre giriniz")?>">
+                                            <h6><?translate("Enter Old Password","Eski &#351;ifre giriniz")?></h6>
+                                            <input type="password" class="form-control" id="password" name="old_password" placeholder="<?translate("Enter Old Password","Eski &#351;ifre giriniz")?>">
                                         </div>
                                         <div class="form-group">
-                                            <h6><?translate("Enter new Password","Yeni şifreyi giriniz")?></h6>
-                                            <input type="password" class="form-control" id="email" name="new_password1" placeholder="<?translate("Enter new Password","Yeni şifreyi giriniz")?>">
+                                            <h6><?translate("Enter new Password","Yeni &#351;ifreyi giriniz")?></h6>
+                                            <input type="password" class="form-control" id="email" name="new_password1" placeholder="<?translate("Enter new Password","Yeni &#351;ifreyi giriniz")?>">
                                         </div>
                                         <div class="form-group">
-                                            <h6><?translate("Re-type New Password","Yeni şifreyi tekrar giriniz")?></h6>
-                                            <input type="password" class="form-control" id="email" name="new_password2" placeholder="<?translate("Re-type New Password","Yeni şifreyi tekrar giriniz")?>">
+                                            <h6><?translate("Re-type New Password","Yeni &#351;ifreyi tekrar giriniz")?></h6>
+                                            <input type="password" class="form-control" id="email" name="new_password2" placeholder="<?translate("Re-type New Password","Yeni &#351;ifreyi tekrar giriniz")?>">
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-right">
@@ -217,17 +253,9 @@ if(isset($_POST["buttonAction"]))
                         <!-- Optional JavaScript -->
                         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
                         <script src="js/jquery-3.2.1.min.js"></script>
-                        <script src="js/popper.js"></script>
-                        <script src="js/bootstrap.min.js"></script>
-                        <script src="js/stellar.js"></script>
-                        <script src="vendors/lightbox/simpleLightbox.min.js"></script>
-                        <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
-                        <script src="js/jquery.ajaxchimp.min.js"></script>
-                        <script src="js/mail-script.js"></script>
-                        <!--gmaps Js-->
-                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
-                        <script src="js/gmaps.min.js"></script>
-                        <script src="js/theme.js"></script>
+                       
+                        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+                        <script src="//geodata.solutions/includes/countrystatecity.js"></script>
             </body>
 
         </html>

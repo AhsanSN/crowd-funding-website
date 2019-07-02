@@ -6,6 +6,9 @@ if(isset($_POST['itemSelect'])&&isset($_POST['quantitySelect'])){
     $donationStatus= "failed";
     $objectId = ($_POST['itemSelect']);
     $quantity = ($_POST['quantitySelect']);
+    if($quantity<0){
+        $quantity=0;
+    }
     $query_checkIfinCart= "select * from fik_cart where object= '$objectId' and userId='$session_userId'"; 
     $result_checkIfinCart = $con->query($query_checkIfinCart); 
     if ($result_checkIfinCart->num_rows > 0)
@@ -18,9 +21,13 @@ if(isset($_POST['itemSelect'])&&isset($_POST['quantitySelect'])){
         }
         else{
             $donationStatus= "success";
+            ?>
+             <script type="text/javascript">
+                    window.location = "./checkout.php";
+                </script>
+            <?
         }
         
-            
     }
     else{
         //add 1
@@ -30,6 +37,11 @@ if(isset($_POST['itemSelect'])&&isset($_POST['quantitySelect'])){
             echo "err";
         }else{
             $donationStatus= "success";
+            ?>
+             <script type="text/javascript">
+                    window.location = "./checkout.php";
+                </script>
+            <?
         }
     }
 
@@ -71,7 +83,6 @@ $result_inventory = $con->query($query_inventory);
                     </button>
                   </div>
                   <div class="modal-body">
-                      
                       <div class="container">
                             <div class="form-group">
                                 <input type="text" class="custom-select quantitySelectMenu" name="itemSelect" id="itemSelect" hidden>
@@ -82,11 +93,15 @@ $result_inventory = $con->query($query_inventory);
                             </div>
                             
                         </div>
+
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><?translate("Close","Kapat")?></button>
-                    <button class="btn btn-primary" type="submit"><?translate("Buy","satın almak")?></button>
+                    <button class="btn btn-primary" type="submit"><?translate("Buy","Sat&#305;n Al&#305;n")?></button>
                   </div>
+                 
+                  
+                  
                 </div>
             </form>
           </div>
@@ -99,12 +114,19 @@ $result_inventory = $con->query($query_inventory);
     <!--================ Home Banner Area =================-->
     <section class="banner_area">
         <div class="banner_inner d-flex align-items-center">
-            <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
-            <div class="container">
+            <style>
+                #backImg{
+                    /**background: rgba(0, 0, 0, 0) url("https://img1.beachbodyimages.com/teambeachbody/image/upload/Teambeachbody/shared_assets/Shop/Nutrition/Shop-Nutrition-CDP/Hero/shop-nut-cdp-hero-bcb-launch-mbl-1920-500-en-us-030818.jpg") no-repeat scroll center center;position: absolute;**/
+                
+                    background: rgba(0, 0, 0, 0) url("./img/manavbanner(3).jpg") no-repeat scroll center center;position: absolute;
+                }
+            </style>
+            <div class="overlay bg-parallax" id="backImg" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
+            <div class="container" style="background-color:purple;opacity: .8;border-radius: 20px;">
                 <div class="banner_content text-center">
-                    <h2><?translate("Shop","Dükkan")?> <?if($donationStatus=="success"){echo"<div style='background-color:green;'>Purchase was Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='background-color:red;'>Purchase failed!</div>";}?></h2>
-                    <p><?translate("Buy items to donate to world-class ideas.","ShopBuy ürünlerini dünya standartlarında fikirlere bağışlamak için satın alın.")?></p>
-                    <?if($logged==0){echo '<p style="color:red;">'.translateRet("You need to signin to buy from the market.","Piyasadan satın almak için imza atmanız gerekir.").'</p>';}?>
+                    <h1 style="color:white;font-size:40px;"><?translate("FARM","MANAV")?> <?if($donationStatus=="success"){echo"<div style='background-color:green;'>Purchase was Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='background-color:red;'>Purchase failed!</div>";}?></h1>
+                    <p style="color:white;font-size:20px;text-transform: uppercase;"><?translate("Buy items to donate to world-class ideas.","Bah&#231;&#305;vanlar&#305;n Ortaya &#199;&#305;kard&#305;&#287;&#305; &#220;r&#252;nler&#304; Ke&#351;fed&#304;n!")?></p>
+                    <?//if($logged==0){echo '<p style="color:red;">'.translateRet("You need to signin to buy from the market.","Piyasadan Sat&#305;n Al&#305;n i&#231;in imza atman&#305;z gerekir.").'</p>';}?>
                 </div>
             </div>
         </div>
@@ -120,12 +142,13 @@ $result_inventory = $con->query($query_inventory);
 	<section class="features_causes" style="margin-top:40px;">
         <div class="container">
             <div class="main_title">
-                <h2><?translate("Shop","Dükkan")?><?if($donationStatus=="success"){echo"<div style='color:green;'>Purchase was Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='color:red;'>Purchase failed!</div>";}?></h2>
-                <p><?translate("Buy items to donate to world-class ideas.","ShopBuy ürünlerini dünya standartlarında fikirlere bağışlamak için satın alın.")?></p>
-                 <?if($logged==0){echo '<p style="color:red;">'.translateRet("You need to signin to buy from the market.","Piyasadan satın almak için imza atmanız gerekir.").'</p>';}?>
+                <h1><?translate("Shop","Manav")?><?if($donationStatus=="success"){echo"<div style='color:green;'>Purchase was Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='color:red;'>Purchase failed!</div>";}?></h1>
+                <p><?translate("Buy items to donate to world-class ideas.","Bah&ccedil;&#305;vanlar&#305;n Ortaya &Ccedil;&#305;kard&#305;&#287;&#305; &Uuml;r&uuml;nleri Ke&#351;fedin ve Sat&#305;n Al&#305;n!")?></p>
+                 <?//if($logged==0){echo '<p style="color:red;">'.translateRet("You need to signin to buy from the market.","Piyasadan Sat&#305;n Al&#305;n i&#231;in imza atman&#305;z gerekir.").'</p>';}?>
             </div>
 
-            <div class="row">
+            <?if($logged==1){?>
+                <div class="row">
                 <div class="col-lg-8 posts-list">
                     
 			    <?
@@ -150,10 +173,22 @@ $result_inventory = $con->query($query_inventory);
             								</p>
             								
             								<div class="d-flex justify-content-between donation align-items-center">
+            								    
+            								    <a href="./shopItem.php?id=<?echo $row['id']?>" style="float: left;">
+                                                    <button type="button" class="btn btn-primary primary_btn rounded" style="background-color:orange;">
+                                                        <?translate("About","&Uuml;r&uuml;n&uuml; &#304;nceley&#304;n")?>
+                                                    </button>
+                                                </a>
+                                                
+                                                </div>
+                                                <div class="d-flex justify-content-between donation align-items-center" style="margin-top:10px;">
             									<button type="button" class="btn btn-primary primary_btn rounded" <?if($logged==1){echo 'data-toggle="modal"';}?> data-whatever="<?echo $row['id']?>" data-target="#exampleModalCenter">
-                                                    <?translate("Buy","satın almak")?>
+                                                    <?translate("Buy","Sat&#305;n Al&#305;n")?>
                                                 </button>
+                                                
+                                                
             								</div>
+            								
             							</div>
             						</div>
             					</div>
@@ -171,14 +206,76 @@ $result_inventory = $con->query($query_inventory);
 				</div>
 				
 				
-				
-				<div class="col-lg-4">
-                        <div class="blog_right_sidebar">
-                            <?php include_once("./phpComponents/cartWidget.php")?>
-                        </div>
+				<?if($logged==1){?>
+    				<div class="col-lg-4">
+                            <div class="blog_right_sidebar">
+                                <?php include_once("./phpComponents/cartWidget.php")?>
+                            </div>
                     </div>
-                    
+                <?}?>
 			</div>
+			<?}else{?>
+			<div class="row">
+
+			    <?
+			        $i=0;
+                    if ($result_shopObjects->num_rows > 0)
+                    { 
+                        while($row = $result_shopObjects->fetch_assoc()) 
+                        { 
+                            ?>
+                            
+				            <div class="col-lg-3 col-md-6">
+            					<div class="card">
+            						<div class="card-body">
+            							<figure>
+            								<img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>"  alt="<?echo $row['name']?>">
+            							</figure>
+            							<div class="card_inner_body" style="padding: 5px 5px;">
+            								<h4 class="card-title"><?echo $row['name']?> -  &#8378; <?echo $row['price']?></h4>
+            								<p class="card-text">
+            									<?echo $row['description']?>
+            								</p>
+            								
+            								<div class="d-flex justify-content-between donation align-items-center">
+            								    
+            								    <a href="./shopItem.php?id=<?echo $row['id']?>" style="float: left;">
+                                                    <button type="button" class="btn btn-primary primary_btn rounded" style="background-color:orange;">
+                                                        <?translate("About","&Uuml;r&uuml;n&uuml; &#304;nceley&#304;n")?>
+                                                    </button>
+                                                </a>
+                                                
+                                                </div>
+                                                <div class="d-flex justify-content-between donation align-items-center" style="margin-top:10px;">
+            									<button type="button" class="btn btn-primary primary_btn rounded" <?if($logged==1){echo 'data-toggle="modal"';}?> data-whatever="<?echo $row['id']?>" data-target="#exampleModalCenter">
+                                                    <?translate("Buy","Sat&#305;n Al&#305;n")?>
+                                                </button>
+                                                
+                                                
+            								</div>
+            								
+            							</div>
+            						</div>
+            					</div>
+            				</div>
+				            
+				            <?
+
+                        }
+                    }
+				?>
+				
+
+				
+				<?if($logged==1){?>
+    				<div class="col-lg-4">
+                            <div class="blog_right_sidebar">
+                                <?php include_once("./phpComponents/cartWidget.php")?>
+                            </div>
+                    </div>
+                <?}?>
+			</div>
+			<?}?>
         </div>
     </section>
     <!--================ End Features Cause section =================-->

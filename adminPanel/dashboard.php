@@ -126,7 +126,7 @@ if ($logged==0){
                                 { 
                                     echo "<tr>";
                                     echo "<td>".$row['comment']."</td>";
-                                    echo '<td><a href="./dashboard.php?deleteBlogComment='.$row['id'].'"><button class="btn" style="background-color:green;">Delete</td>';
+                                    echo '<td><a href="./dashboard.php?deleteBlogComment='.$row['id'].'"><button class="btn" style="background-color:red;">Delete</td>';
                                     echo "</tr>";
                                 }
                             }
@@ -157,7 +157,7 @@ if ($logged==0){
                                 { 
                                     echo "<tr>";
                                     echo "<td>".$row['comment']."</td>";
-                                    echo '<td><a href="./dashboard.php?deletePostComment='.$row['id'].'"><button class="btn" style="background-color:green;">Delete</td>';
+                                    echo '<td><a href="./dashboard.php?deletePostComment='.$row['id'].'"><button class="btn" style="background-color:red;">Delete</td>';
                                     echo "</tr>";
                                 }
                             }

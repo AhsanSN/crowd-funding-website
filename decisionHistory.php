@@ -4,7 +4,7 @@
 
 
 //cart items for check out
-$query_cartItemsCheckout= "select * from fik_postApproval order by id desc"; //for now
+$query_cartItemsCheckout= "select * from fik_postApproval where userId = '$session_userId' order by id desc"; //for now
 $result_cartItemsCheckout = $con->query($query_cartItemsCheckout); 
 
 ?>
@@ -20,6 +20,13 @@ $result_cartItemsCheckout = $con->query($query_cartItemsCheckout);
     <!--================ Home Banner Area =================-->
     <section class="banner_area">
         <div class="banner_inner d-flex align-items-center">
+            <style>
+        .banner_area .banner_inner .overlay{
+            
+            background: linear-gradient(0deg, rgba(6, 13, 1, 0.3), rgba(6, 13, 1, 0.3)), url(./img/garden.jpg) no-repeat scroll center center;
+            background-size:cover
+        }
+    </style>
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
             <div class="container">
                 <div class="banner_content text-center">
@@ -32,10 +39,7 @@ $result_cartItemsCheckout = $con->query($query_cartItemsCheckout);
 	
 	<section class="features_causes">
         <div class="container">
-            <div class="main_title">
-                <h2><?translate("Posts","Mesajlar")?></h2>
-            </div>
-
+     
             <div class="row">
                 <div class="col-lg-12 posts-list">
                     
@@ -44,9 +48,9 @@ $result_cartItemsCheckout = $con->query($query_cartItemsCheckout);
 							<div class="progress-table">
 								<div class="table-head">
 									<div class="serial">#</div>
-									<div class="country"><?translate("Title","Başlık")?></div>
+									<div class="country"><?translate("Title","Ba&#351;l&#305;k")?></div>
 									<div class="visit"><?translate("Goal","Hedef")?></div>
-									<div class="percentage"><?translate("Excerpt","Alıntı")?></div>
+									<div class="percentage"><?translate("Excerpt","Al&#305;nt&#305;")?></div>
 									<div class="percentage"><?translate("Decision","Karar")?></div>
 								</div>
 								<?
@@ -77,7 +81,7 @@ $result_cartItemsCheckout = $con->query($query_cartItemsCheckout);
         									    ?>
         									    <?if ($row['decision']=='posted'){
         									        ?>
-        									        <p style="color:green;"><?translate("Approved","onaylı")?></p>
+        									        <p style="color:green;"><?translate("Approved","onayl&#305;")?></p>
         									        <?
         									    }
         									    ?>

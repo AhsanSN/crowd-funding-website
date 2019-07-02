@@ -3,7 +3,7 @@
 
 $noPageFound = true;
 if(isset($_GET['id'])){
-    $id = $_GET['id'];
+    $id = htmlspecialchars($_GET['id']);
     $query_selectedPost= "
     select p.views, u.userImg as pImg, u.about, p.id, p.title, p.excerpt,p.aboutMe, p.image ,p.description, p.category, p.datePosted , u.name from fik_blogs p inner join fik_users u on u.id = p.userId where p.id='$id' 
     "; 
@@ -79,17 +79,15 @@ else{
 //posting new comment
 if(isset($_POST["new_comment"]))
 {
-    $comment = $_POST["new_comment"];
-    $id = $_POST['postId'];
+    $comment = mb_htmlentities($_POST["new_comment"]);
+    $id = htmlspecialchars($_POST['postId']);
     $datePosted = time();
     $sql="insert into fik_blogComments (`blogId`, `userId`, `comment`, `datePosted`) values ('$id', '$session_userId', '$comment', '$datePosted')";
     if(!mysqli_query($con,$sql))
     {
         echo "err";
     }
-    ?>
-    <script>console.log("hi")</script>
-    <?
+    
 }
 
 //recent posts
@@ -166,12 +164,19 @@ else{
         <!--================ End Header Menu Area =================-->
             
         <!--================ Home Banner Area =================-->
+                <style>
+        .banner_area .banner_inner .overlay{
+            
+            background: linear-gradient(0deg, rgba(6, 13, 1, 0.3), rgba(6, 13, 1, 0.3)), url(./img/garden.jpg) no-repeat scroll center center;
+            background-size:cover
+        }
+    </style>
         <section class="banner_area">
             <div class="banner_inner d-flex align-items-center">
                 <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
                 <div class="container">
                     <div class="banner_content text-center">
-                        <h2><?echo $title?><?if($noPageFound){echo "No page Found!";}?></h2>
+                        <h2><?echo $title?><?if($noPageFound){translate("No page Found!","Sayfa bulunamad&#305;!");}?></h2>
                         <p><?echo $excerpt?></p>
                     </div>
                 </div>
@@ -201,7 +206,7 @@ else{
                                     <ul class="blog_meta list">
                                         <li><a href="#"><?echo $name?><i class="lnr lnr-user"></i></a></li>
                                         <li><a href="#"><?echo date('Y/m/d H:i',$date)?><i class="lnr lnr-calendar-full"></i></a></li>
-                                        <li><a href="#"><?echo $views?> <?translate("Views","Görünümler")?><i class="lnr lnr-eye"></i></a></li>
+                                        <li><a href="#"><?echo $views?> <?translate("Views","G&#246;r&#252;n&#252;mler")?><i class="lnr lnr-eye"></i></a></li>
                                         <li><a href="#"><?echo $nComments?> <?translate("Comments","Yorumlar")?><i class="lnr lnr-bubble"></i></a></li>
                                     </ul>
                                     
@@ -231,14 +236,14 @@ else{
                                         <a href="./blogPage.php?id=<?echo $previd?>"><span class="lnr text-white lnr-arrow-left"></span></a>
                                     </div>
                                     <div class="detials">
-                                        <p><?translate("Prev Post","Önceki yazı")?></p>
+                                        <p><?translate("Prev Post","&#246;nceki yaz&#305;")?></p>
                                         <a href="./blogPage.php?id=<?echo $previd?>"><h4><?echo $prevtitle?></h4></a>
                                     </div>
                                 </div>
                                 <?}if($nextid!=null){?>
                                 <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
                                     <div class="detials">
-                                        <p><?translate("Next Post","Sonraki gönderi")?></p>
+                                        <p><?translate("Next Post","Sonraki g&#246;nderi")?></p>
                                         <a href="./blogPage.php?id=<?echo $nextid?>"><h4><?echo $nexttitle?></h4></a>
                                     </div>
                                     <div class="arrow">
@@ -272,7 +277,7 @@ else{
                                                 </div>
                                                 <div class="desc">
                                                     <h5><a href="#"><?echo $row['name']?></a></h5>
-                                                    <p class="date"><?echo $row['datePosted']?></p>
+                                                    <p class="date"><?echo date('d/m/Y H:i', $row['datePosted']);?></p>
                                                     <p class="comment">
                                                         <?echo $row['comment']?>
                                                     </p>
@@ -292,9 +297,9 @@ else{
                             <form method="get">
                                 <input name="postId" hidden value="<?echo $id?>">
                                 <div class="form-group">
-                                    <textarea class="form-control mb-10" rows="5" name="new_comment" id="new_comment" placeholder="<?translate("Type your comment here.","Yorumunuzu buraya yazın.")?>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<?translate("Type your comment here.","Yorumunuzu buraya yazın.")?>'" required=""></textarea>
+                                    <textarea class="form-control mb-10" rows="5" name="new_comment" id="new_comment" placeholder="<?translate("Type your comment here.","Yorumunuzu buraya yaz&#305;n.")?>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<?translate("Type your comment here.","Yorumunuzu buraya yaz&#305;n.")?>'" required=""></textarea>
                                 </div>
-                                <button href="#" class="primary-btn primary_btn"><?translate("Post Comment","Yorum gönder")?></button>	
+                                <button href="#" class="primary-btn primary_btn"><?translate("Post Comment","Yorum g&#246;nder")?></button>	
                             </form>
                         </div>
                         <?}?>

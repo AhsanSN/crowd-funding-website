@@ -3,63 +3,51 @@
 // recent 3 posts
 
 //booked rooms list
-$query_recent3Posts = "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned from fik_posts p left outer join fik_contributions c on p.id=c.postId group by c.postId order by p.views desc limit 3"; 
+$query_recent3Posts = "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(c.postId) as nContributors, sum(c.quantity) as amountEarned from fik_posts p left outer join fik_contributions c on p.id=c.postId group by c.postId order by p.id desc limit 3"; 
 
-require_once 'Mobile_Detect.php';
-$detect = new Mobile_Detect;
- 
 ?>
 <!doctype html>
 <html lang="en">
     <?php include_once("./phpComponents/header.php")?>
     <link rel="stylesheet" href="css/videoBanner.css">
+    <style>
+        .progress{
+            margin-bottom:-10px;
+            height:7px;
+            border-radius: 0px;
+        }
+        .progress-bar{
+            background-color:#54a829;
+        }
+    </style>
+
 <body>
         
 	<!--================ Start Header Menu Area =================-->
-	<?php include_once("./phpComponents/navbar.php")?>
-	
+	<?php include_once("./phpComponents/navbar.php")?>  
 	<!--================ End Header Menu Area =================-->
 	
 	<!--================ Home Banner Area =================-->
 	
-	<section>
+	<section class="features_causes" style="background-color:#008c7d;padding-bottom:2px;margin-top:3px;">
 		
 
-<video autoplay muted loop id="myVideo">
+<video autoplay muted height="100%" width="100%" loop id="myVideo" style="margin-top:68px;">
   <source src="./uploads/bannerVideo.mp4" type="video/mp4">
 </video>
-<div class="content">
-  <div class="banner_inner">
-			<div class="container">
-				<div class="banner_content">
-				    <?
-				    if ( $detect->isMobile() ) {
-                        ?>
-                        <h3 style=" color: #f9f9ff;"><?translate("Create a better world","Daha iyi bir dünya yarat")?></h3>
-                        <p style="font-size:12px;line-height: 20px;">
-						That don't lights. Blessed land spirit creature divide our made two 
-						itself upon you'll dominion waters man second good you they're divided upon winged were replenish night
-					</p>
-                        <?
-                    }
-                    else{
-                        ?>
-                        <h2><?translate("Create a better world","Daha iyi bir dünya yarat")?></h2>
-                        <p>
-						That don't lights. Blessed land spirit creature divide our made two 
-						itself upon you'll dominion waters man second good you they're divided upon winged were replenish night
-					</p>
-                        <?
-                    }
-				    ?>
-					
-					
-					<a class="primary_btn mr-20" href="./allPosts.php"><?translate("Donate Now","Şimdi Bağış yap")?></a>
-				</div>
-			</div>
-		</div>
-</div>
 
+<div class="container">
+    <br>
+			<div class="main_title">
+				<h3 style=" color: white;font-size:30px"><?translate("Create a better world","DAHA B&Uuml;Y&Uuml;K B&#304;R A&#304;LE &#304;&Ccedil;&#304;N!")?></h3>
+                        <p style="color: white;font-size:20pxline-height: 20px;">
+                            <?translate("Donate to some of the best ideas globally. ","Haydi Beraber &#304;lk Ba&#351;ar&#305; Hikayemizi Olu&#351;tural&#305;m!")?></p>
+            <a class="primary_btn mr-20" href="./postPage.php?id=2" style="font-size:13px;"><?translate("Donate Now","F&#304;k&#304;r Bah&ccedil;&#305;van&#305;'na Destek Olun!")?></a>
+                            
+			</div>
+			</div>
+
+					
 	</section>
 	<!--================ End Home Banner Area =================-->
 	
@@ -69,8 +57,8 @@ $detect = new Mobile_Detect;
 	<section class="features_causes">
 		<div class="container">
 			<div class="main_title">
-				<h2><?translate("Featured Projects", "Öne çıkan projeler")?></h2>
-				<p><?translate("Some of the featured projects.","Öne çıkan projelerden bazıları.")?></p>
+				<h2><?translate("Newest Projects", "Bah&ccedil;&#305;vanlar&#305;n Projeleri")?></h2>
+				<p><?translate("Some of the newest projects.","Haydi Fikir Tohumlar&#305;n&#305; &#304;nceleyelim!")?></p>
 			</div>
 
 			<div class="row">
@@ -85,8 +73,25 @@ $detect = new Mobile_Detect;
             					<div class="card">
             						<div class="card-body">
             							<figure>
-            								<img class="card-img-top img-fluid"src="./uploads/postImages/<?echo $row['image']?>" alt="<?echo $row['title']?>">
+            								<?
+            							    if(substr($row['image'],-3)=="mp4"){
+                                            ?>
+                                            <video class="videoImg card-img-top img-fluid" controls loop>
+                                              <source src="./uploads/postImages/<?echo $row['image']?>" type="video/mp4" alt="<?echo $row['title']?>">
+                                            </video>
+                                            <?}else{?>
+                                            
+                                            <img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>" alt="<?echo $row['title']?>">
+                                            <?}?>
             							</figure>
+            							<?
+            							$percentageCollected = ($row['amountEarned']/($row['goal']+1))*100;
+            							?>
+            							<div class="progress">
+                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<?echo $percentageCollected?>%">
+                                              
+                                            </div>
+                                          </div>
             							<div class="card_inner_body">
             								<h4 class="card-title"><?echo $row['title']?></h4>
             								<p class="card-text">
@@ -98,7 +103,7 @@ $detect = new Mobile_Detect;
             								</div>
             								<div class="d-flex justify-content-between donation align-items-center">
             									<a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("donate","Destekle")?></a>
-            									<p><span class="lnr lnr-heart"></span> <?echo $row['nContributors']?> <?translate("Donors","Destekçiler")?></p>
+            									<p><span class="lnr lnr-heart"></span> <?echo $row['nContributors']?> <?translate("Donors","Destek&#231;iler")?></p>
             								</div>
             							</div>
             						</div>
@@ -117,34 +122,34 @@ $detect = new Mobile_Detect;
 	<section class="causes_area" style="padding:0px;">
 		<div class="container">
 			<div class="main_title">
-				<h2>Our major Projects</h2>
-				<p>Creepeth called face upon face yielding midst is after moveth </p>
+				<h2><?translate("What do we do?", "Neler Yap&#305;yoruz?")?></h2>
+				<p><?translate("We bring the generous donors and the people with big ideas one step closer.", "Kitleleri ve fikir sahiplerini bir araya getirerek, projelerin ye&#351;ermesi i&ccedil;in &ccedil;al&#305;&#351;malar yap&#305;yoruz.")?></p>
 			</div>
 			<div class="row">
 				<div class="col-lg-4 col-md-6">
 					<div class="single_causes">
-						<h4>Give Donation</h4>
-						<img src="img/causes/c1.png" alt="">
+						<h4><?translate("Give Donation", "Fikir Tohumlar&#305;n&#305; &#304;nceleyin!")?></h4>
+						<img style="height:100px; width:100px;" src="img/symbol1.png" alt="">
 						<p>
-							It you're. Was called you're fowl grass lesser land together waters beast darkness earth land whose male all moveth fruitful.
+							<?translate("Give donation to some of the best ideas around you and help make this world a better place to live in.", "Platformda yer alan projeleri inceleyebilir ya da sizde proje yollayarak platformumuzda yer alabilirsiniz. Her fikir gelece&#287;i de&#287;i&#351;tirebilir anlay&#305;&#351;&#305; ile her konudaki fikire a&ccedil;&#305;&#287;&#305;z. Tek istedi&#287;imiz sizin fikrinize g&uuml;venmeniz.")?>
 						</p>
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="single_causes">
-						<h4>Give Inspiration</h4>
-						<img src="img/causes/c2.png" alt="">
+						<h4><?translate("Give Inspiration", "Bah&ccedil;&#305;vanlar&#305;n Yan&#305;nda Yer Al&#305;n!")?></h4>
+						<img style="height:100px; width:100px;" src="img/symbol2.png" alt="">
 						<p>
-							It you're. Was called you're fowl grass lesser land together waters beast darkness earth land whose male all moveth fruitful.
+							<?translate("Inspire people with big dreams and passion to come forward and contribute in making this world better.", "Her fikir sahibi ve fikrin geli&#351;mesi i&ccedil;in &ccedil;aba g&ouml;sterenler bizim i&ccedil;in bir bah&ccedil;&#305;vand&#305;r, &ccedil;&uuml;nk&uuml; her fikir bir tohumdur. Sizde platformumuzda yer alan projelere destekte bulunarak, bah&ccedil;&#305;vanlar&#305;n yan&#305;nda bulunabilirsiniz.")?>
 						</p>
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="single_causes">
-						<h4>Become Bolunteer</h4>
-						<img src="img/causes/c3.png" alt="">
+						<h4><?translate("Become Volunteer", "El Ele Neler Ba&#351;ard&#305;&#287;&#305;m&#305;z&#305; Fark Edin!")?></h4>
+						<img style="height:100px; width:100px;" src="img/symbol3.png" alt="">
 						<p>
-							It you're. Was called you're fowl grass lesser land together waters beast darkness earth land whose male all moveth fruitful.
+							<?translate("Be one of the thousands generous donors, and donate to the deserving minds.", "Destekte bulundu&#287;unuz fikirlerin sizler sayesinde neler ba&#351;ard&#305;&#287;&#305;n&#305; g&ouml;zlerinizle g&ouml;rd&uuml;&#287;&uuml;n&uuml;z zaman gelece&#287;e dair anlay&#305;&#351;&#305;n&#305;z de&#287;i&#351;ecek. &#350;unu unutmay&#305;n ki: siz, bah&ccedil;&#305;van&#305;n yan&#305;nda bulunmasayd&#305;n&#305;z; proje ba&#351;ar&#305;ya ula&#351;mayacakt&#305;.")?>
 						</p>
 					</div>
 				</div>
@@ -154,39 +159,7 @@ $detect = new Mobile_Detect;
 	<!--================ End Causes Area =================-->
 
 	<!--================ Start About Us Area =================-->
-	<section class="about_area section_gap_bottom">
-		<div class="container">
-			<div class="row">	
-				<div class="single_about row">
-					<div class="col-lg-6 col-md-12 text-center about_left">
-						<div class="about_thumb">
-							<img src="img/about-img.jpg" class="img-fluid" alt="">
-						</div>
-					</div>
-					<div class="col-lg-6 col-md-12 about_right">
-						<div class="about_content">
-							<h2>
-								We are nonprofit team <br>
-									and work worldwide
-							</h2>
-							<p>
-									Their multiply doesn't behold shall appear living heaven second 
-									roo lights. Itself hath thing for won't herb forth gathered good 
-									bear fowl kind give fly form winged for reason
-							</p>
-							<p>
-									Land their given the seasons herb lights fowl beast whales it 
-									after multiply fifth under to it waters waters created heaven 
-									very fill agenc to. Dry creepeth subdue them kind night behold 
-									rule stars him grass waters our without 
-							</p>
-							<a href="#" class="primary_btn">Learn more</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+	
 	<!--================ End About Us Area =================-->
 
 	<!--================ End Features Cause section =================-->
@@ -203,17 +176,20 @@ $detect = new Mobile_Detect;
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="js/jquery-3.2.1.min.js"></script>
-	<script src="js/popper.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/stellar.js"></script>
-	<script src="vendors/lightbox/simpleLightbox.min.js"></script>
-	<script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
-	<script src="js/jquery.ajaxchimp.min.js"></script>
-	<script src="js/mail-script.js"></script>
-	<script src="js/countdown.js"></script>
-	<!--gmaps Js-->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
-	<script src="js/gmaps.min.js"></script>
-	<script src="js/theme.js"></script>
+        <script src="js/popper.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/stellar.js"></script>
+        <script src="vendors/lightbox/simpleLightbox.min.js"></script>
+        <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
+        <script src="js/jquery.ajaxchimp.min.js"></script>
+        <script src="js/mail-script.js"></script>
+        <!--gmaps Js-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+        <script src="js/gmaps.min.js"></script>
+        <script src="js/theme.js"></script>
+        
+
 </body>
+
+
 </html>
