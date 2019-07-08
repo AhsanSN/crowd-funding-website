@@ -3,8 +3,8 @@ $filenameLink = basename($_SERVER['PHP_SELF']);
 ?>
 <link rel="stylesheet" href="https://use.typekit.net/feh8sou.css">
 <!--style="background-color:#438c00"-->
-<header class="header_area" <?if($filenameLink=='checkout.php'){echo 'style="background-color:#008c7d"';}?>>
-		<div class="main_menu">
+<header class="header_area" style="background-color:#008c7d">
+		<div class="main_menu" style="background-color:#008c7d">
 			<div class="container">
 				<nav class="navbar navbar-expand-lg navbar-light">
 					<div class="container">
@@ -32,7 +32,7 @@ $filenameLink = basename($_SERVER['PHP_SELF']);
 							<span class="icon-bar"></span>
 						</button>
 						<!-- Collect the nav links, forms, and other content for toggling -->
-						<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+						<div class="collapse navbar-collapse offset" id="navbarSupportedContent" style="background-color:#008c7d">
 							<ul class="nav navbar-nav menu_nav ml-auto">
 								<li class="nav-item <?if($filenameLink=='index.php'){echo'active';}?>"><a class="nav-link" href="./"><?translate("Home","Ana sayfa")?></a></li> 
 								<li class="nav-item <?if($filenameLink=='allPosts.php'){echo'active';}?>"><a class="nav-link" href="allPosts.php"><?translate("Projects","Projeler")?></a></li> 
@@ -57,7 +57,7 @@ $filenameLink = basename($_SERVER['PHP_SELF']);
 								?>
 								<li class="nav-item submenu dropdown">
                                     <a href="<?if($session_language=='EN'){echo "?lang=TK";}else{echo "?lang=EN";}?>" class="nav-link">
-                                        <img height="15" width="25" src="./img/<?if($session_language=='TK'){echo 'englishFlag.jpg';}else{echo 'turkishFlag.png';}?>" style="margin-right:5px;">
+                                        <img height="15" width="25" src="./img/<?if($session_language=='TK'){echo 'world1.png';}else{echo 'turkishFlag.png';}?>" style="margin-right:5px;">
                                         <?
                                         if($session_language=="TK"){
                                             echo 'EN';

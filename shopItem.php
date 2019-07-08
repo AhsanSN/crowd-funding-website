@@ -236,7 +236,7 @@ else{
                 }
                 </style>
                 <div class="overlay bg-parallax" id='backImg' data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
-                <div class="container" style="background-color:purple;opacity: .8;border-radius: 20px;">
+                <div class="container" style="opacity: .8;border-radius: 20px;">
                     <div class="banner_content text-center">
                         <h2><?echo $name?> <?if($noPageFound){echo "No page Found!";}?></h2>
                         <p><?echo $description?></p>

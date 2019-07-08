@@ -21,7 +21,7 @@
     <section class="banner_area">
         <div class="banner_inner d-flex align-items-center">
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
-            <div class="container" style="background-color:purple;opacity: .8;border-radius: 20px;">
+            <div class="container" style="border-radius: 20px;">
                 <div class="banner_content text-center">
                     <h2 style="color:white;font-size:50px;text-transform: uppercase;"><?translate("About Us","Hakk&#305;m&#305;zda")?></h2>
                     <p style="color:white;font-size:20px;text-transform: uppercase;"><?translate("This is all about you and us.","F&#304;k&#304;r Bah&ccedil;&#305;van&#305; Hakk&#305;nda Merak Ett&#304;&#287;&#304;n&#304;z Her &#350;ey!")?></p>

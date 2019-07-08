@@ -175,13 +175,14 @@ $result_inventory = $con->query($query_inventory);
 
                                     <div class="row">
                                         <?
-                    $result_supportedProjects = $con->query($query_supportedProjects); 
-                    if ($result_supportedProjects->num_rows > 0)
-                    { 
-                        while($row = $result_supportedProjects->fetch_assoc()) 
-                        { 
-                ?>
-
+                                            $result_supportedProjects = $con->query($query_supportedProjects); 
+                                            if ($result_supportedProjects->num_rows > 0)
+                                            { 
+                                                while($row = $result_supportedProjects->fetch_assoc()) 
+                                                { 
+                                                    
+                                        ?>
+                                            
                                             <div class="col-lg-4 col-md-6">
                                                 <div class="card">
                                                     <div class="card-body">
@@ -207,15 +208,84 @@ $result_inventory = $con->query($query_inventory);
                                                             </div>
                                                             <div class="d-flex justify-content-between donation align-items-center">
                                                                 <a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("View","g&#246;r&#252;n&#252;m")?></a>
+                                                                <?
+                                                            if(((time() - $row['datePosted']) >= 7776000 )&&( $session_AgreeOption=='moneyToFikir')){
+                                                                //transfer everythonig to fikir
+                                                                $postID= $row['id'];
+                                                                //send greater than 1 cont to fikir
+                                                                $sql="update fik_contributions c inner join fik_shopItems s on c.contribution=s.id
+                                                                        set c.postId='2' where c.userId='$session_userId' and c.postId='$postID' and s.price>1";
+                                                                if(!mysqli_query($con,$sql))
+                                                                {
+                                                                echo"err";
+                                                                }
+                                                                
+                                                                //send rest to owner
+                                                                $query_myCont= "select * from fik_contributions where userId='$session_userId' and postId='$postID' and postId!='2'"; 
+                                                                $result_myCont = $con->query($query_myCont); 
+                                                                if ($result_myCont->num_rows > 0)
+                                                                { 
+                                                                    while($row = $result_myCont->fetch_assoc()) 
+                                                                    { 
+                                                                        $itemId = $row['contribution'];
+                                                                        $itemQuantity = $row['quantity'];
+                                                                        
+                                                                        $sql="update fik_inventory set quantity=quantity+'$itemQuantity' where userId='$session_userId' and object='$itemId'";
+                                                                        if(!mysqli_query($con,$sql))
+                                                                        {
+                                                                        echo"err";
+                                                                        }
+                                                                    }
+                                                                }
+                                                                
+                                                                
+                                                                $sql="delete from fik_contributions where userId='$session_userId' and postId='$postID' and postId!='2'";
+                                                                if(!mysqli_query($con,$sql))
+                                                                {
+                                                                echo"err";
+                                                                }
+                                                                
+                                                               
+                                                            }
+                                                            if(((time() - $row['datePosted']) >= 7776000 )&&( $session_AgreeOption=='moneyToMe') &&( $row['id']!=2)){
+                                                                //send things to my wallet again
+                                                                $postID= $row['id'];
+                                                                
+                                                                $query_myCont= "select * from fik_contributions where userId='$session_userId' and postId='$postID'"; 
+                                                                $result_myCont = $con->query($query_myCont); 
+                                                                if ($result_myCont->num_rows > 0)
+                                                                { 
+                                                                    while($row = $result_myCont->fetch_assoc()) 
+                                                                    { 
+                                                                        $itemId = $row['contribution'];
+                                                                        $itemQuantity = $row['quantity'];
+                                                                        
+                                                                        $sql="update fik_inventory set quantity=quantity+'$itemQuantity' where userId='$session_userId' and object='$itemId'";
+                                                                        if(!mysqli_query($con,$sql))
+                                                                        {
+                                                                        echo"err";
+                                                                        }
+                                                                    }
+                                                                }
+                                                                
+                                                                $sql="delete from fik_contributions where userId='$session_userId' and postId='$postID'";
+                                                                if(!mysqli_query($con,$sql))
+                                                                {
+                                                                echo"err";
+                                                                }
+                                                                
+                                                            }
+                                                            ?>
                                                             </div>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <?
-                        }
-                    }
-				?>
+                                                }
+                                            }
+                        				?>
                                     </div>
 
                                     <div class="row justify-content-center">

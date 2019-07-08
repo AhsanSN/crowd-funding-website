@@ -3,8 +3,13 @@
     include_once("./phpComponents/checkLoginStatus.php");
 
 
-//cart items for check out
-$query_cartItemsCheckout= "SELECT p.title, s.name, c.quantity, (c.quantity*s.price)as cost, c.timeDone FROM `fik_contributions` c inner join fik_posts p on p.id=c.postId inner join fik_shopItems s on s.id=c.contribution order by c.id desc"; //for now
+//cart items for check out (1. single line for each)
+//$query_cartItemsCheckout= "SELECT p.title, s.name, c.quantity, (c.quantity*s.price)as cost, c.timeDone FROM `fik_contributions` c inner join fik_posts p on p.id=c.postId inner join fik_shopItems s on s.id=c.contribution order by c.id desc"; //for now
+
+$query_cartItemsCheckout= "SELECT p.title, s.name, sum(c.quantity)as quantity, sum(c.quantity*s.price)as cost,round(sum(c.quantity*s.price) - (sum(c.quantity*s.price)*100)/(118),2) as kdv,  c.timeDone FROM `fik_contributions` c inner join fik_posts p on p.id=c.postId inner join fik_shopItems s on s.id=c.contribution where c.userId='$session_userId' GROUP by c.postId order by c.id DESC
+"; //for now
+
+
 $result_cartItemsCheckout = $con->query($query_cartItemsCheckout); 
 
 ?>
@@ -53,7 +58,14 @@ $result_cartItemsCheckout = $con->query($query_cartItemsCheckout);
 									<div class="visit"><?translate("Item","madde")?></div>
 									<div class="percentage"><?translate("Quantity","miktar")?></div>
 									<div class="percentage"><?translate("Value","de&#287;er")?></div>
-									<div class="percentage"><?translate("Date","tarih")?></div>
+									<?
+									if($session_AgreeOption == "moneyToFikir"){
+									   ?><div class="percentage"><?translate("Sales Tax","KDV")?></div><?
+									}
+									?>
+									
+									<div class="percentage"><?translate("Date","tar&#304;h")?></div>
+									
 								</div>
 								<?
 								if ($result_cartItemsCheckout->num_rows > 0)
@@ -67,6 +79,12 @@ $result_cartItemsCheckout = $con->query($query_cartItemsCheckout);
         									<div class="visit"><?echo $row['name']?></div>
         									<div class="percentage"><?echo $row['quantity']?></div>
         									<div class="percentage">&#8378; <?echo $row['cost']?></div>
+        									<?
+        									if($session_AgreeOption == "moneyToFikir"){
+        									    ?><div class="percentage">&#8378; <?echo $row['kdv']?></div><?
+        									}
+        									?>
+        									
         									<div class="percentage">
         										 <?echo date('Y/m/d H:i', $row['timeDone']);?>
         									</div>

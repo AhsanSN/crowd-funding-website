@@ -26,13 +26,16 @@ if(isset($_GET['approve'])){
             $datePosted = $row['datePosted'];
             $userId = $row['userId'];
             $aboutMe = $row['aboutMe'];
+            $postRewardId = $row['postRewardId'];
         }
     }
+    //echo "---------------"."$postRewardId"."asa";
 
     
     $datePosted = time();
     
-        $sql="insert into fik_posts (`title`, `excerpt`, `description`, `goal`, `image`, `category`, `datePosted`, `userId`, `aboutMe`) values ('$title', '$excerpt', '$description', '$goal', '$image', '$category', '$datePosted', '$userId', '$aboutMe')";
+    
+        $sql="insert into fik_posts (`title`, `excerpt`, `description`, `goal`, `image`, `category`, `datePosted`, `userId`, `aboutMe`, `postRewardId`) values ('$title', '$excerpt', '$description', '$goal', '$image', '$category', '$datePosted', '$userId', '$aboutMe', '$postRewardId')";
         if(!mysqli_query($con,$sql))
         {
             echo "err";
@@ -52,6 +55,7 @@ if(isset($_GET['approve'])){
                 window.location = "./dashboard.php";
             </script>
             <?
+            
         
 }
 

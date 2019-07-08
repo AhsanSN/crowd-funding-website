@@ -61,32 +61,126 @@ if(isset($_POST["buttonAction"]))
     $goal= mb_htmlentities($_POST['project_goal']);
     $aboutMe = mb_htmlentities($_POST['project_aboutMe']);
     $category = mb_htmlentities($_POST['project_category']);
-        
+    
+    //rewards 
+    $reward1Price = mb_htmlentities($_POST['reward1Prize']);
+    $reward2Price = mb_htmlentities($_POST['reward2Prize']);
+    $reward3Price = mb_htmlentities($_POST['reward3Prize']);
+    $reward4Price = mb_htmlentities($_POST['reward4Prize']);
+    $reward5Price = mb_htmlentities($_POST['reward5Prize']);
+    $reward6Price = mb_htmlentities($_POST['reward6Prize']);
+    $reward7Price = mb_htmlentities($_POST['reward7Prize']);
+    
+    $reward1EstimatedTime = mb_htmlentities($_POST['reward1EstimatedTime']);
+    $reward2EstimatedTime = mb_htmlentities($_POST['reward2EstimatedTime']);
+    $reward3EstimatedTime = mb_htmlentities($_POST['reward3EstimatedTime']);
+    $reward4EstimatedTime = mb_htmlentities($_POST['reward4EstimatedTime']);
+    $reward5EstimatedTime = mb_htmlentities($_POST['reward5EstimatedTime']);
+    $reward6EstimatedTime = mb_htmlentities($_POST['reward6EstimatedTime']);
+    $reward7EstimatedTime = mb_htmlentities($_POST['reward7EstimatedTime']);
+    
+
     if($buttonAction=="save"){
+        $postId = md5((strval(1)).(strval(mt_rand(111111111, 999999999))));
         if($filename!="none"){
-            $sql="UPDATE `fik_draftProjects` SET `title`='$title',`excerpt`='$excerpt',`description`='$description',`goal`='$goal',`aboutMe`='$aboutMe',`category`='$category', `coverPhoto`='$filename' WHERE userId='$session_userId'";
+            $sql="UPDATE `fik_draftProjects` SET `postRewardId`='$postId', `title`='$title',`excerpt`='$excerpt',`description`='$description',`goal`='$goal',`aboutMe`='$aboutMe',`category`='$category', `coverPhoto`='$filename' WHERE userId='$session_userId'";
         }
         else{
-            $sql="UPDATE `fik_draftProjects` SET `title`='$title',`excerpt`='$excerpt',`description`='$description',`goal`='$goal',`aboutMe`='$aboutMe',`category`='$category' WHERE userId='$session_userId'";
+            $sql="UPDATE `fik_draftProjects` SET `postRewardId`='$postId', `title`='$title',`excerpt`='$excerpt',`description`='$description',`goal`='$goal',`aboutMe`='$aboutMe',`category`='$category' WHERE userId='$session_userId'";
         }
         if(!mysqli_query($con,$sql))
         {
             echo "err";
+        }
+        else{
+            //add enteries for rewards  
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', '6fc9c09eb90bcaf4dcd95a1a24e299a7', '$reward1Price', '$reward1EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 1";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', 'b2d5e6dbc0a98d106d70dafe524fc365', '$reward2Price', '$reward2EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 2";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', '5968406e99c2d10164452ac410db67f1', '$reward3Price', '$reward3EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 3";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', '15', '$reward4Price', '$reward4EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 4";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', 'f693fd750bd7d7ebf150fa6c9118717d', '$reward5Price', '$reward5EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 5";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', '9892bf01b944967108a473baaac47831', '$reward6Price', '$reward6EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 6";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', '4ac4f4b9ebca6674dedcbbcba1952ea0', '$reward7Price', '$reward7EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 7";
+            }
         }
         
     }
     if($buttonAction=="post"){
         //save first
-        
+        $postId = md5((strval(1)).(strval(mt_rand(111111111, 999999999))));
         if($filename!="none"){
-            $sql="UPDATE `fik_draftProjects` SET `title`='$title',`excerpt`='$excerpt',`description`='$description',`goal`='$goal',`aboutMe`='$aboutMe',`category`='$category', `coverPhoto`='$filename' WHERE userId='$session_userId'";
+            $sql="UPDATE `fik_draftProjects` SET `postRewardId`='$postId', `title`='$title',`excerpt`='$excerpt',`description`='$description',`goal`='$goal',`aboutMe`='$aboutMe',`category`='$category', `coverPhoto`='$filename' WHERE userId='$session_userId'";
         }
         else{
-            $sql="UPDATE `fik_draftProjects` SET `title`='$title',`excerpt`='$excerpt',`description`='$description',`goal`='$goal',`aboutMe`='$aboutMe',`category`='$category' WHERE userId='$session_userId'";
+            $sql="UPDATE `fik_draftProjects` SET `postRewardId`='$postId', `title`='$title',`excerpt`='$excerpt',`description`='$description',`goal`='$goal',`aboutMe`='$aboutMe',`category`='$category' WHERE userId='$session_userId'";
         }
         if(!mysqli_query($con,$sql))
         {
-            echo "err";
+            echo "err fik_draftProjects";
+        }else{
+            //add enteries for rewards  
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', '6fc9c09eb90bcaf4dcd95a1a24e299a7', '$reward1Price', '$reward1EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 1";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', 'b2d5e6dbc0a98d106d70dafe524fc365', '$reward2Price', '$reward2EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 2";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', '5968406e99c2d10164452ac410db67f1', '$reward3Price', '$reward3EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 3";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', '15', '$reward4Price', '$reward4EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 4";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', 'f693fd750bd7d7ebf150fa6c9118717d', '$reward5Price', '$reward5EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 5";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', '9892bf01b944967108a473baaac47831', '$reward6Price', '$reward6EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 6";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', '4ac4f4b9ebca6674dedcbbcba1952ea0', '$reward7Price', '$reward7EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 7";
+            }
         }
         
         
@@ -108,17 +202,17 @@ if(isset($_POST["buttonAction"]))
         }
         
         $datePosted = time();
-        $sql="insert into fik_postApproval (`title`, `excerpt`, `description`, `goal`, `image`, `category`, `datePosted`, `userId`, `aboutMe`) values ('$title', '$excerpt', '$description', '$goal', '$coverPhoto', '$category', '$datePosted', '$session_userId', '$aboutMe')";
+        $sql="insert into fik_postApproval (`postRewardId`, `title`, `excerpt`, `description`, `goal`, `image`, `category`, `datePosted`, `userId`, `aboutMe`) values ('$postId', '$title', '$excerpt', '$description', '$goal', '$coverPhoto', '$category', '$datePosted', '$session_userId', '$aboutMe')";
         if(!mysqli_query($con,$sql))
         {
-            echo "err";
+            echo "err e1";
         }
         
         
         $sql="UPDATE `fik_draftProjects` SET `title`='',`excerpt`='',`description`='',`goal`='0',`aboutMe`='$aboutMe',`category`='', `coverPhoto`='defaultCover.png' WHERE userId='$session_userId'";
         if(!mysqli_query($con,$sql))
         {
-            echo "err";
+            echo "err e2";
         }
         
         ?>
@@ -144,7 +238,23 @@ if ($result_savedProject->num_rows > 0)
         $goal= $row['goal'];
         $coverPhoto= $row['coverPhoto'];
         $aboutMe = $row['aboutMe'];
+        $postRewardId = $row['postRewardId'];
     }
+    
+    //find draft rewards
+    $arr_prize = array();
+    $arr_deliveryTime = array();
+    $query_rewards= "select * from fik_rewards r where postRewardId= '$postRewardId' order by id asc"; 
+    $result_rewards = $con->query($query_rewards);
+    if ($result_rewards->num_rows > 0)
+    { 
+        while($row = $result_rewards->fetch_assoc()) 
+        { 
+             array_push($arr_prize,$row['reward']);
+             array_push($arr_deliveryTime,$row['deliveryTime']);
+        }
+    }
+    //echo '<pre>'; print_r($arr_prize); echo '</pre>';
 }
 else{
     //no template found
@@ -304,6 +414,127 @@ $result_categories = $con->query($query_categories);
                                    <textarea class="form-control mb-10 excerpt-textarea" rows="5" maxlength="93" name="project_excerpt" placeholder="<?translate('Describe your project in few words for the readers.','okuyucular i&#231;in bir ka&#231; kelimeyle blo&#287;unu tan&#305;mla')?>"  required=""><?echo $excerpt?></textarea>
                                 </p>
                                 
+                                <p style="width=130%" >
+                                        <?translate('Describe your project in detail.','Projenizi ayr&#305;nt&#305;l&#305; olarak tan&#305;mlay&#305;n.')?>
+                                    <textarea style="width=130%" class="form-control mb-10" rows="5" name="project_description" id="textarea2" ><?echo $description?></textarea>
+                                </p>
+                                
+                                <hr>
+                                
+                                <h4 class="card-title">Rewards</h4>
+								<div style="background-color:#c9ffc1;padding:10px;">
+                                    <h4 style="padding:10px;text-align: center;">Yonca -  &#8378; 10</h4>
+                                    <div style="text-align: center;">
+                                        <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/yonca.png"   alt="post">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h6><?translate("Reward","Reward")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward1Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[0]?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
+                                        <input type="text" class="form-control" id="reward1EstimatedTime" name="reward1EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[0]?>">
+                                    </div>
+                                </div>
+                                
+                                
+                                <br>
+                                <div style="background-color:#c9ffc1;padding:10px;">
+                                    <h4 style="padding:10px;text-align: center;">&Ccedil;i&ccedil;ek Demeti -  &#8378; 25</h4>
+                                    <div style="text-align: center;">
+                                        <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/demet.png"   alt="post">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <h6><?translate("Reward","Reward")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward2Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[1]?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
+                                        <input type="text" class="form-control" id="reward2EstimatedTime" name="reward2EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[1]?>">
+                                    </div>
+                                </div>
+                                <br>
+                                <div style="background-color:#c9ffc1;padding:10px;">
+                                    <h4 style="padding:10px;text-align: center;">Budama Makas&#305; -  &#8378; 50</h4>
+                                    <div style="text-align: center;">
+                                        <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/budamamakasi.png"   alt="post">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <h6><?translate("Reward","Reward")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward3Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[2]?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
+                                        <input type="text" class="form-control" id="reward3EstimatedTime" name="reward3EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[2]?>">
+                                    </div>
+                                </div>
+                                <br>
+                                <div style="background-color:#c9ffc1;padding:10px;">
+                                    <h4 style="padding:10px;text-align: center;">Fidan -  &#8378; 100</h4>
+                                    <div style="text-align: center;">
+                                        <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/fidan.png"   alt="post">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <h6><?translate("Reward","Reward")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward4Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[3]?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
+                                        <input type="text" class="form-control" id="reward4EstimatedTime" name="reward4EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[3]?>">
+                                    </div>
+                                </div>
+                                <br>
+                                <div style="background-color:#c9ffc1;padding:10px;">
+                                    <h4 style="padding:10px;text-align: center;">El Arabas&#305; -  &#8378; 250</h4>
+                                    <div style="text-align: center;">
+                                        <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/elarabasi.png"   alt="post">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <h6><?translate("Reward","Reward")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward5Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[4]?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
+                                        <input type="text" class="form-control" id="reward5EstimatedTime" name="reward5EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[4]?>">
+                                    </div>
+                                </div>
+                                <br>
+                                <div style="background-color:#c9ffc1;padding:10px;">
+                                    <h4 style="padding:10px;text-align: center;">Meyve A&#287;ac&#305; -  &#8378; 500</h4>
+                                    <div style="text-align: center;">
+                                        <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/agac.png"   alt="post">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <h6><?translate("Reward","Reward")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward6Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[5]?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
+                                        <input type="text" class="form-control" id="reward6EstimatedTime" name="reward6EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[5]?>">
+                                    </div>
+                                </div>
+                                <br>
+                                <div style="background-color:#c9ffc1;padding:10px;">
+                                    <h4 style="padding:10px;text-align: center;">Bah&ccedil;&#305;van Ailesi -  &#8378; 1000</h4>
+                                    <div style="text-align: center;">
+                                        <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/gelecek.png"   alt="post">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <h6><?translate("Reward","Reward")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward7Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[6]?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
+                                        <input type="text" class="form-control" id="reward7EstimatedTime" name="reward7EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[6]?>">
+                                    </div>
+                                </div>
                                 
                             </div>
                             
@@ -320,15 +551,12 @@ $result_categories = $con->query($query_categories);
                             </aside>
                             <hr>
                             <div class="form-group">
-                                    <textarea class="form-control mb-10" rows="5"  name="project_aboutMe" maxlength="200" placeholder="<?translate('Tell people about yourself.','İnsanlara kendinden bahset.')?>" required=""><?echo $aboutMe?></textarea>
-                                </div>
+                                <textarea class="form-control mb-10" rows="5"  name="project_aboutMe" maxlength="200" placeholder="<?translate('Tell people about yourself.','İnsanlara kendinden bahset.')?>" required=""><?echo $aboutMe?></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <p style="width=100%" >
-                    <?translate('Describe your project in detail.','Projenizi ayr&#305;nt&#305;l&#305; olarak tan&#305;mlay&#305;n.')?>
-                                    <textarea style="width=100%" class="form-control mb-10" rows="5" name="project_description" id="textarea2" ><?echo $description?></textarea>
-                                </p>
+                
             </div>
             </form>
         
@@ -343,6 +571,7 @@ $result_categories = $con->query($query_categories);
 
     <!--================ Start footer Area  =================-->    
      <?php include_once("./phpComponents/footer.php")?>
+     
      
         <!--================ End footer Area  =================--> 
         

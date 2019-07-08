@@ -25,7 +25,7 @@
                 }
                 </style>
                 <div class="overlay bg-parallax" id='backImg' data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
-                <div class="container" style="background-color:purple;opacity: .8;border-radius: 20px;">
+                <div class="container" style="opacity: .8;border-radius: 20px;">
                     <div class="banner_content text-center">
                         <h2>F&#304;K&#304;R BAH&#199;IVANI</h2>
                     </div>

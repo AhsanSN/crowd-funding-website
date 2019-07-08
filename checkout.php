@@ -4,6 +4,9 @@
 
 if(isset($_GET['removeItem'])){
     $remItem = $_GET['removeItem'];
+    ?>
+    <script>console.log("9999");</script>
+    <?
     $sql="delete from fik_cart where object='$remItem' and userId='$session_userId'";
         if(!mysqli_query($con,$sql))
         {
@@ -12,7 +15,7 @@ if(isset($_GET['removeItem'])){
 }
 
 //cart items for check out
-$query_cartItemsCheckout= "select c.id, c.userId,c.object,c.quantity,s.name,s.price,s.image,s.description,(s.price*c.quantity)as total from fik_cart c inner join fik_shopItems s on c.object=s.id where userId='$session_userId' order by c.id desc"; //for now
+$query_cartItemsCheckout= "select s.id, c.userId,c.object,c.quantity,s.name,s.price,s.image,s.description,(s.price*c.quantity)as total from fik_cart c inner join fik_shopItems s on c.object=s.id where userId='$session_userId' order by c.id desc"; //for now
 $result_cartItemsCheckout = $con->query($query_cartItemsCheckout); 
 
 //total bill
@@ -29,7 +32,7 @@ if ($result_totalBill->num_rows > 0)
 $costWithoutKDV = round(($total*100)/(118),2);
 $kdv = $total - $costWithoutKDV;
 
-if(isset($_GET['insertOrder'])){
+if(isset($_POST['condition'])){
     $orderId = md5(md5(sha1( mt_rand(111111111, 99999999999999999999999))).'Anomoz');
     $country= mb_htmlentities($_POST['country']);
     $state= mb_htmlentities($_POST['state']);
@@ -37,7 +40,15 @@ if(isset($_GET['insertOrder'])){
     $streetAddress= mb_htmlentities($_POST['streetAddress']);
     
     $date = time();
-    $sql="insert into fik_orders (`orderId`, `datePlaced`, `totalAmount`, `KDV`, `withoutKDV`, `status`, `userId`, `country`, `state`, `city`, `streetAddress`) values ('$orderId', '$date', '$total', '$kdv', '$costWithoutKDV', 'waiting', '$session_userId', '$country', '$state', '$city', '$streetAddress')";
+    $AgreeOption = $_POST['condition'];
+    $sql="insert into fik_orders (`orderId`, `datePlaced`, `totalAmount`, `KDV`, `withoutKDV`, `status`, `userId`, `country`, `state`, `city`, `streetAddress`, `AgreeOption`) values
+    ('$orderId', '$date', '$total', '$kdv', '$costWithoutKDV', 'waiting', '$session_userId', '$country', '$state', '$city', '$streetAddress', '$AgreeOption')";
+    if(!mysqli_query($con,$sql))
+    {
+    echo"err";
+    }
+    
+    $sql="update fik_users set AgreeOption='$AgreeOption' where  id='$session_userId'";
     if(!mysqli_query($con,$sql))
     {
     echo"err";
@@ -109,9 +120,14 @@ if(isset($_GET['insertOrder'])){
         										 &#8378; <?echo $row['quantity']* $row['price']?>
         									</div>
         									<div class="percentage">
-        										<a href="?removeItem=<?echo $row['id']?>" style="background-color:red;" class="btn btn-primary">
+        									    <a href="./checkout.php?removeItem=<?echo $row['id']?>" style="background-color:red;" class="btn btn-primary">
                                                     <?translate("Remove","Kald&#305;r")?>
                                                 </a>
+        									    <!--
+        										<div onclick='removeItem("<?echo $row['id']?>")' style="background-color:red;" class="btn btn-primary">
+                                                    <?translate("Remove","Kald&#305;r")?>
+                                                </div>
+                                                -->
         									</div>
         								</div>
     								<?
@@ -162,9 +178,16 @@ if(isset($_GET['insertOrder'])){
     							        </div>
     							<br>
     							<h4><?translate("Agreements","Agreements")?></h4>
-    							
-    							
-					
+                                <div>
+                                  <input type="radio" id="huey" name="condition" value="moneyToMe"
+                                         >
+                                  <label for="huey">If the project expires and goal has not been met, all the money should be sent to Me</label>
+                                </div>
+                                <div>
+                                  <input type="radio" id="huey" name="condition" value="moneyToFikir"
+                                         >
+                                  <label for="huey">If the project expires and goal has not been met, all the money should be sent to FIKIR BAHCIVANI</label>
+                                </div>
 							</div>
 						</div>
 					</div>
@@ -258,6 +281,23 @@ if(isset($_GET['insertOrder'])){
                         <script src="//geodata.solutions/includes/countrystatecity.js"></script>
         <script>
             document.getElementById('sendNewSms').disabled = true;
+            
+            function removeItem(productId){
+                
+                /**
+                var http = new XMLHttpRequest();
+                http.open("POST", "checkout.php", true);
+                http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                var params = "removeItem=" + productId; // probably use document.getElementById(...).value
+                http.send(params);
+                console.log("--", params);
+                **/
+                
+               
+                
+            }
+                                        
+                                        
         </script>
     </body>
 </html>

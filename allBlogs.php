@@ -44,7 +44,7 @@ $result_allBlogs = $con->query($query_allBlogs);
     <section class="banner_area">
         <div class="banner_inner d-flex align-items-center">
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
-            <div class="container" style="background-color:purple;opacity: .8;border-radius: 20px;">
+            <div class="container" style="border-radius: 20px;">
                 <div class="banner_content text-center">
                     <h2 style="color:white;font-size:50px;text-transform: uppercase;"><?translate("Garden","Bah&#231;e")?></h2>
                     <p style="color:white;font-size:20px;text-transform: uppercase;"><?translate("Read from hundered of blogs written by people like you.","F&#304;k&#304;r Bah&#231;IvanI'nIn Neler YaptI&#287;InI Ke&#351;fed&#304;n!")?></p>

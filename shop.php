@@ -50,13 +50,17 @@ else{
     1;
 }
 
-//recent posts
-$query_recentPosts= "select * from fik_posts order by views desc limit 4"; 
-$result_recentPosts = $con->query($query_recentPosts); 
-
 //shop items
-$query_shopObjects= "select * from fik_shopItems order by id desc"; 
-$result_shopObjects = $con->query($query_shopObjects); 
+if($_GET['item']){
+    $item = $_GET['item'];
+    $query_shopObjects= "select * from fik_shopItems where id='$item'"; 
+    $result_shopObjects = $con->query($query_shopObjects); 
+    
+}else{
+    $query_shopObjects= "select * from fik_shopItems order by price asc"; 
+    $result_shopObjects = $con->query($query_shopObjects); 
+}
+
 
 //cart items
 $query_cartItems= "select * from fik_cart c inner join fik_shopItems s on c.object=s.id where userId='$session_userId' order by c.id desc"; //for now
@@ -70,6 +74,7 @@ $result_inventory = $con->query($query_inventory);
 <!doctype html>
 <html lang="en">
     <?php include_once("./phpComponents/header.php")?>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <body>
     
      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -89,7 +94,7 @@ $result_inventory = $con->query($query_inventory);
 
                             </div>
                             <div class="form-group">
-                                <input class="custom-select quantitySelectMenu" name="quantitySelect" type="number" value="3">
+                                <input class="custom-select quantitySelectMenu" name="quantitySelect" id="minQuantityBuy" type="number" min="0" value="0">
                             </div>
                             
                         </div>
@@ -99,9 +104,7 @@ $result_inventory = $con->query($query_inventory);
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><?translate("Close","Kapat")?></button>
                     <button class="btn btn-primary" type="submit"><?translate("Buy","Sat&#305;n Al&#305;n")?></button>
                   </div>
-                 
-                  
-                  
+             
                 </div>
             </form>
           </div>
@@ -122,7 +125,7 @@ $result_inventory = $con->query($query_inventory);
                 }
             </style>
             <div class="overlay bg-parallax" id="backImg" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
-            <div class="container" style="background-color:purple;opacity: .8;border-radius: 20px;">
+            <div class="container" style="opacity: 1;border-radius: 20px;">
                 <div class="banner_content text-center">
                     <h1 style="color:white;font-size:40px;"><?translate("FARM","MANAV")?> <?if($donationStatus=="success"){echo"<div style='background-color:green;'>Purchase was Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='background-color:red;'>Purchase failed!</div>";}?></h1>
                     <p style="color:white;font-size:20px;text-transform: uppercase;"><?translate("Buy items to donate to world-class ideas.","Bah&#231;&#305;vanlar&#305;n Ortaya &#199;&#305;kard&#305;&#287;&#305; &#220;r&#252;nler&#304; Ke&#351;fed&#304;n!")?></p>
@@ -145,6 +148,7 @@ $result_inventory = $con->query($query_inventory);
                 <h1><?translate("Shop","Manav")?><?if($donationStatus=="success"){echo"<div style='color:green;'>Purchase was Successfull!</div>";}if($donationStatus=="failed"){echo"<div style='color:red;'>Purchase failed!</div>";}?></h1>
                 <p><?translate("Buy items to donate to world-class ideas.","Bah&ccedil;&#305;vanlar&#305;n Ortaya &Ccedil;&#305;kard&#305;&#287;&#305; &Uuml;r&uuml;nleri Ke&#351;fedin ve Sat&#305;n Al&#305;n!")?></p>
                  <?//if($logged==0){echo '<p style="color:red;">'.translateRet("You need to signin to buy from the market.","Piyasadan Sat&#305;n Al&#305;n i&#231;in imza atman&#305;z gerekir.").'</p>';}?>
+                <!--<p style="background-color:orange;color:white;display:none;" id="errMessage"><?translate("You need to signin to buy from the market.","Piyasadan Sat&#305;n Al&#305;n i&#231;in imza atman&#305;z gerekir.")?></p>-->
             </div>
 
             <?if($logged==1){?>
@@ -167,22 +171,27 @@ $result_inventory = $con->query($query_inventory);
             								<img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>"  alt="<?echo $row['name']?>">
             							</figure>
             							<div class="card_inner_body" style="padding: 5px 5px;">
-            								<h4 class="card-title"><?echo $row['name']?> -  &#8378; <?echo $row['price']?></h4>
+
+            								<h4 class="card-title"><?echo $row['name']?> - <?if(substr($row['price'],-2)=="00"){echo substr($row['price'],0,-3);}else{echo $row['price'];}?> &#8378; </h4>
             								<p class="card-text">
             									<?echo $row['description']?>
             								</p>
             								
             								<div class="d-flex justify-content-between donation align-items-center">
-            								    
+            								    <!--
             								    <a href="./shopItem.php?id=<?echo $row['id']?>" style="float: left;">
                                                     <button type="button" class="btn btn-primary primary_btn rounded" style="background-color:orange;">
                                                         <?translate("About","&Uuml;r&uuml;n&uuml; &#304;nceley&#304;n")?>
                                                     </button>
                                                 </a>
+                                                -->
                                                 
                                                 </div>
-                                                <div class="d-flex justify-content-between donation align-items-center" style="margin-top:10px;">
-            									<button type="button" class="btn btn-primary primary_btn rounded" <?if($logged==1){echo 'data-toggle="modal"';}?> data-whatever="<?echo $row['id']?>" data-target="#exampleModalCenter">
+                                                <div class="d-flex justify-content-between donation align-items-center" style="margin-top:20px;text-align:center;"  >
+                                                <?
+                                                $minAmount = ceil(1/$row['price']);
+                                                ?>
+            									<button style="margin: 0 auto;" type="button" class="btn btn-primary primary_btn rounded" <?if($logged==1){echo 'data-toggle="modal"';}?> data-minamount="<?echo $minAmount?>" data-whatever="<?echo $row['id']?>" data-target="#exampleModalCenter">
                                                     <?translate("Buy","Sat&#305;n Al&#305;n")?>
                                                 </button>
                                                 
@@ -232,25 +241,44 @@ $result_inventory = $con->query($query_inventory);
             								<img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>"  alt="<?echo $row['name']?>">
             							</figure>
             							<div class="card_inner_body" style="padding: 5px 5px;">
-            								<h4 class="card-title"><?echo $row['name']?> -  &#8378; <?echo $row['price']?></h4>
+            								<h4 class="card-title"><?echo $row['name']?> -  <?if(substr($row['price'],-2)=="00"){echo substr($row['price'],0,-3);}else{echo $row['price'];}?> &#8378; </h4>
             								<p class="card-text">
             									<?echo $row['description']?>
             								</p>
             								
-            								<div class="d-flex justify-content-between donation align-items-center">
-            								    
+            								<div class="d-flex justify-content-between donation align-items-center" style="text-align:center;">
+            								    <!--
             								    <a href="./shopItem.php?id=<?echo $row['id']?>" style="float: left;">
                                                     <button type="button" class="btn btn-primary primary_btn rounded" style="background-color:orange;">
                                                         <?translate("About","&Uuml;r&uuml;n&uuml; &#304;nceley&#304;n")?>
                                                     </button>
                                                 </a>
+                                                -->
                                                 
                                                 </div>
-                                                <div class="d-flex justify-content-between donation align-items-center" style="margin-top:10px;">
-            									<button type="button" class="btn btn-primary primary_btn rounded" <?if($logged==1){echo 'data-toggle="modal"';}?> data-whatever="<?echo $row['id']?>" data-target="#exampleModalCenter">
+                                                <div class="d-flex justify-content-between donation align-items-center" style="margin-top:20px;">
+            									<button onclick="showError()" style="margin: 0 auto;" type="button" class="btn btn-primary primary_btn rounded" <?if($logged==1){echo 'data-toggle="modal"';}?> data-whatever="<?echo $row['id']?>" data-target="#exampleModalCenter">
                                                     <?translate("Buy","Sat&#305;n Al&#305;n")?>
                                                 </button>
-                                                
+                                                <script>
+                                                    function showError(){
+                                                        //var obtainedErrorObjectToDisplayMessageOnToTellUserToSignin = document.getElementById('errMessage');
+                                                        //obtainedErrorObjectToDisplayMessageOnToTellUserToSignin.style.display = "block";
+                                                        Swal.fire({
+                                                          title: 'Merhaba :)',
+                                                          html: '<?translate("You need to signin to buy from the market.","Sat&#305;n Almak &#304;&ccedil;in Giri&#351; Yapman&#305;z Gerekmektedir!")?>',
+                                                            confirmButtonText: "G&#304;R&#304;&#350; YAP",
+                                                            
+                                                        }).then(function() {
+                                                            // Redirect the user
+                                                            window.open(
+                                                              "./signup.php"
+                                                            );
+                                                            //console.log('The Ok Button was clicked.');
+                                                            });
+
+                                                    }
+                                                </script>
                                                 
             								</div>
             								
@@ -306,16 +334,25 @@ $result_inventory = $con->query($query_inventory);
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
         <script src="js/gmaps.min.js"></script>
         <script src="js/theme.js"></script>
-        
+        <script>
+            
+        </script>
         <script>
             $('#exampleModalCenter').on('show.bs.modal', function (event) {
               var button = $(event.relatedTarget) // Button that triggered the modal
               var recipient = button.data('whatever') // Extract info from data-* attributes
+              var minamountFetch = button.data('minamount') // Extract info from data-* attributes
+              
               // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
               // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
               var modal = $(this)
-              console.log("object"+recipient);
+              //console.log("object"+recipient+minamountFetch);
               modal.find('.modal-body #itemSelect').val(recipient)
+              $("#minQuantityBuy").attr({
+               "min" : minamountFetch,          // values (or variables) here
+                "value" : minamountFetch          // values (or variables) here
+            });
+            
             })
         </script>
     </body>

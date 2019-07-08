@@ -45,7 +45,7 @@ if(isset($_GET['id'])){
 
 
     $query_selectedPost= "
-    select p.views, u.userImg as pImg, u.about, p.id, p.title, p.excerpt, p.goal,p.aboutMe, p.image ,p.description, p.category, p.datePosted ,COUNT(c.postId) as nContributors, sum(c.quantity*s.price) as amountEarned , u.name from fik_posts p left outer join fik_contributions c on p.id=c.postId inner join fik_users u on u.id = p.userId left outer join fik_shopItems s on s.id = c.contribution where p.id='$id' group by c.postId
+    select p.postRewardId, p.views, u.userImg as pImg, u.about, p.id, p.title, p.excerpt, p.goal,p.aboutMe, p.image ,p.description, p.category, p.datePosted ,COUNT(c.postId) as nContributors, sum(c.quantity*s.price) as amountEarned , u.name from fik_posts p left outer join fik_contributions c on p.id=c.postId inner join fik_users u on u.id = p.userId left outer join fik_shopItems s on s.id = c.contribution where p.id='$id' group by c.postId
     "; 
     $result_selectedPost = $con->query($query_selectedPost); 
     if ($result_selectedPost->num_rows > 0)
@@ -66,6 +66,7 @@ if(isset($_GET['id'])){
             $about = $row['about'];
             $personImg = $row['pImg'];
             $aboutMe= $row['aboutMe'];
+            $postRewardId= $row['postRewardId'];
             $noPageFound = false;
         }
         if($donations == null){
@@ -111,8 +112,11 @@ if(isset($_GET['id'])){
     }
     
 
-    $query_postParticipants= "select * from fik_postParticipants where postId= '$id'"; 
-    $result_postParticipants = $con->query($query_postParticipants); 
+    $query_postParticipants= "select DISTINCT(u.name), s.name, u.userImg from fik_contributions c INNER join fik_users u on c.userId=u.id inner join fik_shopItems s on s.id=c.contribution where postId= '$id'"; 
+    $result_postParticipants = $con->query($query_postParticipants);
+    
+    $query_rewards= "select * from fik_rewards r inner join fik_shopItems s on r.object=s.id where postRewardId= '$postRewardId'"; 
+    $result_rewards = $con->query($query_rewards);
     
     //post comments
     $query_postComments= "select * from fik_postComments p inner join fik_users u on p.userId=u.id where p.postId='$id' order by p.id asc"; //for now
@@ -256,7 +260,7 @@ else{
 <!doctype html>
 <html lang="en">
      <?php include_once("./phpComponents/header.php")?>
-     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
      <!—- ShareThis BEGIN -—>
 <script async src="https://platform-api.sharethis.com/js/sharethis.js#property=5d0a4c705b432800123988e3&product=sticky-share-buttons"></script>
 <style>
@@ -287,7 +291,7 @@ else{
         }
     </style>
                 <div class="overlay bg-parallax" id='backImg' data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
-                <div class="container" style="background-color:purple;opacity: .8;border-radius: 20px;">
+                <div class="container" style="opacity: 1;border-radius: 20px;">
                     <div class="banner_content text-center">
                         <h2><?echo $title?> <?if($noPageFound){echo "No page Found!";}?></h2>
                         <p><?echo $excerpt?></p>
@@ -378,7 +382,35 @@ else{
                                 <p>
                                     <?echo $description?>
                                 </p>
+                                <!--
+                                <div class="progress-table">
                                 
+                                <div class="table-head">
+                                	<div class="serial">Image</div>
+                                	<div class="country"><?translate("Isim","Isim")?></div>
+                                	<div class="percentage"><?translate("Item","Madde")?></div>
+                                </div>
+                                <?
+                                if ($query_postParticipants->num_rows > 0)
+                                { 
+                                    while($row = $query_postParticipants->fetch_assoc()) 
+                                    { 
+                                	?>
+                                	    <div class="table-row">
+                                			<div class="serial"><img  width="70" height="50"  src="./uploads/postImages/<?echo $row['userImg']?>" alt="flag"></div>
+                                			<div class="country"><?echo $row['name']?></div>
+                                			<div class="visit"><?echo $row['quantity']?></div>
+                                			<div class="percentage">
+                                				 &#8378; <?echo $row['quantity']* $row['price']?>
+                                			</div>
+                                			
+                                		</div>
+                                	<?
+                                    }
+                                }
+                                ?>
+                                </div>
+                                -->
                             </div>
                                 <?
                             }
@@ -386,6 +418,7 @@ else{
                             
                             
                         </div>
+                        
                         <div class="navigation-area">
                             <div class="row">
                                 <?if($previd!=null){?>
@@ -497,6 +530,152 @@ else{
                             </aside>
                             <hr>
                             <aside class="single_sidebar_widget post_category_widget">
+                                <h4 class="widget_title"><?translate("Rewards","Rewards")?></h4>
+                                    <?
+                                    $myArr = array();
+                                    
+                                    
+                                    ?>
+                                    <style>
+                                         /* Three image containers (use 25% for four, and 50% for two, etc) */
+                                        .column {
+                                          float: left;
+                                          width: 27.33%;
+                                          padding: 5px;
+                                          margin:3px;
+                                          text-align:center;
+                                           border-radius: 25px;
+                                           border: 3px solid #60bc0f !important;
+                                        }
+                                        
+                                        /* Clear floats after image containers */
+                                        .row::after {
+                                          content: "";
+                                          clear: both;
+                                          display: table;
+                                          text-align:center;
+                                        } 
+                                        
+                                        .myBtn{
+                                            color:white;background-color:#60bc0f;font-size:12px;padding:4px;margin-bottom:54px;border-radius: 3px;
+                                        }
+                                    </style>
+                                    <a <?if($logged==1){?>href="./shop.php"<?}?>>
+                                        <div class="" style="background-color:#c4ffc4;text-align:center;" <?if($logged==0){echo "onclick='showError()'";}?>>
+                                            <div class="media-body" style="margin:1px;">
+                                                <br>
+                                                 <a <?if($logged==1){?>href="./shop.php"<?}?>><h6>If you donate us these, we will thank you.</h6></a>
+                                                <p><?echo $row['deliveryTime']?></p>
+                                                
+                                                <?
+                                                if($id!=2){
+                                                    ?>
+                                                    <a <?if($logged==1){?>href="./shop.php"<?}?>>
+                                                    <div class="row" style="justify-content: center;" >
+                                                  <div class="column" style="">
+                                                    <img src="./uploads/postImages/toprak.png" alt="Snow" style="width:100%">
+                                                    <a href="<?if($id==2){echo './shop.php';}else{'./shop.php';}?>" class="myBtn">
+                                                        <?translate("Donate","DESTEKLE")?>
+                                                    </a>
+                                                    <br>
+
+                                                  </div>
+                                                  <div class="column">
+                                                    <img src="./uploads/postImages/tohum.png" alt="Forest" style="width:100%">
+                                                    <a <?if($logged==1){?>href="./shop.php"<?}?> class="myBtn">
+                                                        <?translate("Donate","DESTEKLE")?>
+                                                    </a>
+                                                  </div>
+                                                  <div class="column" >
+                                                    <img src="./uploads/postImages/sudamlasi.png" alt="Mountains" style="width:100%">
+                                                    <a <?if($logged==1){?>href="./shop.php"<?}?> class="myBtn">
+                                                        <?translate("Donate","DESTEKLE")?>
+                                                    </a>
+                                                  </div>
+                                                </div> 
+                                                </a>
+
+                                                 <br>
+                                                    <?
+                                                }
+                                                ?>
+                                                 
+                                                 <a <?if($logged==1){?>href="./shop.php"<?}?>>
+                                                 <div class="row" style="justify-content: center;">
+                                                  <div class="column" style="">
+                                                      <a <?if($logged==1){?>href="./shop.php"<?}?>>
+                                                    <img src="./uploads/postImages/cicek.png" alt="Snow" style="width:100%">
+                                                    </a>
+                                                    <a <?if($logged==1){?>href="./shop.php"<?}?> class="myBtn">
+                                                        <?translate("Donate","DESTEKLE")?>
+                                                    </a>
+                                                    
+                                                  </div>
+                                                  <div class="column">
+                                                      <a <?if($logged==1){?>href="./shop.php"<?}?>>
+                                                    <img src="./uploads/postImages/gul.png" alt="Forest" style="width:100%">
+                                                    </a>
+                                                    <a <?if($logged==1){?>href="./shop.php"<?}?> class="myBtn">
+                                                        <?translate("Donate","DESTEKLE")?>
+                                                    </a>
+                                                  </div>
+                                                  <div class="column" >
+                                                      <a <?if($logged==1){?>href="./shop.php"<?}?>>
+                                                    <img src="./uploads/postImages/orkide.png" alt="Mountains" style="width:100%">
+                                                    </a>
+                                                    <a <?if($logged==1){?>href="./shop.php"<?}?> class="myBtn">
+                                                        <?translate("Donate","DESTEKLE")?>
+                                                    </a>
+                                                  </div>
+                                                </div> 
+                                                </a>
+                                                   
+                                                <br style="margin-bottom:10px;">
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <br>
+                                                
+                                    <?
+                                    $fakeId=0;
+                                    if ($result_rewards->num_rows > 0)
+                                    { 
+                                        while($row = $result_rewards->fetch_assoc()) 
+                                        { 
+                                            if(($row['reward']!=''))
+                                            {
+                                                ?>
+                                                <a href="./shop.php?item=<?echo $row['object']?>">
+                                                    <div class="" style="background-color:#c4ffc4;text-align:center;" >
+                              
+                                                        <img style="padding-top:15px; margin: 0 auto;"  width="130" height="100" src="./uploads/postImages/<?echo $row['image']?>"  alt="post">
+                                                        <br>
+                                                        <div class="media-body" style="margin:10px;">
+                                                            
+                                                             <a href="./shop.php?item=<?echo $row['object']?>"><h6><?echo $row['reward']?></h6></a>
+                                                            <p><?echo $row['deliveryTime']?></p>
+                                                            
+                                                             <a href="./shop.php?item=<?echo $row['object']?>">
+                                                                <button type="button" class="btn btn-primary primary_btn rounded" style="margin: 0 auto;margin-bottom:20px;">
+                                                                  <?translate("Donate","ba&#287;&#305;&#351;lamak")?>
+                                                                </button>
+                                                            </a>
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <br>
+                                                <?
+                                            }
+                                        }
+                                    }
+                                    
+                                    $myJSON = json_encode($myArr);
+                                    ?>
+                                  														
+                            </aside>
+                            
+                            <aside class="single_sidebar_widget post_category_widget">
                                 <h4 class="widget_title"><?translate("Donate","ba&#287;&#305;&#351;lamak")?></h4>
                                 <ul class="list cat-list">
                                     <style>
@@ -523,26 +702,31 @@ else{
                                     { 
                                         while($row = $result_inventoryClickDonation->fetch_assoc()) 
                                         { 
-                                            if($row['quantity']>0){
-                                                array_push($myArr, [$row['id'], $row['quantity'], $fakeId])
-                                        ?>
-                                            <li>
-                                                
-                                                <div style="background-color:#e2ffe2;">
-                                                    <div onclick="donateFunction('<?echo $row['price']?>','<?echo $row['id']?>', '<?echo $row['quantity']?>', '<?echo $fakeId?>')"><!--name="new_donation" id="new_donation" value=""-->
-                                                        <div class="d-flex justify-content-between" >
-                                                            <img height="50" width="50" style="margin-top:3px;" src="./uploads/postImages/<?echo $row['image']?>">
-                                                            <p style="margin-top:15px;"><?echo $row['name']?> x 1</p>
-                                                            <p>
+                                            
+                                            if((($row['price']>1)&&$id=='2')||($id!='2')){
+                            
+                                            
+                                                if($row['quantity']>0){
+                                                    array_push($myArr, [$row['id'], $row['quantity'], $fakeId])
+                                                    ?>
+                                                        <li>
                                                             
-                                                            </p>
-                                                        </div>
-                                                    </div>	
-                                                </div>
-                                                
-                                            </li>
-                                        <?
-                                            $fakeId+=1;
+                                                            <div style="background-color:#e2ffe2;">
+                                                                <div onclick="donateFunction('<?echo $row['price']?>','<?echo $row['id']?>', '<?echo $row['quantity']?>', '<?echo $fakeId?>')"><!--name="new_donation" id="new_donation" value=""-->
+                                                                    <div class="d-flex justify-content-between" >
+                                                                        <img height="50" width="50" style="margin-top:3px;" src="./uploads/postImages/<?echo $row['image']?>">
+                                                                        <p style="margin-top:15px;"><?echo $row['name']?> x 1</p>
+                                                                        <p>
+                                                                        
+                                                                        </p>
+                                                                    </div>
+                                                                </div>	
+                                                            </div>
+                                                            
+                                                        </li>
+                                                    <?
+                                                $fakeId+=1;
+                                                }
                                             }
                                         }
                                     }
@@ -582,6 +766,7 @@ else{
                             <?}?>
                             
                             <?php include_once("./phpComponents/cartWidget.php")?>
+                            
                         </div>
                     </div>
                 </div>
@@ -640,7 +825,28 @@ else{
               });
     
         </script>
+        
         <script>
+        
+        function showError(){
+            //var obtainedErrorObjectToDisplayMessageOnToTellUserToSignin = document.getElementById('errMessage');
+            //obtainedErrorObjectToDisplayMessageOnToTellUserToSignin.style.display = "block";
+            Swal.fire({
+              title: 'Merhaba :)',
+              html: '<?translate("You need to signin to buy from the market.","Sat&#305;n Almak &#304;&ccedil;in Giri&#351; Yapman&#305;z Gerekmektedir!")?>',
+                confirmButtonText: "G&#304;R&#304;&#350; YAP",
+                
+            }).then(function() {
+                // Redirect the user
+                window.open(
+                  "./signup.php"
+                );
+                //console.log('The Ok Button was clicked.');
+                });
+
+        }
+                                                    
+                                                    
             //for donation
             /**
             var div = document.getElementById('quantitySelectMenu');

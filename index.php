@@ -31,12 +31,13 @@ $query_recent3Posts = "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(
 	
 	<section class="features_causes" style="background-color:#008c7d;padding-bottom:2px;margin-top:3px;">
 		
-
+<!--
 <video autoplay muted height="100%" width="100%" loop id="myVideo" style="margin-top:68px;">
   <source src="./uploads/bannerVideo.mp4" type="video/mp4">
 </video>
-
+-->
 <div class="container">
+    <br><br><br><br>
     <br>
 			<div class="main_title">
 				<h3 style=" color: white;font-size:30px"><?translate("Create a better world","DAHA B&Uuml;Y&Uuml;K B&#304;R A&#304;LE &#304;&Ccedil;&#304;N!")?></h3>

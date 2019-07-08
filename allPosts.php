@@ -48,12 +48,12 @@ $result_allPosts = $con->query($query_allPosts);
           <style>
         .banner_area .banner_inner .overlay{
             
-            background: linear-gradient(0deg, rgba(6, 13, 1, 0.3), rgba(6, 13, 1, 0.3)), url(./img/garden.jpg) no-repeat scroll center center;
+            background: linear-gradient(0deg, rgba(6, 13, 1, 0.3), rgba(6, 13, 1, 0.3)), url(./img/projectpage.jpg) no-repeat scroll center center;
             background-size:cover
         }
     </style>
             <div class="overlay bg-parallax" id="backImg" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
-            <div class="container" style="background-color:purple;opacity: .8;border-radius: 20px;">
+            <div class="container" style="opacity: 1;border-radius: 20px;">
                 <div class="banner_content text-center">
                     <h2 style="color:white;font-size:40px;text-transform: uppercase;"><?translate("All Projects","BAH&Ccedil;IVANLARIN PROJELER&#304;")?></h2>
                     <p style="color:white;font-size:20px;text-transform: uppercase;"><?translate("Donate to some of the best ideas in your hometown","G&#304;r&#304;&#351;&#304;mc&#304;ler ve F&#304;k&#304;r Sah&#304;pler&#304; Neler Yapmak &#304;st&#304;yor?")?></p>

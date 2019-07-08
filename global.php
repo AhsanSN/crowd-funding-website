@@ -29,6 +29,7 @@ if ($result->num_rows > 0){
     $session_name = $row['name'];
     $session_image = $row['userImg'];
     $session_about = $row['about'];
+    $session_AgreeOption = $row['AgreeOption'];
     
     $session_country = $row['country'];
     $session_state = $row['state'];

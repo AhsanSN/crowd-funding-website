@@ -7,16 +7,18 @@
                     { 
                         while($row = $result_inventory->fetch_assoc()) 
                         { 
-                            if($row['quantity']>0){
-                        ?>
-                            <li>
-                                <a class="d-flex justify-content-between">
-                                    <p><?echo $row['name']?></p>
-                                    <p><?echo $row['quantity']?></p>
-                                </a>
-                            </li>
-                        <?
-                            }
+                                if($row['quantity']>0){
+                                    ?>
+                                        <li>
+                                            <a class="d-flex justify-content-between">
+                                                <p><?echo $row['name']?></p>
+                                                <p><?echo $row['quantity']?></p>
+                                            </a>
+                                        </li>
+                                    <?
+                                }
+                            
+                            
                         }
                     }
                     else{
