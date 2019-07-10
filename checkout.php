@@ -2,6 +2,22 @@
     <?
     include_once("./phpComponents/checkLoginStatus.php");
 
+if(isset($_GET['postRefId'])&&isset($_GET['itemId'])){
+    $postRefId = $_GET['postRefId'];
+    $itemIdURL = $_GET['itemId'];
+    //only have this item cart -delete rest
+    if($postRefId!="none"){
+        $sql="delete from fik_cart where object!='$itemIdURL' and userId='$session_userId'";
+        if(!mysqli_query($con,$sql))
+        {
+        echo"err";
+        }
+    }
+    
+}else{
+    $postRefId="none";
+}
+
 if(isset($_GET['removeItem'])){
     $remItem = $_GET['removeItem'];
     ?>
@@ -34,21 +50,41 @@ $kdv = $total - $costWithoutKDV;
 
 if(isset($_POST['condition'])){
     $orderId = md5(md5(sha1( mt_rand(111111111, 99999999999999999999999))).'Anomoz');
-    $country= mb_htmlentities($_POST['country']);
-    $state= mb_htmlentities($_POST['state']);
-    $city= mb_htmlentities($_POST['city']);
-    $streetAddress= mb_htmlentities($_POST['streetAddress']);
+    
+    if(!isset($_POST['country'])){
+        $country = $session_country;
+    }else{$country= mb_htmlentities($_POST['country']);}
+    
+    if(!isset($_POST['state'])){
+        $state = $session_state;
+    }else{$state= mb_htmlentities($_POST['state']);}
+    
+    if(!isset($_POST['city'])){
+        $city = $session_city;
+    }else{$city= mb_htmlentities($_POST['city']);}
+    
+    if(!isset($_POST['streetAddress'])){
+        $streetAddress = $session_streetAddress;
+    }else{$streetAddress= mb_htmlentities($_POST['streetAddress']);}
+    
+    if(!isset($_POST['identityNumber'])){
+        $identityNumber = $session_identityNumber;
+    }else{$identityNumber= mb_htmlentities($_POST['identityNumber']);}
+    
+    $isAnon= mb_htmlentities($_POST['isAnon']);
+    
+    
     
     $date = time();
     $AgreeOption = $_POST['condition'];
-    $sql="insert into fik_orders (`orderId`, `datePlaced`, `totalAmount`, `KDV`, `withoutKDV`, `status`, `userId`, `country`, `state`, `city`, `streetAddress`, `AgreeOption`) values
-    ('$orderId', '$date', '$total', '$kdv', '$costWithoutKDV', 'waiting', '$session_userId', '$country', '$state', '$city', '$streetAddress', '$AgreeOption')";
+    $sql="insert into fik_orders (`orderId`, `datePlaced`, `totalAmount`, `KDV`, `withoutKDV`, `status`, `userId`, `country`, `state`, `city`, `streetAddress`, `AgreeOption`, `identityNumber`) values
+    ('$orderId', '$date', '$total', '$kdv', '$costWithoutKDV', 'waiting', '$session_userId', '$country', '$state', '$city', '$streetAddress', '$AgreeOption', '$identityNumber')";
     if(!mysqli_query($con,$sql))
     {
     echo"err";
     }
-    
-    $sql="update fik_users set AgreeOption='$AgreeOption' where  id='$session_userId'";
+  
+    $sql="update fik_users set AgreeOption='$AgreeOption', isAnon='$isAnon',  country='$country', state='$state', city='$city', streetAddress='$streetAddress', identityNumber='$identityNumber'  where  id='$session_userId'";
     if(!mysqli_query($con,$sql))
     {
     echo"err";
@@ -72,7 +108,64 @@ if(isset($_POST['condition'])){
             
         }
     }
-
+    
+    
+    //considering everything was purchased - $postRefId
+    //clean cart
+    
+    
+    //first add things to my bag
+    $query_dbOrdersToBag= "select * from fik_cart c where c.userId='$session_userId'"; //for now
+    $result_dbOrdersToBag = $con->query($query_dbOrdersToBag); 
+    if ($result_dbOrdersToBag->num_rows > 0)
+    { 
+        while($row = $result_dbOrdersToBag->fetch_assoc()) 
+        { 
+            $object = $row['object'];
+            $quantity = $row['quantity'];
+            //if item exist
+            $query_itemInCart= "select * from fik_inventory i where i.userId='$session_userId' and i.object='$object'"; 
+            $result_itemInCart = $con->query($query_itemInCart); 
+            if ($result_itemInCart->num_rows > 0)
+            { 
+                //update
+                $sql="update fik_inventory set quantity=quantity+'$quantity' where userId='$session_userId' and object='$object'";
+                if(!mysqli_query($con,$sql))
+                {
+                echo"err";
+                }
+            }
+            else{
+                // insert new
+                $sql="insert into fik_inventory (`userId`, `object`, `quantity`) values ('$session_userId', '$object', '$quantity')";
+                if(!mysqli_query($con,$sql))
+                {
+                echo"err";
+                }
+            }
+        }
+    }
+    
+    //delete my cart
+    $sql="delete from fik_cart where userId='$session_userId'";
+        if(!mysqli_query($con,$sql))
+        {
+        echo"err";
+        }
+    
+    //donate to $postRefId
+    if($postRefId!="none"){
+        ?>
+            <script>window.location = "./postPage.php?id=<?echo $postRefId?>&postRefId=<?echo $postRefId?>&itemId=<?echo $itemIdURL?>"</script>
+            <?
+    }
+    else{
+        ?>
+            <script>window.location = "./home.php"</script>
+            <?
+    }
+    
+    
 }
 ?>
 <!doctype html>
@@ -92,19 +185,24 @@ if(isset($_POST['condition'])){
                 <h2><?translate("Checkout","&#199;&#305;k&#305;&#351; yapmak")?></h2>
                     <p><?translate("Use your most trusted payment methods to make the payment.","&#246;deme yapmak &#231;in en g&#252;venilir &#246;deme y&#246;ntemlerinizi kullan&#305;n.")?></p>
             </div>
-
-            <div class="row">
+             <style>
+                 .progress-table{
+                     min-width: 100px;
+                 }
+             </style>
+            
+                <div class="row">
                 <div class="col-lg-8 posts-list">
-                    
                     <div class="section-top-border">
 						<div class="progress-table-wrap">
 							<div class="progress-table">
 								<div class="table-head">
 									<div class="serial">#</div>
-									<div class="country"><?translate("Item","Madde")?></div>
-									<div class="visit"><?translate("Quantity","miktar")?></div>
-									<div class="percentage"><?translate("Total Cost","Toplam tutar")?></div>
-									<div class="percentage"><?translate("Action","Aksiyon")?></div>
+									<div class="country" style="margin-left:4px;"><?translate("Image","Image")?></div>
+									<div class="country" style="margin-left:4px;"><?translate("Item","Madde")?></div>
+									<div class="country" style="margin-left:4px;"><?translate("Quantity","miktar")?></div>
+									<div class="country"style="margin-left:4px;"><?translate("Total Cost","Toplam tutar")?></div>
+									<div class="country"style="margin-left:4px;"><?translate("Action","Aksiyon")?></div>
 								</div>
 								<?
 								if ($result_cartItemsCheckout->num_rows > 0)
@@ -114,12 +212,15 @@ if(isset($_POST['condition'])){
     								?>
     								    <div class="table-row">
         									<div class="serial">-</div>
-        									<div class="country"> <img  width="70" height="50"  src="./uploads/postImages/<?echo $row['image']?>" alt="flag"><?echo $row['name']?></div>
-        									<div class="visit"><?echo $row['quantity']?></div>
-        									<div class="percentage">
+        									<div class="country" style="margin-left:4px;">
+        									     <img  width="70" height="50"  src="./uploads/postImages/<?echo $row['image']?>" alt="flag">
+        									</div>
+        									<div class="country" style="margin-left:4px;"><?echo $row['name']?></div>
+        									<div class="country" style="margin-left:4px;"><?echo $row['quantity']?></div>
+        									<div class="country" style="margin-left:4px;">
         										 &#8378; <?echo $row['quantity']* $row['price']?>
         									</div>
-        									<div class="percentage">
+        									<div class="country" style="margin-left:4px;">
         									    <a href="./checkout.php?removeItem=<?echo $row['id']?>" style="background-color:red;" class="btn btn-primary">
                                                     <?translate("Remove","Kald&#305;r")?>
                                                 </a>
@@ -138,12 +239,23 @@ if(isset($_POST['condition'])){
     									<div class="serial"><b style="font-weight:bold;color:black;"><?translate("Total","Genel Toplam")?></b></div>
     									<div class="country"></div>
     									<div class="visit"></div>
-    									<div class="percentage">
+    									<div class="country">
     										<b style="font-weight:bold;color:black;"> &#8378; <?echo $total?></b>
     									</div>
     							</div>
     							<br>
+    							 
+    							 <?if(strlen($session_identityNumber)<3){?>
+    							 <h4><?translate("Identity Number","Identity Number")?></h4>
+    							 <input style="width: 50vw;" maxlength="11" name="identityNumber" type="text" class="form-control" value="00000000000" required>
+    							 <br>
+    							 <?}?>
+    							 
+    							 
+                                <?if((strlen($session_streetAddress)<3) || (strlen($session_country)<3)){?>
     							<h4><?translate("Address","Address")?></h4>
+    							<?}?>
+    							<?if(strlen($session_country)<3){?>
     							<div class="table-row" >
     							    <div class="row">
     							        <div class="col-md-4">
@@ -166,9 +278,10 @@ if(isset($_POST['condition'])){
     							        </div>
     							        
     							    </div>
-    							    
-    							    
     							</div>
+    							<?}?>
+    							
+    							<?if(strlen($session_streetAddress)<3){?>
     							<div class="row">
     							    <div class="col-md-12">
     							            <p>Street Address</p>
@@ -176,18 +289,39 @@ if(isset($_POST['condition'])){
 
     							        </div>
     							        </div>
+    							 <?}?>
     							<br>
-    							<h4><?translate("Agreements","Agreements")?></h4>
-                                <div>
-                                  <input type="radio" id="huey" name="condition" value="moneyToMe"
-                                         >
-                                  <label for="huey">If the project expires and goal has not been met, all the money should be sent to Me</label>
-                                </div>
-                                <div>
-                                  <input type="radio" id="huey" name="condition" value="moneyToFikir"
-                                         >
-                                  <label for="huey">If the project expires and goal has not been met, all the money should be sent to FIKIR BAHCIVANI</label>
-                                </div>
+    							<?if ($postRefId!=2){?>
+        							<h4><?translate("Agreements","Agreements")?></h4>
+        							
+                                    <div>
+                                      <input type="radio" id="huey" name="condition" value="moneyToMe"
+                                             >
+                                      <label for="huey">If the project expires and goal has not been met, all the money should be sent to Me</label>
+                                    </div>
+                                    <div>
+                                      <input type="radio" id="huey" name="condition" value="moneyToFikir"
+                                             >
+                                      <label for="huey">If the project expires and goal has not been met, all the money should be sent to FIKIR BAHCIVANI</label>
+                                    </div>
+                                <?}else{?>
+                                    <input type="radio" id="huey" name="condition" value="moneyToFikir" checked style="display:none;"
+                                             >
+                                <?}?>
+                                
+                                <h4><?translate("Donate as","Donate as")?></h4>
+        							
+                                    <div>
+                                      <input type="radio" id="huey" name="isAnon" value="0"
+                                             checked>
+                                      <label for="huey"><?echo $session_name?></label>
+                                    </div>
+                                    <div>
+                                      <input type="radio" id="huey" name="isAnon" value="1"
+                                             >
+                                      <label for="huey">Anonymous Gardener</label>
+                                    </div>
+                                
 							</div>
 						</div>
 					</div>
@@ -206,7 +340,7 @@ if(isset($_POST['condition'])){
                                 
                                 ?>
                                 <ul class="list cat-list">
-                                    
+                                    <?if($postRefId==2){?>
                                     <li>
                                                 <a class="d-flex justify-content-between">
                                                     <p><?translate("Cost", "Maliyet")?></p>
@@ -215,6 +349,7 @@ if(isset($_POST['condition'])){
                                                     </p>
                                                 </a>
                                     </li>
+                                    
                                     <li>
                                                 <a class="d-flex justify-content-between">
                                                     <p>KDV</p>
@@ -223,6 +358,7 @@ if(isset($_POST['condition'])){
                                                     </p>
                                                 </a>
                                     </li>
+                                    <?}?>
                                     <li>
                                                 <a class="d-flex justify-content-between">
                                                     <h4><?translate("Total","Genel Toplam")?></h4>
@@ -242,7 +378,7 @@ if(isset($_POST['condition'])){
                                                 <a class="d-flex justify-content-between">
                                                     <p>PayTr</p>
                                                     <p>
-                                                       <a href="./checkout.php?insertOrder=3s2d1s83v12f5cd1g7m3do6">
+                                                       <a href="./checkout.php?insertOrder=3s2d1s83v12f5cd1g7m3do6&postRefId=<?echo $postRefId?>">
                                                        <button type="submit" class="btn btn-primary" id="sendNewSms" >
                                                                     <?translate("","")?>Pay
                                                                 </button></a>
@@ -276,9 +412,21 @@ if(isset($_POST['condition'])){
     <!--================ End footer Area  =================-->  
         
         <script src="js/jquery-3.2.1.min.js"></script>
-                       
-                        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
-                        <script src="//geodata.solutions/includes/countrystatecity.js"></script>
+        <script src="js/popper.js"></script>
+                        <script src="js/bootstrap.min.js"></script>
+                        <script src="js/stellar.js"></script>
+                        <script src="vendors/lightbox/simpleLightbox.min.js"></script>
+                        
+                        <!--gmaps Js-->
+                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+                        <script src="js/gmaps.min.js"></script>
+                        
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <?if(strlen($session_country)<3){?>
+        <script src="//geodata.solutions/includes/countrystatecity.js"></script>
+    <?}?>
+                        
         <script>
             document.getElementById('sendNewSms').disabled = true;
             

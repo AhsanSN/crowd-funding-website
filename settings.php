@@ -69,11 +69,14 @@ if(isset($_POST["buttonAction"]))
     $state= mb_htmlentities($_POST['state']);
     $city= mb_htmlentities($_POST['city']);
     $streetAddress= mb_htmlentities($_POST['streetAddress']);
+    $identityNumber= mb_htmlentities($_POST['identityNumber']);
+    
+    
     
     //echo $name, $about, $email, $old_password, $new_password1, $new_password2;
     
     //change name and about
-    $sql="UPDATE `fik_users` SET `name`='$name',`about`='$about', country='$country', state='$state', city='$city', streetAddress='$streetAddress' WHERE id='$session_userId' and email='$email'";
+    $sql="UPDATE `fik_users` SET `name`='$name',`about`='$about', country='$country', identityNumber='$identityNumber', state='$state', city='$city', streetAddress='$streetAddress' WHERE id='$session_userId' and email='$email'";
     if(!mysqli_query($con,$sql))
         {
             echo "err";
@@ -114,7 +117,7 @@ if(isset($_POST["buttonAction"]))
     
     ?>
     <script type="text/javascript">
-                window.location = "./home.php";
+                //window.location = "./home.php";
             </script>
     <?
 }
@@ -186,6 +189,12 @@ if(isset($_POST["buttonAction"]))
                                             <h6><?translate("Change Profile Picture","Profil resmini de&#287;i&#351;tir")?></h6>
                                             <input class="btn btn-primary primary_btn rounded" style="background-color:#777;" type="file" name="fileToUpload" id="fileToUpload">
                                         </div>
+                                        
+                                        <div class="form-group">
+                                            <h6><?translate("Identity Number","Identity Number")?>:</h6>
+                                            <input type="text" maxlength="11" class="form-control" id="identityNumber" name="identityNumber" value="<?echo $session_identityNumber?>" placeholder="<?translate("Identity Number","Identity Number")?>">
+                                        </div>
+                                        
                                         <div class="form-group">
                                             <h6><?translate("Address","Address")?></h6>
                                             <p>Country</p>
@@ -201,7 +210,7 @@ if(isset($_POST["buttonAction"]))
                                                     <option value="<?echo $session_city?>"><?echo $session_city?></option>
                                                 </select>
                                             <p>Street Address</p>
-                                                <textarea name="streetAddress" class="form-control" placeholder="Describe yourself here..."><?if($session_streetAddress!=''){echo $session_streetAddress;}else{echo 'Street Address...';}?></textarea>
+                                                <textarea name="streetAddress" class="form-control" placeholder="Enter your street address."><?if($session_streetAddress!=''){echo $session_streetAddress;}?></textarea>
                                         </div>
                                         
 
@@ -253,6 +262,15 @@ if(isset($_POST["buttonAction"]))
                         <!-- Optional JavaScript -->
                         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
                         <script src="js/jquery-3.2.1.min.js"></script>
+                        
+                        <script src="js/popper.js"></script>
+                        <script src="js/bootstrap.min.js"></script>
+                        <script src="js/stellar.js"></script>
+                        <script src="vendors/lightbox/simpleLightbox.min.js"></script>
+                        
+                        <!--gmaps Js-->
+                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+                        <script src="js/gmaps.min.js"></script>
                        
                         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
                         <script src="//geodata.solutions/includes/countrystatecity.js"></script>

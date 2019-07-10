@@ -1,5 +1,10 @@
 <?include_once("global.php");?>
     <?
+if(isset($_GET['postRefId'])){
+    $postRefId = $_GET['postRefId'];
+}else{
+    $postRefId="none";
+}
 
 if(isset($_POST['itemSelect'])&&isset($_POST['quantitySelect'])){
     
@@ -23,7 +28,12 @@ if(isset($_POST['itemSelect'])&&isset($_POST['quantitySelect'])){
             $donationStatus= "success";
             ?>
              <script type="text/javascript">
-                    window.location = "./checkout.php";
+                    if((localStorage.getItem("addToCart")==1)||(localStorage.getItem("addToCart")=="1")){
+                         window.location = "./shop.php";
+                    }
+                    else{
+                       window.location = "./checkout.php?postRefId=<?echo $postRefId?>&itemId=<?echo $objectId?>";
+                    }
                 </script>
             <?
         }
@@ -39,7 +49,12 @@ if(isset($_POST['itemSelect'])&&isset($_POST['quantitySelect'])){
             $donationStatus= "success";
             ?>
              <script type="text/javascript">
-                    window.location = "./checkout.php";
+                   if((localStorage.getItem("addToCart")==1)||(localStorage.getItem("addToCart")=="1")){
+                         window.location = "./shop.php";
+                    }
+                    else{
+                       window.location = "./checkout.php?postRefId=<?echo $postRefId?>&itemId=<?echo $objectId?>";
+                    }
                 </script>
             <?
         }
@@ -55,8 +70,19 @@ if($_GET['item']){
     $item = $_GET['item'];
     $query_shopObjects= "select * from fik_shopItems where id='$item'"; 
     $result_shopObjects = $con->query($query_shopObjects); 
+}
+else if($_GET['viewN']){
+    $viewN = $_GET['viewN'];
+    if($viewN==3){
+        $query_shopObjects= "select * from fik_shopItems where id in (17, 18, 'ec617144ff2c89736719d8b636dfe78a') order by price asc limit 3"; 
+        $result_shopObjects = $con->query($query_shopObjects); 
+    }else{
+        $query_shopObjects= "select * from fik_shopItems order by price asc limit $viewN"; 
+        $result_shopObjects = $con->query($query_shopObjects); 
+    }
     
-}else{
+}
+else{
     $query_shopObjects= "select * from fik_shopItems order by price asc"; 
     $result_shopObjects = $con->query($query_shopObjects); 
 }
@@ -69,6 +95,26 @@ $result_cartItems = $con->query($query_cartItems);
 //bucket items
 $query_inventory= "select * from fik_inventory c inner join fik_shopItems s on c.object=s.id where userId='$session_userId' order by c.id desc"; //for now
 $result_inventory = $con->query($query_inventory); 
+
+// Start function
+function shorter($text, $chars_limit)
+{
+    // Check if length is larger than the character limit
+    if (strlen($text) > $chars_limit)
+    {
+        // If so, cut the string at the character limit
+        $new_text = substr($text, 0, $chars_limit);
+        // Trim off white space
+        $new_text = trim($new_text);
+        // Add at end of text ...
+        return $new_text . "...";
+    }
+    // If not just return the text as is
+    else
+    {
+    return $text;
+    }
+}
 
 ?>
 <!doctype html>
@@ -150,151 +196,119 @@ $result_inventory = $con->query($query_inventory);
                  <?//if($logged==0){echo '<p style="color:red;">'.translateRet("You need to signin to buy from the market.","Piyasadan Sat&#305;n Al&#305;n i&#231;in imza atman&#305;z gerekir.").'</p>';}?>
                 <!--<p style="background-color:orange;color:white;display:none;" id="errMessage"><?translate("You need to signin to buy from the market.","Piyasadan Sat&#305;n Al&#305;n i&#231;in imza atman&#305;z gerekir.")?></p>-->
             </div>
+            <style>
+                
+                #post .btn{
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  border: 1px solid #FF8333;
+                  color: #FF8333;
+                }
+                .post-wrap img{
+                  object-fit: cover;
+                  width: 100%;
+                }
+                #post .btn:hover{
+                  background: #FF8333;
+                  color: #fff;
+                }
+                .post-wrap{
+                  width: 100%;
+                  height: auto;
+                  background: #fff;
+                  max-width: 900px;
+                  margin-bottom: 50px!important;
+                }
+                /*__________________________________
+                        Responsive
+                ____________________________________*/
+                @media screen and (max-width: 768px){
+                  #post .btn{
+                    position: relative;
+                    margin-bottom: 10px;
+                    top: 0;
+                    left: 0;
+                    transform: translate(0,0);
+                  }
+                  .post-wrap p{padding: 10px;}
+                }
+                
+                .space{height: 100px;}
 
-            <?if($logged==1){?>
+                .swal2-popup{
+            padding:0px;
+        }
+        .swal2-image{
+            margin:0px;
+        }
+        .swal2-actions{
+            margin-top:-60px;
+        }
+
+            </style>
+            
+            <div class="container" id="post">
+
+            <?if(true){?>
                 <div class="row">
-                <div class="col-lg-8 posts-list">
-                    
-			    <?
-			        $i=0;
-                    if ($result_shopObjects->num_rows > 0)
-                    { 
-                        while($row = $result_shopObjects->fetch_assoc()) 
+                    <div class="col-lg-<?if($logged==1){echo '8';}else{echo '12';}?> posts-list">
+                        
+                        <?
+                        if ($result_shopObjects->num_rows > 0)
                         { 
-                            if($i%3==0){echo '<div class="row">';};
-                            ?>
-                            
-				            <div class="col-sm-4">
-            					<div class="card">
-            						<div class="card-body">
-            							<figure>
-            								<img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>"  alt="<?echo $row['name']?>">
-            							</figure>
-            							<div class="card_inner_body" style="padding: 5px 5px;">
+                            while($row = $result_shopObjects->fetch_assoc()) 
+                            { 
+                                $minAmount = ceil(1/$row['price']);
+                        ?>
+                      
+                         <style>
+                            .vertCen{
+                               position: relative;
+                              top: 50%;
+                              -webkit-transform: translateY(-50%);
+                              -ms-transform: translateY(-50%);
+                              transform: translateY(-50%);
+                              margin-right:10px;
+                            } 
+                             
+                         </style>                       
+                         <div class="post-wrap m-auto shadow">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <img src="./uploads/postImages/<?echo $row['image']?>"  alt="<?echo $row['name']?>" class="img-fluid vertCen">
+                              </div>
+                              <div class="col-md-5">
+                                <h3 style="text-align:center;"><?echo $row['name']?> - <?if(substr($row['price'],-2)=="00"){echo substr($row['price'],0,-3);}else{echo $row['price'];}?> &#8378;</h3>
+                                <?
+                                if($logged==1){
+                                    $maxLimit = 300;
+                                }else{
+                                    $maxLimit = 1000;
+                                }
+                                
+                                ?>
+                                <p style="text-align:center;"><?echo shorter($row['description'], $maxLimit)?></p>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="text-center vertCen">
+                                    <br>
+                                  <div class="btna primary_btn mr-20" style="padding-right:1px;padding-left:1px;width:100%;" <?if($logged==1){/**echo**/ 'data-toggle="modal"';}else{echo 'onclick="showError()" ';}?> data-minamount="<?echo $minAmount?>" data-whatever="<?echo $row['id']?>" data-target="#exampleModalCenter" >Buy</div>
+                                    <hr>
+                                  <div class="btna primary_btn mr-20" style="padding-right:1px;padding-left:1px;width:100%; " <?if($logged==1){/**echo**/ 'data-toggle="modal"';}else{echo 'onclick="showError()" ';}?> data-addtocart="1" data-minamount="<?echo $minAmount?>" data-whatever="<?echo $row['id']?>" data-target="#exampleModalCenter" >Add to cart</div>
 
-            								<h4 class="card-title"><?echo $row['name']?> - <?if(substr($row['price'],-2)=="00"){echo substr($row['price'],0,-3);}else{echo $row['price'];}?> &#8378; </h4>
-            								<p class="card-text">
-            									<?echo $row['description']?>
-            								</p>
-            								
-            								<div class="d-flex justify-content-between donation align-items-center">
-            								    <!--
-            								    <a href="./shopItem.php?id=<?echo $row['id']?>" style="float: left;">
-                                                    <button type="button" class="btn btn-primary primary_btn rounded" style="background-color:orange;">
-                                                        <?translate("About","&Uuml;r&uuml;n&uuml; &#304;nceley&#304;n")?>
-                                                    </button>
-                                                </a>
-                                                -->
-                                                
-                                                </div>
-                                                <div class="d-flex justify-content-between donation align-items-center" style="margin-top:20px;text-align:center;"  >
-                                                <?
-                                                $minAmount = ceil(1/$row['price']);
-                                                ?>
-            									<button style="margin: 0 auto;" type="button" class="btn btn-primary primary_btn rounded" <?if($logged==1){echo 'data-toggle="modal"';}?> data-minamount="<?echo $minAmount?>" data-whatever="<?echo $row['id']?>" data-target="#exampleModalCenter">
-                                                    <?translate("Buy","Sat&#305;n Al&#305;n")?>
-                                                </button>
-                                                
-                                                
-            								</div>
-            								
-            							</div>
-            						</div>
-            					</div>
-            				</div>
-				            
-				            <?
-				            $i =$i+1;
-				            if($i%3==0){echo '</div>';};
-				            
-                        }
-                    }
-                    if($i%3!=0){echo '</div>';};
-				?>
-				
-				</div>
-				
-				
-				<?if($logged==1){?>
-    				<div class="col-lg-4">
-                            <div class="blog_right_sidebar">
-                                <?php include_once("./phpComponents/cartWidget.php")?>
+                                </div>
+                                <br>
+                              </div>
                             </div>
-                    </div>
-                <?}?>
-			</div>
-			<?}else{?>
-			<div class="row">
-
-			    <?
-			        $i=0;
-                    if ($result_shopObjects->num_rows > 0)
-                    { 
-                        while($row = $result_shopObjects->fetch_assoc()) 
-                        { 
-                            ?>
-                            
-				            <div class="col-lg-3 col-md-6">
-            					<div class="card">
-            						<div class="card-body">
-            							<figure>
-            								<img class="card-img-top img-fluid" src="./uploads/postImages/<?echo $row['image']?>"  alt="<?echo $row['name']?>">
-            							</figure>
-            							<div class="card_inner_body" style="padding: 5px 5px;">
-            								<h4 class="card-title"><?echo $row['name']?> -  <?if(substr($row['price'],-2)=="00"){echo substr($row['price'],0,-3);}else{echo $row['price'];}?> &#8378; </h4>
-            								<p class="card-text">
-            									<?echo $row['description']?>
-            								</p>
-            								
-            								<div class="d-flex justify-content-between donation align-items-center" style="text-align:center;">
-            								    <!--
-            								    <a href="./shopItem.php?id=<?echo $row['id']?>" style="float: left;">
-                                                    <button type="button" class="btn btn-primary primary_btn rounded" style="background-color:orange;">
-                                                        <?translate("About","&Uuml;r&uuml;n&uuml; &#304;nceley&#304;n")?>
-                                                    </button>
-                                                </a>
-                                                -->
-                                                
-                                                </div>
-                                                <div class="d-flex justify-content-between donation align-items-center" style="margin-top:20px;">
-            									<button onclick="showError()" style="margin: 0 auto;" type="button" class="btn btn-primary primary_btn rounded" <?if($logged==1){echo 'data-toggle="modal"';}?> data-whatever="<?echo $row['id']?>" data-target="#exampleModalCenter">
-                                                    <?translate("Buy","Sat&#305;n Al&#305;n")?>
-                                                </button>
-                                                <script>
-                                                    function showError(){
-                                                        //var obtainedErrorObjectToDisplayMessageOnToTellUserToSignin = document.getElementById('errMessage');
-                                                        //obtainedErrorObjectToDisplayMessageOnToTellUserToSignin.style.display = "block";
-                                                        Swal.fire({
-                                                          title: 'Merhaba :)',
-                                                          html: '<?translate("You need to signin to buy from the market.","Sat&#305;n Almak &#304;&ccedil;in Giri&#351; Yapman&#305;z Gerekmektedir!")?>',
-                                                            confirmButtonText: "G&#304;R&#304;&#350; YAP",
-                                                            
-                                                        }).then(function() {
-                                                            // Redirect the user
-                                                            window.open(
-                                                              "./signup.php"
-                                                            );
-                                                            //console.log('The Ok Button was clicked.');
-                                                            });
-
-                                                    }
-                                                </script>
-                                                
-            								</div>
-            								
-            							</div>
-            						</div>
-            					</div>
-            				</div>
-				            
-				            <?
-
+                          </div>
+                        <?  }
                         }
-                    }
-				?>
-				
+                          
+                          ?>
 
-				
+				    </div>
 				<?if($logged==1){?>
     				<div class="col-lg-4">
                             <div class="blog_right_sidebar">
@@ -304,6 +318,7 @@ $result_inventory = $con->query($query_inventory);
                 <?}?>
 			</div>
 			<?}?>
+			</div>
         </div>
     </section>
     <!--================ End Features Cause section =================-->
@@ -342,11 +357,31 @@ $result_inventory = $con->query($query_inventory);
               var button = $(event.relatedTarget) // Button that triggered the modal
               var recipient = button.data('whatever') // Extract info from data-* attributes
               var minamountFetch = button.data('minamount') // Extract info from data-* attributes
-              
+              var addToCart = button.data('addtocart')
+              if((addToCart==1)||(addToCart=="1")){
+                  console.log("object"+recipient+"-min a-"+minamountFetch+"--"+addToCart);
+                  // Store
+                localStorage.setItem("addToCart", "1");
+              }
+              else{
+                  localStorage.setItem("addToCart", "0");
+                  console.log("to checkout");
+              }
+              /**
+              if(minamountFetch==''){
+                  if(recipient=='883caebaa0b94407e089f4c8f0406c9f'){
+                      minamountFetch=10;
+                  }
+                  else{
+                      minamountFetch = 1;
+                  }
+                  
+              }
+              **/
               // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
               // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
               var modal = $(this)
-              //console.log("object"+recipient+minamountFetch);
+              console.log("object"+recipient+"-min a-"+minamountFetch+"--"+addToCart);
               modal.find('.modal-body #itemSelect').val(recipient)
               $("#minQuantityBuy").attr({
                "min" : minamountFetch,          // values (or variables) here
@@ -354,6 +389,35 @@ $result_inventory = $con->query($query_inventory);
             });
             
             })
+            
+            
+            
+            
+        </script>
+        
+        <script>
+            function showError(){
+                //var obtainedErrorObjectToDisplayMessageOnToTellUserToSignin = document.getElementById('errMessage');
+                //obtainedErrorObjectToDisplayMessageOnToTellUserToSignin.style.display = "block";
+                Swal.fire({
+                    imageUrl: './img/manavinfpost.jpg',
+                    imageAlt: 'A tall image',
+                    confirmButtonText: "G&#304;R&#304;&#350; YAP",
+                    /**
+                  title: 'Merhaba :)',
+                  html: '<?translate("You need to signin to buy from the market.","Sat&#305;n Almak &#304;&ccedil;in Giri&#351; Yapman&#305;z Gerekmektedir!")?>',
+                    confirmButtonText: "G&#304;R&#304;&#350; YAP",
+                    **/
+                }).then(function() {
+                    // Redirect the user
+                    var fallBackUrl = window.location.href
+                    window.open(
+                      "./signup.php?fallBack="+fallBackUrl,"_self"
+                    );
+                    //console.log('The Ok Button was clicked.');
+                    });
+
+            }
         </script>
     </body>
 </html>

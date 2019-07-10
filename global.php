@@ -35,9 +35,11 @@ if ($result->num_rows > 0){
     $session_state = $row['state'];
     $session_city = $row['city'];
     $session_streetAddress = $row['streetAddress'];
+    $session_identityNumber = $row['identityNumber'];
+    
     
     ?>
-    <script>console.log("$session_info<?echo $session_userId, $session_name, $session_email, $session_password ?>")</script>
+    <script>//console.log("$session_info<?echo $session_userId, $session_name, $session_email, $session_password ?>")</script>
     <?
     
     }

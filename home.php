@@ -25,7 +25,6 @@ if(isset($_GET['id'])){
             $image = $row['image'];
         }
     }
-
 }
 else{
     1;
@@ -86,7 +85,7 @@ $result_inventory = $con->query($query_inventory);
                             <style>
         .banner_area .banner_inner .overlay{
             
-            background: linear-gradient(0deg, rgba(6, 13, 1, 0.3), rgba(6, 13, 1, 0.3)), url(./img/garden.jpg) no-repeat scroll center center;
+            background: linear-gradient(0deg, rgba(6, 13, 1, 0.3), rgba(6, 13, 1, 0.3)), url(./img/profilbanner.jpg) no-repeat scroll center center;
             background-size:cover
         }
     </style>
@@ -143,12 +142,18 @@ $result_inventory = $con->query($query_inventory);
                                             }
                                         ?>
                                         
-                                        <br>
-                                        <hr>
-                                        <h4><?translate("OR","VEYA")?></h4>
-                                        <hr>
-                                        <br>
+
                                         <?
+                                        if($session_userId==2){
+                                            ?>
+                                            
+                                            <br>
+                                            <hr>
+                                            <h4><?translate("OR","VEYA")?></h4>
+                                            <hr>
+                                            <br>
+                                        
+                                            <?
                                             if($lang=='EN'){
                                                 ?>
                                                   <h3>Write a [<a href="./newBlog.php" class="rounded" style="color:green;">NEW BLOG</a>]</h3>
@@ -159,6 +164,7 @@ $result_inventory = $con->query($query_inventory);
                                                   <h3>[<a href="./newBlog.php" class="rounded" style="color:green;">Yeni blog</a>] yaz </h3>
                                                 <?
                                             }
+                                        }
                                         ?>
 
                                         <p><?translate("The best way to make your project a success is by telling more people about it. Post a new project and get people interested about your idea.","Projenizi ba&#351;ar&#305;ya ula&#351;t&#305;rman&#305;n en iyi yolu, daha fazla insana bunu anlatmakt&#305;r. Yeni bir proje yay&#305;nlay&#305;n ve insanlar&#305;n fikrinizle ilgilenmesini sa&#287;lay&#305;n.")?></p>

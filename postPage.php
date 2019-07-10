@@ -1,8 +1,53 @@
 <?include_once("global.php");?>
-    <?
+<?
 
 $noPageFound = true;
+require 'Mobile_Detect.php';
+$detect = new Mobile_Detect();
 
+//donation through chedckout
+if(isset($_GET['postRefId'])&&isset($_GET['itemId'])){
+    if($_GET['postRefId']==$_GET['id']){
+        $itemId = $_GET['itemId'];
+        $id = $_GET['id'];
+        //donate now
+        $query_seeIfEnough= "select * from fik_inventory where userId='$session_userId' and object='$itemId' and quantity>'0'"; 
+            $result_seeIfEnough = $con->query($query_seeIfEnough);
+            if ($result_seeIfEnough->num_rows > 0)
+            { 
+                //get quantity
+                while($row = $result_seeIfEnough->fetch_assoc()) 
+                { 
+                    $quantityDonation = $row['quantity'];
+                }
+                //success
+                $donationStatus= "success";
+                //update
+                $quantity = $quantityDonation;
+                $sql="update fik_inventory set quantity=quantity-'$quantity' where userId='$session_userId' and object='$itemId'";
+                if(!mysqli_query($con,$sql))
+                {
+                    echo "err 1";
+                }
+                else{
+                    //make donation
+                    $timeNow = time();
+                    $sql="insert into fik_contributions(`postId`, `userId`, `timeDone`, `contribution`, `quantity`) values ('$id', '$session_userId', '$timeNow', '$itemId', '$quantity')";
+                    if(!mysqli_query($con,$sql))
+                    {
+                        echo "err 1";
+                    }
+                }
+            }
+            else{
+                //failed
+                1;
+            }
+            
+    }
+}
+
+//donation through click
 if(isset($_POST['itemSelect'])){
     $donationStatus= "failed";
     $item = ($_POST["itemSelect"]);
@@ -10,7 +55,6 @@ if(isset($_POST['itemSelect'])){
     $quantity = 1;//$_GET["quantitySelect"];
     $quantity =$quantity-1;
   
-            
     $query_seeIfEnough= "select * from fik_inventory where userId='$session_userId' and object='$item' and quantity>'$quantity'"; 
     $result_seeIfEnough = $con->query($query_seeIfEnough);
     if ($result_seeIfEnough->num_rows > 0)
@@ -39,6 +83,44 @@ if(isset($_POST['itemSelect'])){
         1;
     }
 }
+
+//donation through rewards
+if(isset($_GET['itemSelect'])){
+    $donationStatus= "failed";
+    $item = ($_GET["itemSelect"]);
+    $id = ($_GET["id"]);
+    $quantity = 1;//$_GET["quantitySelect"];
+    $quantity =$quantity-1;
+  
+    $query_seeIfEnough= "select * from fik_inventory where userId='$session_userId' and object='$item' and quantity>'$quantity'"; 
+    $result_seeIfEnough = $con->query($query_seeIfEnough);
+    if ($result_seeIfEnough->num_rows > 0)
+    { 
+        //success
+        $donationStatus= "success";
+        //update
+        $quantity = $quantity+1;
+        $sql="update fik_inventory set quantity=quantity-'$quantity' where userId='$session_userId' and object='$item'";
+        if(!mysqli_query($con,$sql))
+        {
+            echo "err 1";
+        }
+        else{
+            //make donation
+            $timeNow = time();
+            $sql="insert into fik_contributions(`postId`, `userId`, `timeDone`, `contribution`, `quantity`) values ('$id', '$session_userId', '$timeNow', '$item', '$quantity')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 1";
+            }
+        }
+    }
+    else{
+        //failed
+        1;
+    }
+}
+
 
 if(isset($_GET['id'])){
     $id = htmlspecialchars($_GET['id']);
@@ -112,11 +194,22 @@ if(isset($_GET['id'])){
     }
     
 
-    $query_postParticipants= "select DISTINCT(u.name), s.name, u.userImg from fik_contributions c INNER join fik_users u on c.userId=u.id inner join fik_shopItems s on s.id=c.contribution where postId= '$id'"; 
+    $query_postParticipants= "select DISTINCT(IF(u.isAnon,'Anonymous', (u.name)))as 'name', s.name as itemName , s.image as itemImg, IF(u.isAnon,'profilePic.png',  u.userImg) as 'userImg' from fik_contributions c INNER join fik_users u on c.userId=u.id inner join fik_shopItems s on s.id=c.contribution where postId= '$id'"; 
     $result_postParticipants = $con->query($query_postParticipants);
     
     $query_rewards= "select * from fik_rewards r inner join fik_shopItems s on r.object=s.id where postRewardId= '$postRewardId'"; 
     $result_rewards = $con->query($query_rewards);
+    
+    $query_reward0= "select * from fik_rewards r where object='item0' and postRewardId= '$postRewardId'"; 
+    $result_reward0 = $con->query($query_reward0);
+    if ($result_reward0->num_rows > 0)
+    { 
+        while($row = $result_reward0->fetch_assoc()) 
+        { 
+            $reward0_reward = $row['reward'];
+            $reward0_deliveryTime = $row['deliveryTime'];
+        }
+    }
     
     //post comments
     $query_postComments= "select * from fik_postComments p inner join fik_users u on p.userId=u.id where p.postId='$id' order by p.id asc"; //for now
@@ -175,9 +268,6 @@ if(isset($_POST["new_comment"]))
     {
         echo "err";
     }
-    ?>
-    <script>console.log("hi")</script>
-    <?
 }
 
 
@@ -204,6 +294,23 @@ if ($result_inventory_size->num_rows > 0)
 else{
     $noMaterial = "true";
 }
+
+//rewards - bucket items for donating from 1 click
+$rewardsInbucket = array();
+$query_inventoryClickDonation_Rewards= "select * from fik_inventory c inner join fik_shopItems s on c.object=s.id where userId='$session_userId' order by c.id desc"; //for now
+$result_inventoryClickDonation_Rewards = $con->query($query_inventoryClickDonation_Rewards);
+if ($result_inventoryClickDonation_Rewards->num_rows > 0)
+{ 
+    while($row = $result_inventoryClickDonation_Rewards->fetch_assoc()) 
+    { 
+        if($row['quantity']>0){//if(true){
+            array_push($rewardsInbucket,$row['object']);
+        }
+    }
+}
+?>
+<?
+//print_r($rewardsInbucket);
 
 //bucket items for donating from 1 click
 $query_inventoryClickDonation= "select * from fik_inventory c inner join fik_shopItems s on c.object=s.id where userId='$session_userId' order by c.id desc"; //for now
@@ -255,8 +362,9 @@ else{
     }
 }
 
-
 ?>
+<?if($id==2){$realShopName =  'shopFikir';}else{$realShopName = 'shop';}?>
+
 <!doctype html>
 <html lang="en">
      <?php include_once("./phpComponents/header.php")?>
@@ -273,6 +381,20 @@ else{
             background-color:#54a829;
         }
     </style>
+    
+    <?if($logged==0){?>
+        <style>
+            .swal2-popup{
+            padding:0px;
+        }
+        .swal2-image{
+            margin:0px;
+        }
+        .swal2-actions{
+            margin-top:-60px;
+        }
+        </style>
+    <?}?>
 <!—- ShareThis END -—>
 <body>
         
@@ -309,7 +431,6 @@ else{
                     <div class="col-lg-8 posts-list">
                         <div class="single-post row">
                             <div class="col-lg-12">
-                                									
                             </div>
                             <?
                             if(!$noPageFound){
@@ -346,6 +467,15 @@ else{
                                     <ul class="blog_meta list">
                                         <li><a href="#"><?echo $name?><i class="lnr lnr-user"></i></a></li>
                                         <li><a href="#"><?echo date('Y/m/d H:i',$date)?><i class="lnr lnr-calendar-full"></i></a></li>
+                                        <?
+                                        if( (round(((($date+7776000)-time())/86400),1))>0){
+                                            $timeLeft =(round(((($date+7776000)-time())/86400),1));
+                                        }else{
+                                            $timeLeft = 0;
+                                        }
+                                         
+                                        ?>
+                                        <li><a href="#"><?echo $timeLeft?> days left<i class="lnr lnr-clock"></i></a></li>
                                         <li><a href="#"><?echo $views?> <?translate("Views","G&#246;r&#252;n&#252;mler")?><i class="lnr lnr-eye"></i></a></li>
                                         <li><a href="#"><?echo $nComments?> <?translate("Comments","Yorumlar")?><i class="lnr lnr-bubble"></i></a></li>
                                     </ul>
@@ -382,35 +512,52 @@ else{
                                 <p>
                                     <?echo $description?>
                                 </p>
-                                <!--
+                                <style>
+                                     .progress-table{
+                                         min-width: 100px;
+                                     }
+                                 </style>
+                                
+                                <?
+                                if(!$detect->isMobile()){
+                                ?>
+                                <?
+                                if ($result_postParticipants->num_rows > 0)
+                                { 
+                                    ?>
+                                    <hr>
+                                <h4><?translate("Contributors", "katk&#305;da")?></h4>
                                 <div class="progress-table">
                                 
                                 <div class="table-head">
-                                	<div class="serial">Image</div>
-                                	<div class="country"><?translate("Isim","Isim")?></div>
-                                	<div class="percentage"><?translate("Item","Madde")?></div>
+                                	<div class="country" style="margin-left:10px;"><?translate("Pic","Pic")?></div>
+                                	<div class="country" style="margin-left:10px;"><?translate("Isim","Isim")?></div>
+                                	<div class="country" style="margin-left:10px;"><?translate("Item","Madde")?></div>
+                                	<div class="country" style="margin-left:10px;"><?translate("Img","Img")?></div>
                                 </div>
-                                <?
-                                if ($query_postParticipants->num_rows > 0)
-                                { 
-                                    while($row = $query_postParticipants->fetch_assoc()) 
+                                    <?
+                                    while($row = $result_postParticipants->fetch_assoc()) 
                                     { 
                                 	?>
                                 	    <div class="table-row">
-                                			<div class="serial"><img  width="70" height="50"  src="./uploads/postImages/<?echo $row['userImg']?>" alt="flag"></div>
-                                			<div class="country"><?echo $row['name']?></div>
-                                			<div class="visit"><?echo $row['quantity']?></div>
-                                			<div class="percentage">
-                                				 &#8378; <?echo $row['quantity']* $row['price']?>
+                                			<div class="country" style="margin-left:10px;">
+                                			    <img  width="70" height="50"  src="./uploads/postImages/<?echo $row['userImg']?>" alt="flag">
                                 			</div>
-                                			
+                                			<div class="country" style="margin-left:10px;"><?echo $row['name']?></div>
+                                			<div class="country" style="margin-left:10px;"><?echo $row['itemName']?></div>
+                                			<div class="country" style="margin-left:10px;">
+                                			    <img  width="70" height="50"  src="./uploads/postImages/<?echo $row['itemImg']?>" alt="flag">
+                                			</div>
                                 		</div>
                                 	<?
                                     }
+                                    ?></div>
+                                    <?
                                 }
                                 ?>
-                                </div>
-                                -->
+                                <?}?>
+                                
+                                
                             </div>
                                 <?
                             }
@@ -469,7 +616,9 @@ else{
                                 <?}?>
                             </div>
                         </div>
+                        
                         <?
+                        if(!$detect->isMobile()){
                             if(!$noPageFound){
                                 ?>
                         <div class="comments-area" id="commentArea">
@@ -509,13 +658,14 @@ else{
                             <form method="get" id="formComment">
                                 <input name="postId" hidden value="<?echo $id?>">
                                 <div class="form-group">
-                                    <textarea class="form-control mb-10" rows="5" name="new_comment" id="new_comment" placeholder="<?translate("Type your comment here.","Yorumunuzu buraya yaz&#305;n.")?>" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Type your comment here.'" required=""></textarea>
+                                    <textarea class="mb-10" style="width:100%" rows="5" name="new_comment" id="new_comment" placeholder="<?translate("Type your comment here.","Yorumunuzu buraya yaz&#305;n.")?>" required=""></textarea>
                                 </div>
                                 <button href="#" class="primary-btn primary_btn"><?translate("Post Comment","Yorum g&#246;nder")?></button>	
                             </form>
                         </div>
                         <?}?>
-                        <?}?>
+                        <?}}?>
+
                     </div>
                     <div class="col-lg-4">
                         <div class="blog_right_sidebar">
@@ -558,6 +708,7 @@ else{
                                         
                                         .myBtn{
                                             color:white;background-color:#60bc0f;font-size:12px;padding:4px;margin-bottom:54px;border-radius: 3px;
+                                            cursor: pointer; 
                                         }
                                     </style>
                                     <a <?if($logged==1){?>href="./shop.php"<?}?>>
@@ -570,67 +721,166 @@ else{
                                                 <?
                                                 if($id!=2){
                                                     ?>
-                                                    <a <?if($logged==1){?>href="./shop.php"<?}?>>
+                                                    
                                                     <div class="row" style="justify-content: center;" >
+                                                        
+                                                        
+                                                        <?if (!in_array('883caebaa0b94407e089f4c8f0406c9f', $rewardsInbucket)) {?>
+                                                            <a <?if($logged==1){?>href="./<?echo $realShopName;?>.php?postRefId=<?echo $id?>&viewN=6"<?}?>>
+                                                        <?}else{?>
+                                                            <a onclick='donateFromRewards("883caebaa0b94407e089f4c8f0406c9f")'>
+                                                        <?}?>
+                                                        
                                                   <div class="column" style="">
                                                     <img src="./uploads/postImages/toprak.png" alt="Snow" style="width:100%">
-                                                    <a href="<?if($id==2){echo './shop.php';}else{'./shop.php';}?>" class="myBtn">
+                                                        
+                                                        
+                                                        <?if (!in_array('883caebaa0b94407e089f4c8f0406c9f', $rewardsInbucket)) {?>
+                                                        
+
+                                                            <a <? if($logged==1){echo 'href="./shop.php?postRefId='.$id.'&viewN=6"';}else{"onclick='showError()'";}?> class="myBtn" style="color:white;">
+                                                        <?}else{?>
+                                                            <a onclick='donateFromRewards("883caebaa0b94407e089f4c8f0406c9f")' class="myBtn" style="color:white;">
+                                                        <?}?>
+                                                        
+                                                    
                                                         <?translate("Donate","DESTEKLE")?>
                                                     </a>
                                                     <br>
 
                                                   </div>
-                                                  <div class="column">
-                                                    <img src="./uploads/postImages/tohum.png" alt="Forest" style="width:100%">
-                                                    <a <?if($logged==1){?>href="./shop.php"<?}?> class="myBtn">
+                                                  </a>
+                                                   <?if (!in_array('14', $rewardsInbucket)) {?>
+                                                            <a <?if($logged==1){?>href="./shop.php?postRefId=<?echo $id?>&viewN=6"<?}?>>
+                                                        <?}else{?>
+                                                            <a onclick='donateFromRewards("14")'>
+                                                        <?}?>
+                                                        
+                                                  <div class="column" style="">
+                                                    <img src="./uploads/postImages/tohum.png" alt="Snow" style="width:100%">
+                                                    <?if (!in_array('14', $rewardsInbucket)) {?>
+                                                            <a <? if($logged==1){echo 'href="./shop.php?postRefId='.$id.'&viewN=6"';}else{"onclick='showError()'";}?> class="myBtn" style="color:white;">
+                                                        <?}else{?>
+                                                            <a onclick='donateFromRewards("14")' class="myBtn" style="color:white;">
+                                                        <?}?>
                                                         <?translate("Donate","DESTEKLE")?>
                                                     </a>
+                                                    <br>
+
                                                   </div>
-                                                  <div class="column" >
-                                                    <img src="./uploads/postImages/sudamlasi.png" alt="Mountains" style="width:100%">
-                                                    <a <?if($logged==1){?>href="./shop.php"<?}?> class="myBtn">
+                                                  </a>
+                                                  
+                                                   <?if (!in_array('16', $rewardsInbucket)) {?>
+                                                            <a <?if($logged==1){?>href="./shop.php?postRefId=<?echo $id?>&viewN=6"<?}?>>
+                                                        <?}else{?>
+                                                            <a onclick='donateFromRewards("16")'>
+                                                        <?}?>
+                                                        
+                                                  <div class="column" style="">
+                                                    <img src="./uploads/postImages/sudamlasi.png" alt="Snow" style="width:100%">
+                                                     <?if (!in_array('16', $rewardsInbucket)) {?>
+                                                            <a <? if($logged==1){echo 'href="./shop.php?postRefId='.$id.'&viewN=6"';}else{"onclick='showError()'";}?> class="myBtn" style="color:white;">
+                                                        <?}else{?>
+                                                            <a onclick='donateFromRewards("16")' class="myBtn" style="color:white;">
+                                                        <?}?>
+                                                        
                                                         <?translate("Donate","DESTEKLE")?>
                                                     </a>
+                                                    <br>
+
                                                   </div>
+                                                  </a>
+                                                 
                                                 </div> 
-                                                </a>
+                                                
 
                                                  <br>
                                                     <?
                                                 }
                                                 ?>
                                                  
-                                                 <a <?if($logged==1){?>href="./shop.php"<?}?>>
+                                                 <a <?if($logged==1){?>href="./<?echo $realShopName?>.php"<?}?>>
                                                  <div class="row" style="justify-content: center;">
                                                   <div class="column" style="">
-                                                      <a <?if($logged==1){?>href="./shop.php"<?}?>>
+                                                      
+                                                      <!--
+                                                      
+                                                      shop = if($id==2){echo 'shopFikir';}else{echo 'shop';}
+                                                      -->
+                                                      
+                                            
+                                                      
+                                                      <?if (!in_array('17', $rewardsInbucket)) {?>
+                                                            <a <?if($logged==1){?>href="./<?if($id==2){echo 'shopFikir';}else{echo 'shop';}?>.php?postRefId=<?echo $id?>&viewN=<?if($id==2){echo '3';}else{echo '6';}?>"<?}?>>
+                                                        <?}else{?>
+                                                            <a onclick='donateFromRewards("17")'>
+                                                        <?}?>
+                                                        
                                                     <img src="./uploads/postImages/cicek.png" alt="Snow" style="width:100%">
                                                     </a>
-                                                    <a <?if($logged==1){?>href="./shop.php"<?}?> class="myBtn">
+                                                    <?if (!in_array('17', $rewardsInbucket)) {?>
+                                                            <?
+                                                            if($id==2){$viewNTemp =  '3';}else{$viewNTemp =  '6';}
+                                                             
+                                                            ?>
+
+                                                            <a <? if($logged==1){echo 'href="./'.$realShopName.'.php?postRefId='.$id.'&viewN='.$viewNTemp.'"';}else{"onclick='showError()'";}?> class="myBtn" style="color:white;">
+                                                        <?}else{?>
+                                                            <a onclick='donateFromRewards("17")' class="myBtn" style="color:white;">
+                                                        <?}?>
+                                                        
                                                         <?translate("Donate","DESTEKLE")?>
                                                     </a>
                                                     
                                                   </div>
                                                   <div class="column">
-                                                      <a <?if($logged==1){?>href="./shop.php"<?}?>>
+                                                      
+                                                      <?if (!in_array('18', $rewardsInbucket)) {?>
+                                                            <a <?if($logged==1){?>href="./<?if($id==2){echo 'shopFikir';}else{echo 'shop';}?>.php?postRefId=<?echo $id?>&viewN=<?if($id==2){echo '3';}else{echo '6';}?>"<?}?>>
+                                                        <?}else{?>
+                                                            <a onclick='donateFromRewards("18")'>
+                                                        <?}?>
+                                                        
                                                     <img src="./uploads/postImages/gul.png" alt="Forest" style="width:100%">
                                                     </a>
-                                                    <a <?if($logged==1){?>href="./shop.php"<?}?> class="myBtn">
+                                                    <?if (!in_array('18', $rewardsInbucket)) {?>
+                                                    <?if($id==2){$redirectN = 3;}else{$redirectN = 6;}?>
+                                                    
+                                                            <a <? if($logged==1){echo 'href="./'.$realShopName.'.php?postRefId='.$id.'&viewN='.$redirectN.'"';}else{"onclick='showError()'";}?> class="myBtn" style="color:white;">
+                                                        <?}else{?>
+                                                            <a onclick='donateFromRewards("18")' class="myBtn" style="color:white;">
+                                                        <?}?>
+                                                        
                                                         <?translate("Donate","DESTEKLE")?>
                                                     </a>
                                                   </div>
                                                   <div class="column" >
-                                                      <a <?if($logged==1){?>href="./shop.php"<?}?>>
+                                                      
+                                                          <?if (!in_array('ec617144ff2c89736719d8b636dfe78a', $rewardsInbucket)) {?>
+                                                            <a <?if($logged==1){?>href="./<?if($id==2){echo 'shopFikir';}else{echo 'shop';}?>.php?postRefId=<?echo $id?>&viewN=<?if($id==2){echo '3';}else{echo '6';}?>"<?}?>>
+                                                        <?}else{?>
+                                                            <a onclick='donateFromRewards("ec617144ff2c89736719d8b636dfe78a")'>
+                                                        <?}?>
+                                                        
                                                     <img src="./uploads/postImages/orkide.png" alt="Mountains" style="width:100%">
                                                     </a>
-                                                    <a <?if($logged==1){?>href="./shop.php"<?}?> class="myBtn">
+                                                    <?if($id==2){$redirectN = 3;}else{$redirectN = 6;}?>
+                                                    <?if (!in_array('ec617144ff2c89736719d8b636dfe78a', $rewardsInbucket)) {?>
+                                                            <a <? if($logged==1){echo 'href="./'.$realShopName.'.php?postRefId='.$id.'&viewN='.$redirectN.'"';}else{"onclick='showError()'";}?> class="myBtn" style="color:white;">
+                                                        <?}else{?>
+                                                            <a onclick='donateFromRewards("ec617144ff2c89736719d8b636dfe78a")' class="myBtn" style="color:white;">
+                                                        <?}?>
+                                                        
                                                         <?translate("Donate","DESTEKLE")?>
                                                     </a>
                                                   </div>
                                                 </div> 
                                                 </a>
-                                                   
-                                                <br style="margin-bottom:10px;">
+                                                <br>   
+                                                <h6><?echo $reward0_deliveryTime?></h6>
+                                                <p><?echo $reward0_reward?></p>
+                                                <br>
+                                                
                                             </div>
                                         </div>
                                     </a>
@@ -645,17 +895,34 @@ else{
                                             if(($row['reward']!=''))
                                             {
                                                 ?>
-                                                <a href="./shop.php?item=<?echo $row['object']?>">
-                                                    <div class="" style="background-color:#c4ffc4;text-align:center;" >
+                                                <?if (!in_array($row['object'], $rewardsInbucket)) {?>
+                                                <a <? if($logged==1){echo 'href="./'.$realShopName.'.php?postRefId='.$id.'&item='.$row['object'].'"';}else{"onclick='showError()'";}?>>
+                                                            <?}else{?>
+                                                            <a onclick='donateFromRewards("<?echo $row['object']?>")'>
+                                                            <?}?>
+                                                            
+                                                    <div class="" style="background-color:#c4ffc4;text-align:center;" <?if($logged==0){echo "onclick='showError()'";}?>>
                               
                                                         <img style="padding-top:15px; margin: 0 auto;"  width="130" height="100" src="./uploads/postImages/<?echo $row['image']?>"  alt="post">
                                                         <br>
                                                         <div class="media-body" style="margin:10px;">
                                                             
-                                                             <a href="./shop.php?item=<?echo $row['object']?>"><h6><?echo $row['reward']?></h6></a>
+                                                             <?if (!in_array($row['object'], $rewardsInbucket)) {?>
+                                                             <a <? if($logged==1){echo 'href="./'.$realShopName.'.php?postRefId='.$id.'&item='.$row['object'].'"';}else{"onclick='showError()'";}?>>
+                                                                 
+                                                            <?}else{?>
+                                                            <a onclick='donateFromRewards("<?echo $row['object']?>")'>
+                                                            <?}?>
+                                                                 
+                                                                 <h6><?echo $row['reward']?></h6></a>
                                                             <p><?echo $row['deliveryTime']?></p>
                                                             
-                                                             <a href="./shop.php?item=<?echo $row['object']?>">
+                                                            <?if (!in_array($row['object'], $rewardsInbucket)) {?>
+                                                            <a <? if($logged==1){echo 'href="./'.$realShopName.'.php?postRefId='.$id.'&item='.$row['object'].'"';}else{"onclick='showError()'";}?>>
+                                                            <?}else{?>
+                                                            <a onclick='donateFromRewards("<?echo $row['object']?>")'>
+                                                            <?}?>
+                                                             
                                                                 <button type="button" class="btn btn-primary primary_btn rounded" style="margin: 0 auto;margin-bottom:20px;">
                                                                   <?translate("Donate","ba&#287;&#305;&#351;lamak")?>
                                                                 </button>
@@ -768,6 +1035,93 @@ else{
                             <?php include_once("./phpComponents/cartWidget.php")?>
                             
                         </div>
+                        <?
+                        if($detect->isMobile()){
+                        ?>
+                        <?
+                        if ($result_postParticipants->num_rows > 0)
+                        { 
+                            ?>
+                            <hr>
+                        <h4><?translate("Contributors", "katk&#305;da")?></h4>
+                        <div class="progress-table">
+                        
+                        <div class="table-head">
+                        	<div class="country" style="margin-left:10px;"><?translate("Pic","Pic")?></div>
+                        	<div class="country" style="margin-left:10px;"><?translate("Isim","Isim")?></div>
+                        	<div class="country" style="margin-left:10px;"><?translate("Item","Madde")?></div>
+                        	<div class="country" style="margin-left:10px;"><?translate("Img","Img")?></div>
+                        </div>
+                            <?
+                            while($row = $result_postParticipants->fetch_assoc()) 
+                            { 
+                        	?>
+                        	    <div class="table-row">
+                        			<div class="country" style="margin-left:10px;">
+                        			    <img  width="70" height="50"  src="./uploads/postImages/<?echo $row['userImg']?>" alt="flag">
+                        			</div>
+                        			<div class="country" style="margin-left:10px;"><?echo $row['name']?></div>
+                        			<div class="country" style="margin-left:10px;"><?echo $row['itemName']?></div>
+                        			<div class="country" style="margin-left:10px;">
+                        			    <img  width="70" height="50"  src="./uploads/postImages/<?echo $row['itemImg']?>" alt="flag">
+                        			</div>
+                        		</div>
+                        	<?
+                            }
+                            ?></div>
+                            <?
+                        }}
+                        ?>
+                        
+                        <?
+                        if($detect->isMobile()){
+                            if(!$noPageFound){
+                                ?>
+                        <div class="comments-area" id="commentArea">
+                            <h4><?echo $nComments?> <?translate("Comments","Yorumlar")?> </h4>
+                            
+                            <?
+                                if ($result_postComments->num_rows > 0)
+                                { 
+                                    while($row = $result_postComments->fetch_assoc()) 
+                                    { 
+                                    ?>
+                                      <div class="comment-list">
+                                        <div class="single-comment justify-content-between d-flex">
+                                            <div class="user justify-content-between d-flex">
+                                                <div class="thumb">
+                                                    <img width="70" height="70" src="./uploads/postImages/<?echo $row['userImg']?>" alt="">
+                                                </div>
+                                                <div class="desc">
+                                                    <h5><a href="#"><?echo $row['name']?></a></h5>
+                                                    <p class="date"><?echo date('d/m/Y H:i', $row['datePosted']);?></p>
+                                                    <p class="comment">
+                                                        <?echo $row['comment']?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                      <?
+                                    }
+                                }
+                              ?>
+                            	                                             				
+                        </div>
+                        <?if($logged==1){?>
+                        <div class="comment-form">
+                            <h4><?translate("Leave a Comment","Yorum yap")?></h4>
+                            <form method="get" id="formComment">
+                                <input name="postId" hidden value="<?echo $id?>">
+                                <div class="form-group">
+                                    <textarea class="mb-10" style="width:100%" rows="5" name="new_comment" id="new_comment" placeholder="<?translate("Type your comment here.","Yorumunuzu buraya yaz&#305;n.")?>" required=""></textarea>
+                                </div>
+                                <button href="#" class="primary-btn primary_btn"><?translate("Post Comment","Yorum g&#246;nder")?></button>	
+                            </form>
+                        </div>
+                        <?}?>
+                        <?}}?>
+
                     </div>
                 </div>
             </div>
@@ -783,9 +1137,7 @@ else{
      <?php include_once("./phpComponents/footer.php")?>
      
         <!--================ End footer Area  =================--> 
-        
-        
-        
+    
         
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -832,14 +1184,19 @@ else{
             //var obtainedErrorObjectToDisplayMessageOnToTellUserToSignin = document.getElementById('errMessage');
             //obtainedErrorObjectToDisplayMessageOnToTellUserToSignin.style.display = "block";
             Swal.fire({
+                imageUrl: './img/manavinfpost(1).jpg',
+                imageAlt: 'A tall image',
+                confirmButtonText: "G&#304;R&#304;&#350; YAP",
+                /**
               title: 'Merhaba :)',
               html: '<?translate("You need to signin to buy from the market.","Sat&#305;n Almak &#304;&ccedil;in Giri&#351; Yapman&#305;z Gerekmektedir!")?>',
                 confirmButtonText: "G&#304;R&#304;&#350; YAP",
-                
+                **/
             }).then(function() {
                 // Redirect the user
+                var fallBackUrl = window.location.href
                 window.open(
-                  "./signup.php"
+                  "./signup.php?fallBack="+fallBackUrl,"_self"
                 );
                 //console.log('The Ok Button was clicked.');
                 });
@@ -861,7 +1218,47 @@ else{
             });
             **/
             
-           
+           function donateFromRewards(itemId){
+               console.log("donateFromRewards", itemId)
+               const swalWithBootstrapButtons = Swal.mixin({
+                  customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                  },
+                  buttonsStyling: false,
+                })
+                
+                swalWithBootstrapButtons.fire({
+                  title: 'Do you want to donate?',
+                  type: 'info',
+                  showCancelButton: true,
+                  confirmButtonText: 'Yes, donate!',
+                  cancelButtonText: "No, don't donate!",
+                  reverseButtons: true
+                }).then((result) => {
+                  if (result.value) {
+                    swalWithBootstrapButtons.fire(
+                      'Donated!',
+                      'Thank you for donating!',
+                      'success'
+                    ).then(function() {
+                        // Redirect the user
+                        window.open(
+                          "./postPage.php?id=<?echo $id?>&itemSelect="+itemId,"_self"
+                        );
+                    });
+                                                            
+                  } else if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.cancel
+                  ) {
+                    swalWithBootstrapButtons.fire(
+                      'Donation Cancelled',
+                    )
+                  }
+                })
+                                                            
+           }
         </script>
     </body>
 </html>

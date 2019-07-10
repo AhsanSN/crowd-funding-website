@@ -18,7 +18,17 @@ if(isset($_POST['email'])&&isset($_POST['password'])){
             $_SESSION['password'] = $row['password'];
             ?>
             <script type="text/javascript">
+            if (window.location.search.indexOf('fallBack') > -1) {
+                var url_string = window.location.href; //window.location.href
+                var url = new URL(url_string);
+                var c = url.searchParams.get("fallBack");
+                window.location = c;
+                //window.location = "./home.php?askldnasd";
+            }else{
                 window.location = "./home.php";
+            }
+            
+                
             </script>
             <?
         }
@@ -184,6 +194,8 @@ else{
                               
                            <div class="form-group">
                               <p class="text-center"><?translate("Don't have account?", "Hesab&#305;n&#305;z yok mu?")?> <a href="./createAccount.php" id="signup"><?translate("Sign up here", "Buradan kaydolun")?></a></p>
+                              <p class="text-center"><?translate("Forgot your password?", "Parolan&#305;z&#305; m&#305; unuttunuz?")?> <a href="./forgetPassword.php" id="signup"><?translate("Change password", "&#350;ifre de&#287;i&#351;tir")?></a></p>
+                           
                            </div>
                         </form>
                  

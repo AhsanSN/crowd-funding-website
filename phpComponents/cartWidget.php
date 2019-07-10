@@ -11,6 +11,7 @@
                                     ?>
                                         <li>
                                             <a class="d-flex justify-content-between">
+                                                <p><img height="40" width="50" style="margin-top:-10px;" src="./uploads/postImages/<?echo $row['image']?>"></p>
                                                 <p><?echo $row['name']?></p>
                                                 <p><?echo $row['quantity']?></p>
                                             </a>
@@ -48,8 +49,13 @@
                         ?>
                             <li>
                                 <a class="d-flex justify-content-between">
-                                    <p><?echo $row['name']?></p>
-                                    <p><?echo $row['quantity']?></p>
+                                    
+                                    <a class="d-flex justify-content-between">
+                                                <p><img height="40" width="50" style="margin-top:-10px;" src="./uploads/postImages/<?echo $row['image']?>"></p>
+                                                <p><?echo $row['name']?></p>
+                                                <p><?echo $row['quantity']?></p>
+                                    
+                                      
                                 </a>
                             </li>
                         <?

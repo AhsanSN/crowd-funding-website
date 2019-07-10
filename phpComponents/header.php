@@ -2,7 +2,7 @@
     <?
 $filenameLink = basename($_SERVER['PHP_SELF']);
 ?>
-    <meta http-equiv="Content-Type" content="text/html; charset=big5">
+    <meta http-equiv="Content-Type" charset="UTF-8">
         <!-- Required meta tags -->
         
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -39,7 +39,7 @@ $filenameLink = basename($_SERVER['PHP_SELF']);
             
         }
         else if($filenameLink=='home.php'){
-            $titleHeader = 'G&#246;sterge paneli - Fikir Bah&#231;&#305;van&#305;';
+            $titleHeader = 'Profil - Fikir Bah&#231;&#305;van&#305;';
             $keywords = "ev, g&#246;sterge paneli, Kontrol Paneli, Fikir Bah&#231;&#305;van&#305;";
             $descriptionHeader = "Kontrol paneliniz, her &#351;eyinizi en uygun &#351;ekilde y&#246;netebilece&#287;iniz yerdir.";
             

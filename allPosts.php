@@ -102,7 +102,8 @@ $result_allPosts = $con->query($query_allPosts);
                 ?>
                             
 				            <div class="col-lg-3 col-md-6">
-            					<div class="card">
+				                <a href="./postPage.php?id=<?echo $row['id']?>" style="color:#777777;">
+            					    <div class="card">
             						<div class="card-body">
             							<figure>
             							    <?
@@ -140,6 +141,7 @@ $result_allPosts = $con->query($query_allPosts);
             							</div>
             						</div>
             					</div>
+            					</a>
             				</div>
 				<?
                         }

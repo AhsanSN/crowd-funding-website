@@ -71,6 +71,8 @@ if(isset($_POST["buttonAction"]))
     $reward6Price = mb_htmlentities($_POST['reward6Prize']);
     $reward7Price = mb_htmlentities($_POST['reward7Prize']);
     
+    $reward0Price = mb_htmlentities($_POST['reward0Prize']);
+    
     $reward1EstimatedTime = mb_htmlentities($_POST['reward1EstimatedTime']);
     $reward2EstimatedTime = mb_htmlentities($_POST['reward2EstimatedTime']);
     $reward3EstimatedTime = mb_htmlentities($_POST['reward3EstimatedTime']);
@@ -78,6 +80,8 @@ if(isset($_POST["buttonAction"]))
     $reward5EstimatedTime = mb_htmlentities($_POST['reward5EstimatedTime']);
     $reward6EstimatedTime = mb_htmlentities($_POST['reward6EstimatedTime']);
     $reward7EstimatedTime = mb_htmlentities($_POST['reward7EstimatedTime']);
+    
+    $reward0EstimatedTime = mb_htmlentities($_POST['reward0EstimatedTime']);
     
 
     if($buttonAction=="save"){
@@ -128,6 +132,11 @@ if(isset($_POST["buttonAction"]))
             if(!mysqli_query($con,$sql))
             {
                 echo "err 7";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', 'item0', '$reward0Price', '$reward0EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 0";
             }
         }
         
@@ -180,6 +189,11 @@ if(isset($_POST["buttonAction"]))
             if(!mysqli_query($con,$sql))
             {
                 echo "err 7";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', 'item0', '$reward0Price', '$reward0EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 0";
             }
         }
         
@@ -422,6 +436,91 @@ $result_categories = $con->query($query_categories);
                                 <hr>
                                 
                                 <h4 class="card-title">Rewards</h4>
+                                <style>
+                                         /* Three image containers (use 25% for four, and 50% for two, etc) */
+                                        .column {
+                                          float: left;
+                                          width: 27.33%;
+                                          padding: 5px;
+                                          margin:3px;
+                                          text-align:center;
+                                           border-radius: 25px;
+                                           border: 2px solid #60bc0f !important;
+                                        }
+                                        
+                                        /* Clear floats after image containers */
+                                        .row::after {
+                                          content: "";
+                                          clear: both;
+                                          display: table;
+                                          text-align:center;
+                                        } 
+                                        
+                                        .myBtn{
+                                            color:white;background-color:#60bc0f;font-size:12px;padding:4px;margin-bottom:54px;border-radius: 3px;
+                                        }
+                                    </style>
+                                
+                                <div style="background-color:#c9ffc1;padding:10px;">
+                                    <h4 style="padding:10px;text-align: center;">Yonca -  &#8378; 10</h4>
+                                    <div style="text-align: center;">
+                                        
+                                        <div class="row" style="justify-content: center;" >
+                                                  <div class="column" style="">
+                                                    <img src="./uploads/postImages/toprak.png" alt="Snow" style="width:100%">
+                                                    
+                                                    <br>
+
+                                                  </div>
+
+                                                  <div class="column" style="">
+                                                    <img src="./uploads/postImages/tohum.png" alt="Snow" style="width:100%">
+                                                    
+                                                    <br>
+
+                                                  </div>
+
+                                                  <div class="column" style="">
+                                                    <img src="./uploads/postImages/sudamlasi.png" alt="Snow" style="width:100%">
+                                                   
+                                                    <br>
+
+                                                  </div>
+
+                                                </div> 
+                                        
+                                        
+                                        <div class="row" style="justify-content: center;">
+                                                  <div class="column" style="">
+                                                      
+                                                    <img src="./uploads/postImages/cicek.png" alt="Snow" style="width:100%">
+                                                   
+                                                    
+                                                  </div>
+                                                  <div class="column">
+                                                    <img src="./uploads/postImages/gul.png" alt="Forest" style="width:100%">
+                                                    
+                                                  </div>
+                                                  <div class="column" >
+                                                    <img src="./uploads/postImages/orkide.png" alt="Mountains" style="width:100%">
+                                                    
+                                                  </div>
+                                                </div> 
+                                        
+                                        
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h6><?translate("Reward","Reward")?></h6>
+                                        <textarea type="text" class="form-control" id="reward0Prize" name="reward0Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[7]?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
+                                        <input type="text" class="form-control" id="reward0EstimatedTime" name="reward0EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[7]?>">
+                                    </div>
+                                </div>
+                                <br>
+                                
 								<div style="background-color:#c9ffc1;padding:10px;">
                                     <h4 style="padding:10px;text-align: center;">Yonca -  &#8378; 10</h4>
                                     <div style="text-align: center;">

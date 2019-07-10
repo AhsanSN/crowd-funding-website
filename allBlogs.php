@@ -90,7 +90,8 @@ $result_allBlogs = $con->query($query_allBlogs);
                 ?>
                             
                             <div class="col-lg-3 col-md-6">
-                                <div class="card">
+                                <a href="./postPage.php?id=<?echo $row['id']?>" style="color:#777777;">
+                                    <div class="card">
                                     <div class="card-body">
                                         <figure>
                                             <img class="card-img-top img-fluid"src="./uploads/postImages/<?echo $row['image']?>" alt="<?echo $row['title']?>">
@@ -107,6 +108,7 @@ $result_allBlogs = $con->query($query_allBlogs);
                                         </div>
                                     </div>
                                 </div>
+                                </a>
                             </div>
                 <?
                         }
