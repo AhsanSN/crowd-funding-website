@@ -417,7 +417,7 @@ else{
                     <div class="banner_content text-center">
                         <h2><?echo $title?> <?if($noPageFound){echo "No page Found!";}?></h2>
                         <p><?echo $excerpt?></p>
-                        <a href="./shop.php"><p style="background-color:red;"><?if($noMaterial=="true"){translate("You dont have anything in your bucket to donate. Head to the market to buy material to donate. To go to the market, click this message.", "Ba&#287;&#305;&#351;&#305;n&#305;zda ba&#287;&#305;&#351; yapacak hi&ccedil;bir &#351;eyiniz yok. Ba&#287;&#305;&#351;ta bulunmak i&ccedil;in malzeme almak i&ccedil;in markete gidin. Markete gitmek i&ccedil;in bu mesaj&#305; t&#305;klay&#305;n.");}?></p></a>
+                        <a href="./shop.php"><p style="background-color:red;"><?if($noMaterial=="true"){translate("You dont have anything in your bucket to donate. Head to the market to buy material to donate. To go to the market, click this message.", "Saksınızda herhangi bir destek materyali bulunmamaktadır. Saksınıza destek materyali eklemek için Manav sayfasına gidiniz.");}?></p></a>
                     </div>
                 </div>
             </div>
@@ -459,9 +459,9 @@ else{
                                         Donation Failed!
                                     </div>
                                     <ul class="blog_meta list">
-                                        <li><?translate("Collected","Toplanm&#305;&#351;")?>:  &#8378; <span id="donationCollected"><?echo $donations?></span></li>
-                                        <li><?translate("Need","gerek")?>:  &#8378; <?echo $goal?></li>
-                                        <li><?translate("Donors","Ba&#287;&#305;&#351;&#231;&#305;lar")?>: <?echo $nDonors?></li>
+                                        <li><?translate("Collected","Toplanan;")?>:  &#8378; <span id="donationCollected"><?echo $donations?></span></li>
+                                        <li><?translate("Need","Hedef")?>:  &#8378; <?echo $goal?></li>
+                                        <li><?translate("Donors","Destekçiler")?>: <?echo $nDonors?></li>
                                     </ul>
                                     <hr>
                                     <ul class="blog_meta list">
@@ -475,7 +475,7 @@ else{
                                         }
                                          
                                         ?>
-                                        <li><a href="#"><?echo $timeLeft?> days left<i class="lnr lnr-clock"></i></a></li>
+                                        <li><a href="#"><?echo $timeLeft?>Kalan Gün<i class="lnr lnr-clock"></i></a></li>
                                         <li><a href="#"><?echo $views?> <?translate("Views","Görüntülemeler")?><i class="lnr lnr-eye"></i></a></li>
                                         <li><a href="#"><?echo $nComments?> <?translate("Comments","Yorumlar")?><i class="lnr lnr-bubble"></i></a></li>
                                     </ul>
@@ -530,10 +530,10 @@ else{
                                 <div class="progress-table">
                                 
                                 <div class="table-head">
-                                	<div class="country" style="margin-left:10px;"><?translate("Pic","Pic")?></div>
-                                	<div class="country" style="margin-left:10px;"><?translate("Isim","Isim")?></div>
-                                	<div class="country" style="margin-left:10px;"><?translate("Item","Madde")?></div>
-                                	<div class="country" style="margin-left:10px;"><?translate("Img","Img")?></div>
+                                	<div class="country" style="margin-left:10px;"><?translate("Pic","Fotoğraf")?></div>
+                                	<div class="country" style="margin-left:10px;"><?translate("Isim","İsim")?></div>
+                                	<div class="country" style="margin-left:10px;"><?translate("Item","Destek")?></div>
+                                	<div class="country" style="margin-left:10px;"><?translate("","")?></div>
                                 </div>
                                     <?
                                     while($row = $result_postParticipants->fetch_assoc()) 
@@ -585,7 +585,7 @@ else{
                                         <a href="./postPage.php?id=<?echo $previd?>"><span class="lnr text-white lnr-arrow-left"></span></a>
                                     </div>
                                     <div class="detials">
-                                        <p><?translate("Prev Post","&#246;nceki yaz&#305;")?></p>
+                                        <p><?translate("Prev Post","Önceki Proje")?></p>
                                         <a href="./postPage.php?id=<?echo $previd?>"><h4><?echo $prevtitle?></h4></a>
                                     </div>
                                 </div>
@@ -923,7 +923,7 @@ else{
                                                             <?}?>
                                                              
                                                                 <button type="button" class="btn btn-primary primary_btn rounded" style="margin: 0 auto;margin-bottom:20px;">
-                                                                  <?translate("Donate","ba&#287;&#305;&#351;lamak")?>
+                                                                  <?translate("Donate","Destekleyin")?>
                                                                 </button>
                                                             </a>
                                                             <br>
@@ -1113,7 +1113,7 @@ else{
                             <form method="get" id="formComment">
                                 <input name="postId" hidden value="<?echo $id?>">
                                 <div class="form-group">
-                                    <textarea class="mb-10" style="width:100%" rows="5" name="new_comment" id="new_comment" placeholder="<?translate("Type your comment here.","Yorumunuzu buraya yaz&#305;n.")?>" required=""></textarea>
+                                    <textarea class="mb-10" style="width:100%" rows="5" name="new_comment" id="new_comment" placeholder="<?translate("Type your comment here.","Yorumunuzu buraya yazın.")?>" required=""></textarea>
                                 </div>
                                 <button href="#" class="primary-btn primary_btn"><?translate("Post Comment","Yorumu gönder")?></button>	
                             </form>
