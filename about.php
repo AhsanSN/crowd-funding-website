@@ -185,9 +185,7 @@
                         <div class="team_name">
                             <h4>Alperen Özdemir</h4>
                             <p>Oyun Geliştirici</p>
-                            <p class="mt-20">
-                                So seed seed green that winged cattle in kath  moved us land years living.
-                            </p>
+                            
                             <div class="social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#" class="active"><i class="fa fa-twitter"></i></a>
