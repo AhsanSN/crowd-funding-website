@@ -147,7 +147,7 @@ if(isset($_POST["buttonAction"]))
                                 <div class="banner_content text-center">
                                     <h2><?translate("Settings","Ayarlar")?></h2>
                                     <p>
-                                        <?translate("Change your account settings here.","Hesap ayarlar&#305;n&#305; de&#287;i&#351;tir.")?>
+                                        <?translate("Change your account settings here.","Bilgilerinizi buradan değiştirebilirsiniz.")?>
                                     </p>
                                 </div>
                             </div>
@@ -168,7 +168,7 @@ if(isset($_POST["buttonAction"]))
                                     <div class="main_title">
                                         <h2><?translate("Settings","Ayarlar")?></h2>
                                     <p>
-                                        <?translate("Change your account settings here.","Hesap ayarlar&#305;n&#305; de&#287;i&#351;tir.")?>
+                                        <?translate("Change your account settings here.","Bilgilerinizi buradan değiştirebilirsiniz.")?>
                                     </p>
                                     </div>
 
@@ -179,37 +179,37 @@ if(isset($_POST["buttonAction"]))
                                         </div>
                                         <div class="form-group">
                                             <h6><?translate("Name","Isim")?>:</h6>
-                                            <input type="text" class="form-control" id="name" name="name" value="<?echo $session_name?>" placeholder="<?translate("Name","Isim")?>">
+                                            <input type="text" class="form-control" id="name" name="name" value="<?echo $session_name?>" placeholder="<?translate("Name","İsminiz")?>">
                                         </div>
                                         <div class="form-group">
-                                            <h6><?translate("About [eg. Software Engineer]","Hakk&#305;m&#305;zda [&#246;rnek, Yaz&#305;l&#305;m Muhendisi]")?></h6>
-                                            <input type="text" class="form-control" id="email" name="about" value="<?echo $session_about?>" placeholder="<?translate("About [eg. Software Engineer]","Hakk&#305;m&#305;zda [&#246;rnek, Yaz&#305;l&#305;m Muhendisi]")?>">
+                                            <h6><?translate("About [eg. Software Engineer]","Hakkınızda bir şeyler anlatın [Örnek, Bir yazılım mühendisiyim.]")?></h6>
+                                            <input type="text" class="form-control" id="email" name="about" value="<?echo $session_about?>" placeholder="<?translate("About [eg. Software Engineer]","Hakkınızda bir şeyler anlatın [Örnek, Bir yazılım mühendisiyim.]")?>">
                                         </div>
                                         <div class="form-group">
-                                            <h6><?translate("Change Profile Picture","Profil resmini de&#287;i&#351;tir")?></h6>
+                                            <h6><?translate("Change Profile Picture","Profil Resminizi Değiştirin")?></h6>
                                             <input class="btn btn-primary primary_btn rounded" style="background-color:#777;" type="file" name="fileToUpload" id="fileToUpload">
                                         </div>
                                         
                                         <div class="form-group">
                                             <h6><?translate("Identity Number","Identity Number")?>:</h6>
-                                            <input type="text" maxlength="11" class="form-control" id="identityNumber" name="identityNumber" value="<?echo $session_identityNumber?>" placeholder="<?translate("Identity Number","Identity Number")?>">
+                                            <input type="text" maxlength="11" class="form-control" id="identityNumber" name="identityNumber" value="<?echo $session_identityNumber?>" placeholder="<?translate("Identity Number","Kimlik Numaranız")?>">
                                         </div>
                                         
                                         <div class="form-group">
-                                            <h6><?translate("Address","Address")?></h6>
-                                            <p>Country</p>
+                                            <h6><?translate("Address","Adresiniz")?></h6>
+                                            <p>Ülke</p>
                                                 <select name="country" class="countries form-control" id="countryId" style="margin-bottom:5px;">
                                                     <option value="<?echo $session_country?>"><?echo $session_country?></option>
                                                 </select>
-                                            <p>State</p>
+                                            <p>Eyalet</p>
                                                 <select name="state" class="states form-control" id="stateId" style="margin-bottom:5px;">
                                                     <option value="<?echo $session_state?>" ><?echo $session_state?></option>
                                                 </select>
-                                            <p>City</p>
+                                            <p>Şehir</p>
                                                 <select name="city" class="cities form-control" id="cityId" style="margin-bottom:5px;">
                                                     <option value="<?echo $session_city?>"><?echo $session_city?></option>
                                                 </select>
-                                            <p>Street Address</p>
+                                            <p>İlçe/Sokak/Cadde/Bina No</p>
                                                 <textarea name="streetAddress" class="form-control" placeholder="Enter your street address."><?if($session_streetAddress!=''){echo $session_streetAddress;}?></textarea>
                                         </div>
                                         
@@ -217,14 +217,14 @@ if(isset($_POST["buttonAction"]))
                                         
                                     </div>
                                     <div class="col-md-6" style="background-color:#ffd9d9;">
-                                        <h4 style="padding:10px;text-align: center;"><?translate("Change Password","&#351;ifre de&#287;i&#351;tir")?></h4>
+                                        <h4 style="padding:10px;text-align: center;"><?translate("Change Password","Şifrenizini Değiştirin")?></h4>
                                         <div class="form-group">
                                             <h6><?translate("Enter Old Password","Eski &#351;ifre giriniz")?></h6>
-                                            <input type="password" class="form-control" id="password" name="old_password" placeholder="<?translate("Enter Old Password","Eski &#351;ifre giriniz")?>">
+                                            <input type="password" class="form-control" id="password" name="old_password" placeholder="<?translate("Enter Old Password","Eski şifrenizi giriniz.")?>">
                                         </div>
                                         <div class="form-group">
                                             <h6><?translate("Enter new Password","Yeni &#351;ifreyi giriniz")?></h6>
-                                            <input type="password" class="form-control" id="email" name="new_password1" placeholder="<?translate("Enter new Password","Yeni &#351;ifreyi giriniz")?>">
+                                            <input type="password" class="form-control" id="email" name="new_password1" placeholder="<?translate("Enter new Password","Yeni şifreyi giriniz.")?>">
                                         </div>
                                         <div class="form-group">
                                             <h6><?translate("Re-type New Password","Yeni &#351;ifreyi tekrar giriniz")?></h6>
