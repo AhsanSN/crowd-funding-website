@@ -49,9 +49,7 @@
                         <div class="team_name">
                             <h4>Burak Salba&#351;&#305;</h4>
                             <p>Kurucu Ortak</p>
-                            <p class="mt-20">
-                                So seed seed green that winged cattle in kath  moved us land years living.
-                            </p>
+                            
                             <div class="social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#" class="active"><i class="fa fa-twitter"></i></a>
@@ -70,9 +68,7 @@
                         <div class="team_name">
                             <h4>S&uuml;heyl Nizamo&#287;lu</h4>
                             <p>Kurucu Ortak</p>
-                            <p class="mt-20">
-                                So seed seed green that winged cattle in kath  moved us land years living.
-                            </p>
+                       
                             <div class="social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#" class="active"><i class="fa fa-twitter"></i></a>
@@ -91,9 +87,7 @@
                         <div class="team_name">
                             <h4>Ramazan Toprak</h4>
                             <p>Yaz&#305;l&#305;m Geli&#351;tirici</p>
-                            <p class="mt-20">
-                                So seed seed green that winged cattle in kath  moved us land years living.
-                            </p>
+                            
                             <div class="social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#" class="active"><i class="fa fa-twitter"></i></a>
@@ -112,9 +106,7 @@
                         <div class="team_name">
                             <h4>Shiromani Bhatti</h4>
                             <p>Grafik Tasar&#305;mc&#305;</p>
-                            <p class="mt-20">
-                                So seed seed green that winged cattle in kath  moved us land years living.
-                            </p>
+                            
                             <div class="social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#" class="active"><i class="fa fa-twitter"></i></a>
@@ -134,11 +126,9 @@
                             <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/v1.jpg" alt="">
                         </div>
                         <div class="team_name">
-                            <h4>Alea Mirslava</h4>
-                            <p>Party Manager</p>
-                            <p class="mt-20">
-                                So seed seed green that winged cattle in kath  moved us land years living.
-                            </p>
+                            <h4>Usame Sadiq</h4>
+                            <p>Oyun Geliştirici</p>
+                           
                             <div class="social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#" class="active"><i class="fa fa-twitter"></i></a>
@@ -155,11 +145,9 @@
                             <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/v2.jpg" alt="">
                         </div>
                         <div class="team_name">
-                            <h4>Adam Virland</h4>
-                            <p>Party Manager</p>
-                            <p class="mt-20">
-                                So seed seed green that winged cattle in kath  moved us land years living.
-                            </p>
+                            <h4>Elif Çelikhan</h4>
+                            <p>Yönetmen</p>
+
                             <div class="social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#" class="active"><i class="fa fa-twitter"></i></a>
@@ -176,11 +164,9 @@
                             <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/v3.jpg" alt="">
                         </div>
                         <div class="team_name">
-                            <h4>Adam Virland</h4>
-                            <p>Party Manager</p>
-                            <p class="mt-20">
-                                So seed seed green that winged cattle in kath  moved us land years living.
-                            </p>
+                            <h4>Amine Hrimsche</h4>
+                            <p>Yazılım Geliştirici</p>
+                           
                             <div class="social">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#" class="active"><i class="fa fa-twitter"></i></a>
@@ -197,8 +183,8 @@
                             <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/v4.jpg" alt="">
                         </div>
                         <div class="team_name">
-                            <h4>Adam Virland</h4>
-                            <p>Party Manager</p>
+                            <h4>Alperen Özdemir</h4>
+                            <p>Oyun Geliştirici</p>
                             <p class="mt-20">
                                 So seed seed green that winged cattle in kath  moved us land years living.
                             </p>
