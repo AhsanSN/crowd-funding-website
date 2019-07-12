@@ -332,10 +332,10 @@ $result_inventory = $con->query($query_inventory);
                                                             <div class="d-flex justify-content-between raised_goal">
                                                                 <p><?translate("Raised","Toplanan")?>:  &#8378; <?echo $row['amountEarned']?>
                                                                 </p>
-                                                                <p><span><?translate("Goal","Hedef")?>:  &#8378; <?echo $row['goal']?></span></p>
+                                                                <p><span><?translate("Goal","Hedeflenen")?>:  &#8378; <?echo $row['goal']?></span></p>
                                                             </div>
                                                             <div class="d-flex justify-content-between donation align-items-center">
-                                                                <a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("View","g&#246;r&#252;n&#252;m")?></a>
+                                                                <a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("View","Görüntüle")?></a>
                                                                 <p><span class="lnr lnr-heart"></span>
                                                                     <?echo $row['nContributors']?> <?translate("Donors","Destek&#231;iler")?></p>
                                                             </div>
@@ -373,7 +373,7 @@ $result_inventory = $con->query($query_inventory);
                                                             </p>
                                                             
                                                             <div class="d-flex justify-content-between donation align-items-center">
-                                                                <a href="./blogPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("View","g&#246;r&#252;n&#252;m")?></a>
+                                                                <a href="./blogPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("View","Görüntüle")?></a>
                                                                 <p><span class="lnr lnr-heart"></span>
                                                                     <?echo $row['views']?> Views</p>
                                                             </div>
