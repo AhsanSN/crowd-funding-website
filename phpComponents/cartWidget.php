@@ -1,6 +1,6 @@
 <?if($logged==1){?>
 <aside class="single_sidebar_widget post_category_widget">
-                <h4 class="widget_title"><?translate("Your Basket","Sepetin")?> [<a href="./shop.php" style="color:#075777;"><?translate("Add More","Daha fazla")?></a>]</h4>
+                <h4 class="widget_title"><?translate("Your Basket","Saksınız")?> [<a href="./shop.php" style="color:#075777;"><?translate("Add More","Ekleyin")?></a>]</h4>
                 <ul class="list cat-list">
                     <?
                     if ($result_inventory->num_rows > 0)
@@ -26,7 +26,7 @@
                         ?>
                         <li>
                                 <a style="color:#8a721d;;text-align:center;" class="d-flex justify-content-between">
-                                    <p><?translate("You dont have anything in your bucket. Head to the market to material to donate.", "Kovada hi&ccedil;bir &#351;ey yok. Ba&#287;&#305;&#351;ta bulunmak i&ccedil;in markete gidin.")?></p>
+                                    <p><?translate("You dont have anything in your bucket. Head to the market to material to donate.", "Saksınızda herhangi bir destek materyali bulunmamaktadır. Eklemek için lütfen Manav'a gidiniz.")?></p>
                                    
                                 </a>
                               
@@ -39,7 +39,7 @@
             </aside>
             <br>
             <aside class="single_sidebar_widget post_category_widget">
-                <h4 class="widget_title"><?translate("Your Cart","Al&#305;&#351; veri&#351; kart&#305;n")?> [<a href="./checkout.php?postRefId=2&itemId=<?echo $_SESSION['inCheckout_itemId']?>" style="color:#075777;"><?translate("Check out","Kontrol edin")?></a>]</h4>
+                <h4 class="widget_title"><?translate("Your Cart","Alışveriş Sepetiniz")?> [<a href="./checkout.php?postRefId=2&itemId=<?echo $_SESSION['inCheckout_itemId']?>" style="color:#075777;"><?translate("Check out","Kontrol edin")?></a>]</h4>
                 <ul class="list cat-list">
                     <?
                     if ($result_cartItems->num_rows > 0)
@@ -71,12 +71,9 @@
 
             if($filenameLink!='shop.php'){
             ?>
-            <!-- 
-        	Developed by Anomoz Softwares. (Anomoz.com).
-        	Please dont remove any watermarks from the website, because this is what helps me get bread on my table.
-        	-->
+            
             <aside class="single_sidebar_widget popular_post_widget">
-                <h3 class="widget_title"><?translate("Popular Posts","Pop&#252;ler g&#246;nderi")?></h3>
+                <h3 class="widget_title"><?translate("Popular Posts","Popüler Projeler")?></h3>
                 <?if ($result_recentPosts->num_rows > 0)
                 { 
                     while($row = $result_recentPosts->fetch_assoc()) 
