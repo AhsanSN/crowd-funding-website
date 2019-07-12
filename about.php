@@ -183,7 +183,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="team_item">
                         <div class="team_img">
-                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/v2.jpg" alt="">
+                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/suheyl.jpg" alt="">
                         </div>
                         <div class="team_name">
                             <h4>S&uuml;heyl Nizamo&#287;lu</h4>
@@ -202,7 +202,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="team_item">
                         <div class="team_img">
-                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/v3.jpg" alt="">
+                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/ahsan.jpg" alt="">
                         </div>
                         <div class="team_name">
                             <h4>Syed Ahsan Ahmed</h4>
@@ -221,7 +221,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="team_item">
                         <div class="team_img">
-                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/v4.jpg" alt="">
+                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/shiromani.jpg" alt="">
                         </div>
                         <div class="team_name">
                             <h4>Shiromani Bhatti</h4>
@@ -243,7 +243,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="team_item">
                         <div class="team_img">
-                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/v1.jpg" alt="">
+                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/usame.jpg" alt="">
                         </div>
                         <div class="team_name">
                             <h4>Usame Sadiq</h4>
@@ -262,7 +262,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="team_item">
                         <div class="team_img">
-                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/v2.jpg" alt="">
+                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/elifcelikhan.jpg" alt="">
                         </div>
                         <div class="team_name">
                             <h4>Elif Çelikhan</h4>
@@ -281,7 +281,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="team_item">
                         <div class="team_img">
-                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/v3.jpg" alt="">
+                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/amine.jpg" alt="">
                         </div>
                         <div class="team_name">
                             <h4>Amine Hrimsche</h4>
@@ -300,7 +300,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="team_item">
                         <div class="team_img">
-                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/v4.jpg" alt="">
+                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/alperen.jpg" alt="">
                         </div>
                         <div class="team_name">
                             <h4>Alperen Özdemir</h4>
