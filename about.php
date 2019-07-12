@@ -163,7 +163,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="team_item">
                         <div class="team_img">
-                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/v1.jpg" alt="" >
+                            <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/burak.jpg" alt="" >
                         </div>
                         <div class="team_name">
                             <h4>Burak Salba&#351;&#305;</h4>
