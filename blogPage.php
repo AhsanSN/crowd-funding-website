@@ -351,6 +351,16 @@ else{
         <script src="js/mail-script.js"></script>
         <script src="js/theme.js"></script>
         <script>
+        
+        function escapeHtml(unsafe) {
+                return unsafe
+                     .replace(/&/g, "&amp;")
+                     .replace(/</g, "&lt;")
+                     .replace(/>/g, "&gt;")
+                     .replace(/"/g, "&quot;")
+                     .replace(/'/g, "&#039;");
+             }
+             
         	$(function () {
                 $('form').on('submit', function (e) {
                   e.preventDefault();
@@ -363,7 +373,7 @@ else{
                         //$('#comment').val('');
                     }
                   });
-                  var a=$("#new_comment").val();
+                  var a=escapeHtml($("#new_comment").val());
                   var b=new Date().toLocaleString();
                     if (a!=''){
             			var txt1 = '<div class="comment-list"><div class="single-comment justify-content-between d-flex"><div class="user justify-content-between d-flex"><div class="thumb"><img width="70" height="70" src="./uploads/postImages/<?echo $session_image?>" alt=""></div><div class="desc"><h5><a href="#"><?echo $session_name?></a></h5><p class="date">'+b+'</p><p class="comment">'+a+'</p></div></div></div></div>';

@@ -30,14 +30,15 @@ if ($result->num_rows > 0){
     $session_image = $row['userImg'];
     $session_about = $row['about'];
     $session_AgreeOption = $row['AgreeOption'];
+    $session_isAnon = $row['isAnon'];
     
     $session_country = $row['country'];
     $session_state = $row['state'];
     $session_city = $row['city'];
     $session_streetAddress = $row['streetAddress'];
     $session_identityNumber = $row['identityNumber'];
-    
-    
+    $session_phoneNumber = $row['phoneNumber'];
+
     ?>
     <script>//console.log("$session_info<?echo $session_userId, $session_name, $session_email, $session_password ?>")</script>
     <?
@@ -119,9 +120,13 @@ if (!function_exists('mb_ord')) {
 
 if (!function_exists('mb_htmlentities')) {
     function mb_htmlentities($string, $hex = true, $encoding = 'UTF-8') {
+        return htmlspecialchars($string);
+        /**
         return preg_replace_callback('/[\x{80}-\x{10FFFF}]/u', function ($match) use ($hex) {
-            return sprintf($hex ? '&#x%X;' : '&#%d;', mb_ord($match[0]));
+            return (sprintf($hex ? '&#x%X;' : '&#%d;', mb_ord($match[0])));
         }, $string);
+        **/
+    
     }
 }
 

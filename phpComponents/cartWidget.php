@@ -39,7 +39,7 @@
             </aside>
             <br>
             <aside class="single_sidebar_widget post_category_widget">
-                <h4 class="widget_title"><?translate("Your Cart","Al&#305;&#351; veri&#351; kart&#305;n")?> [<a href="./checkout.php" style="color:#075777;"><?translate("Check out","Kontrol edin")?></a>]</h4>
+                <h4 class="widget_title"><?translate("Your Cart","Al&#305;&#351; veri&#351; kart&#305;n")?> [<a href="./checkout.php?postRefId=2&itemId=<?echo $_SESSION['inCheckout_itemId']?>" style="color:#075777;"><?translate("Check out","Kontrol edin")?></a>]</h4>
                 <ul class="list cat-list">
                     <?
                     if ($result_cartItems->num_rows > 0)
@@ -49,7 +49,7 @@
                         ?>
                             <li>
                                 <a class="d-flex justify-content-between">
-                                    
+                                    <!--[<a href="./checkout.php" style="color:#075777;"><?translate("Check out","Kontrol edin")?></a>]-->
                                     <a class="d-flex justify-content-between">
                                                 <p><img height="40" width="50" style="margin-top:-10px;" src="./uploads/postImages/<?echo $row['image']?>"></p>
                                                 <p><?echo $row['name']?></p>
@@ -71,6 +71,10 @@
 
             if($filenameLink!='shop.php'){
             ?>
+            <!-- 
+        	Developed by Anomoz Softwares. (Anomoz.com).
+        	Please dont remove any watermarks from the website, because this is what helps me get bread on my table.
+        	-->
             <aside class="single_sidebar_widget popular_post_widget">
                 <h3 class="widget_title"><?translate("Popular Posts","Pop&#252;ler g&#246;nderi")?></h3>
                 <?if ($result_recentPosts->num_rows > 0)

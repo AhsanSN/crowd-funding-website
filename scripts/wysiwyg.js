@@ -1935,13 +1935,11 @@ var WYSIWYG_Core = {
 	 * @return true/false depending on compatiblity of the browser
 	 */
 	isBrowserCompatible: function() {
-		// Validate browser and compatiblity
-		if ((navigator.userAgent.indexOf('Safari') != -1 ) || !document.getElementById || !document.designMode){   
-			//no designMode (Safari lies)
-	   		return false;
-		} 
-		return true;
-	},
+        if (!document.getElementById || !document.designMode) {
+            return false;
+        }
+        return true;
+    },
 	
 	/**
 	 * Set the style attribute of the given element.

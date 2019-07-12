@@ -35,6 +35,13 @@ $file =  basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);
             </a>
           </li>
           
+          <li class="nav-item  <?if($file=='donations.php'){echo 'active';}?> ">
+            <a class="nav-link" href="./donations.php">
+              <i class="material-icons">money</i>
+              <p>Donations</p>
+            </a>
+          </li>
+          
         </ul>
       </div>
     </div>

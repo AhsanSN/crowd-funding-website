@@ -159,6 +159,11 @@
             <div class="main_title">
                 <h2>Ekibimizle Tan&#305;&#351;&#305;n!</h2>
             </div>
+            <style>
+                .img-fluid{
+                    height:170px;
+                }
+            </style>
             <div class="row team_inner">
                 <div class="col-lg-3 col-md-6">
                     <div class="team_item">

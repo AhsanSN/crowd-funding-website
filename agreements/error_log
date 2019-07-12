@@ -1,0 +1,85 @@
+[11-Jul-2019 11:13:59 Europe/London] PHP Notice:  Undefined variable: identityNumber in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 66
+[11-Jul-2019 11:14:19 Europe/London] PHP Notice:  Undefined variable: session_identityNumber in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 66
+[11-Jul-2019 11:14:23 Europe/London] PHP Notice:  Undefined variable: session_identityNumber in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 66
+[11-Jul-2019 11:14:31 Europe/London] PHP Notice:  Undefined variable: session_identityNumber in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 66
+[11-Jul-2019 11:15:01 Europe/London] PHP Notice:  Undefined variable: query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 11:15:01 Europe/London] PHP Warning:  mysqli::query(): Empty query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 11:15:01 Europe/London] PHP Notice:  Trying to get property of non-object in /home/anomozco/projects.anomoz.com/sealife/global.php on line 24
+[11-Jul-2019 11:15:01 Europe/London] PHP Notice:  Undefined variable: session_identityNumber in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 67
+[11-Jul-2019 11:15:03 Europe/London] PHP Notice:  Undefined variable: query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 11:15:03 Europe/London] PHP Warning:  mysqli::query(): Empty query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 11:15:03 Europe/London] PHP Notice:  Trying to get property of non-object in /home/anomozco/projects.anomoz.com/sealife/global.php on line 24
+[11-Jul-2019 11:15:03 Europe/London] PHP Notice:  Undefined variable: session_identityNumber in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 67
+[11-Jul-2019 11:15:12 Europe/London] PHP Notice:  Undefined variable: query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 11:15:12 Europe/London] PHP Warning:  mysqli::query(): Empty query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 11:15:12 Europe/London] PHP Notice:  Trying to get property of non-object in /home/anomozco/projects.anomoz.com/sealife/global.php on line 24
+[11-Jul-2019 11:15:12 Europe/London] PHP Notice:  Undefined variable: session_identityNumber in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 67
+[11-Jul-2019 11:15:13 Europe/London] PHP Notice:  Undefined variable: query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 11:15:13 Europe/London] PHP Warning:  mysqli::query(): Empty query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 11:15:13 Europe/London] PHP Notice:  Trying to get property of non-object in /home/anomozco/projects.anomoz.com/sealife/global.php on line 24
+[11-Jul-2019 11:15:13 Europe/London] PHP Notice:  Undefined variable: session_identityNumber in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 67
+[11-Jul-2019 11:15:18 Europe/London] PHP Warning:  require(../global.phap): failed to open stream: No such file or directory in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 1
+[11-Jul-2019 11:15:18 Europe/London] PHP Warning:  require(../global.phap): failed to open stream: No such file or directory in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 1
+[11-Jul-2019 11:15:18 Europe/London] PHP Fatal error:  require(): Failed opening required '../global.phap' (include_path='.:/opt/alt/php55/usr/share/pear:/opt/alt/php55/usr/share/php') in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 1
+[11-Jul-2019 11:15:22 Europe/London] PHP Notice:  Undefined variable: query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 11:15:22 Europe/London] PHP Warning:  mysqli::query(): Empty query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 11:15:22 Europe/London] PHP Notice:  Trying to get property of non-object in /home/anomozco/projects.anomoz.com/sealife/global.php on line 24
+[11-Jul-2019 11:15:22 Europe/London] PHP Notice:  Undefined variable: session_identityNumber in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 67
+[11-Jul-2019 11:16:15 Europe/London] PHP Notice:  Undefined variable: query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 11:16:15 Europe/London] PHP Warning:  mysqli::query(): Empty query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 11:16:15 Europe/London] PHP Notice:  Trying to get property of non-object in /home/anomozco/projects.anomoz.com/sealife/global.php on line 24
+[11-Jul-2019 11:31:59 Europe/London] PHP Notice:  Undefined variable: query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 11:31:59 Europe/London] PHP Warning:  mysqli::query(): Empty query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 11:31:59 Europe/London] PHP Notice:  Trying to get property of non-object in /home/anomozco/projects.anomoz.com/sealife/global.php on line 24
+[11-Jul-2019 11:57:25 Europe/London] PHP Notice:  Undefined index: inCheckout_postRefId in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 17
+[11-Jul-2019 11:57:25 Europe/London] PHP Notice:  Undefined index: inCheckout_itemId in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 18
+[11-Jul-2019 11:57:28 Europe/London] PHP Notice:  Undefined index: inCheckout_postRefId in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 17
+[11-Jul-2019 11:57:28 Europe/London] PHP Notice:  Undefined index: inCheckout_itemId in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 18
+[11-Jul-2019 11:57:29 Europe/London] PHP Notice:  Undefined index: inCheckout_postRefId in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 17
+[11-Jul-2019 11:57:29 Europe/London] PHP Notice:  Undefined index: inCheckout_itemId in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 18
+[11-Jul-2019 11:57:31 Europe/London] PHP Notice:  Undefined index: inCheckout_postRefId in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 17
+[11-Jul-2019 11:57:31 Europe/London] PHP Notice:  Undefined index: inCheckout_itemId in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 18
+[11-Jul-2019 11:57:41 Europe/London] PHP Notice:  Undefined index: inCheckout_postRefId in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 17
+[11-Jul-2019 11:57:41 Europe/London] PHP Notice:  Undefined index: inCheckout_itemId in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 18
+[11-Jul-2019 11:57:45 Europe/London] PHP Notice:  Undefined index: inCheckout_postRefId in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 17
+[11-Jul-2019 11:57:45 Europe/London] PHP Notice:  Undefined index: inCheckout_itemId in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 18
+[11-Jul-2019 12:29:45 Europe/London] PHP Notice:  Undefined variable: query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 12:29:45 Europe/London] PHP Warning:  mysqli::query(): Empty query in /home/anomozco/projects.anomoz.com/sealife/global.php on line 23
+[11-Jul-2019 12:29:45 Europe/London] PHP Notice:  Trying to get property of non-object in /home/anomozco/projects.anomoz.com/sealife/global.php on line 24
+[11-Jul-2019 12:29:45 Europe/London] PHP Notice:  Undefined variable: session_userId in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 5
+[11-Jul-2019 12:29:45 Europe/London] PHP Notice:  Undefined index: inCheckout_postRefId in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 18
+[11-Jul-2019 12:29:45 Europe/London] PHP Notice:  Undefined index: inCheckout_itemId in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 19
+[11-Jul-2019 12:29:45 Europe/London] PHP Notice:  Undefined variable: session_identityNumber in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 121
+[11-Jul-2019 12:29:45 Europe/London] PHP Notice:  Undefined variable: session_name in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 127
+[11-Jul-2019 12:29:45 Europe/London] PHP Notice:  Undefined variable: session_streetAddress in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 133
+[11-Jul-2019 12:29:45 Europe/London] PHP Notice:  Undefined variable: session_phoneNumber in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 139
+[11-Jul-2019 12:29:45 Europe/London] PHP Notice:  Undefined variable: session_email in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 145
+[11-Jul-2019 12:29:45 Europe/London] PHP Notice:  Undefined variable: itemName in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 248
+[11-Jul-2019 12:29:45 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 254
+[11-Jul-2019 12:29:45 Europe/London] PHP Notice:  Undefined variable: total in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 260
+[11-Jul-2019 13:33:59 Europe/London] PHP Notice:  Use of undefined constant session_name - assumed 'session_name' in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 256
+[11-Jul-2019 13:34:00 Europe/London] PHP Notice:  Use of undefined constant session_name - assumed 'session_name' in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 256
+[11-Jul-2019 14:55:57 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 14:56:16 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 14:56:23 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 14:57:37 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 14:57:44 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 14:59:17 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 15:00:43 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 15:01:43 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 15:05:05 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 15:06:19 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 15:09:13 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 15:10:59 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 15:12:13 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 15:12:14 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 15:13:23 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 15:13:58 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/distSalesCont.php on line 247
+[11-Jul-2019 15:14:17 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 212
+[11-Jul-2019 15:15:42 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 212
+[11-Jul-2019 15:17:04 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 212
+[11-Jul-2019 15:17:48 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 212
+[11-Jul-2019 15:18:05 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 212
+[11-Jul-2019 15:18:27 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 212
+[11-Jul-2019 15:20:49 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 212
+[11-Jul-2019 15:21:17 Europe/London] PHP Notice:  Undefined variable: reward in /home/anomozco/projects.anomoz.com/sealife/agreements/preliminaryInfo.php on line 212

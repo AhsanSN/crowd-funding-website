@@ -121,10 +121,11 @@ function shorter($text, $chars_limit)
 <html lang="en">
     <?php include_once("./phpComponents/header.php")?>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    
 <body>
     
      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-dialog modal-dialog-centered" role="document" style="justify-content: center;">
              <form action="" method="post">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -280,7 +281,7 @@ function shorter($text, $chars_limit)
                                 <img src="./uploads/postImages/<?echo $row['image']?>"  alt="<?echo $row['name']?>" class="img-fluid vertCen">
                               </div>
                               <div class="col-md-5">
-                                <h3 style="text-align:center;"><?echo $row['name']?> - <?if(substr($row['price'],-2)=="00"){echo substr($row['price'],0,-3);}else{echo $row['price'];}?> &#8378;</h3>
+                                <h3 style="text-align:center;"><?echo $row['name']?> - <?if(substr($row['price'],-2)=="00"){echo substr($row['price'],0,-3);}else{echo $row['price'];}?>&#8378;</h3>
                                 <?
                                 if($logged==1){
                                     $maxLimit = 300;
@@ -289,12 +290,21 @@ function shorter($text, $chars_limit)
                                 }
                                 
                                 ?>
-                                <p style="text-align:center;"><?echo shorter($row['description'], $maxLimit)?></p>
+                                <div class="dummy"  style="text-align:center;">
+                                    <p style="text-align:center;"><?echo $row['description']?></p>
+                                </div>
                               </div>
+                              <style>
+                                  .primary_btn{
+                                    width: 70%;
+                                    border-radius: 10px;
+                                    margin-left: 20px;
+                                  }
+                              </style>
                               <div class="col-md-3">
                                 <div class="text-center vertCen">
                                     <br>
-                                  <div class="btna primary_btn mr-20" style="padding-right:1px;padding-left:1px;width:100%;" <?if($logged==1){echo 'data-toggle="modal"';}else{echo 'onclick="showError()" ';}?> data-minamount="<?echo $minAmount?>" data-whatever="<?echo $row['id']?>" data-target="#exampleModalCenter" >Buy</div>
+                                  <div class="btna primary_btn mr-20" style="padding-right:1px;padding-left:1px;" <?if($logged==1){echo 'data-toggle="modal"';}else{echo 'onclick="showError()" ';}?> data-minamount="<?echo $minAmount?>" data-whatever="<?echo $row['id']?>" data-target="#exampleModalCenter" >Buy</div>
                                     <br>
                                 </div>
                                 <br>
@@ -417,5 +427,49 @@ function shorter($text, $chars_limit)
 
             }
         </script>
+        
+        <script src="js/readMoreJS.min.js"></script>
+        <?
+        if($logged==1){
+                                    $maxLimit = 30;
+                                }else{
+                                    $maxLimit = 80;
+                                }
+        ?>
+        <script>
+            function showError(){
+                //var obtainedErrorObjectToDisplayMessageOnToTellUserToSignin = document.getElementById('errMessage');
+                //obtainedErrorObjectToDisplayMessageOnToTellUserToSignin.style.display = "block";
+                Swal.fire({
+                    imageUrl: './img/manavinfpost.jpg',
+                    imageAlt: 'A tall image',
+                    confirmButtonText: "G&#304;R&#304;&#350; YAP",
+                    /**
+                  title: 'Merhaba :)',
+                  html: '<?translate("You need to signin to buy from the market.","Sat&#305;n Almak &#304;&ccedil;in Giri&#351; Yapman&#305;z Gerekmektedir!")?>',
+                    confirmButtonText: "G&#304;R&#304;&#350; YAP",
+                    **/
+                }).then(function() {
+                    // Redirect the user
+                    var fallBackUrl = window.location.href
+                    window.open(
+                      "./signup.php?fallBack="+fallBackUrl,"_self"
+                    );
+                    //console.log('The Ok Button was clicked.');
+                    });
+
+            }
+            
+            
+            $readMoreJS.init({
+               target: '.dummy p',           // Selector of the element the plugin applies to (any CSS selector, eg: '#', '.'). Default: ''
+               numOfWords: <?echo $maxLimit?>,               // Number of words to initially display (any number). Default: 50
+               toggle: true,                 // If true, user can toggle between 'read more' and 'read less'. Default: true
+               moreLink: 'read more ...',    // The text of 'Read more' link. Default: 'read more ...'
+               lessLink: 'read less'         // The text of 'Read less' link. Default: 'read less'
+            });
+
+        </script>
+        
     </body>
 </html>

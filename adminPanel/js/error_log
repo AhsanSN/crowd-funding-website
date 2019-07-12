@@ -1,0 +1,2 @@
+[11-Jul-2019 10:03:15 Europe/London] PHP Warning:  require_once(database.php): failed to open stream: No such file or directory in /home/anomozco/projects.anomoz.com/sealife/adminPanel/js/uza-php.php on line 1
+[11-Jul-2019 10:03:15 Europe/London] PHP Fatal error:  require_once(): Failed opening required 'database.php' (include_path='.:/opt/alt/php55/usr/share/pear:/opt/alt/php55/usr/share/php') in /home/anomozco/projects.anomoz.com/sealife/adminPanel/js/uza-php.php on line 1

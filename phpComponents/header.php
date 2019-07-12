@@ -146,15 +146,16 @@ $filenameLink = basename($_SERVER['PHP_SELF']);
         <meta property="og:image" content="https://1sowv82zxs703aps2323q73z-wpengine.netdna-ssl.com/wp-content/uploads/Brand-Cover.jpg">
         <meta property="og:url" content="<?echo $actual_linkHeader?>">
         <meta property="og:site_name" content="Fikir Bah&#231;&#305;van&#305;">
-        <!--
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        -->
+        
         <meta name="twitter:title" content="<?echo $titleHeader?>">
         <meta name="twitter:description" content="<?echo $descriptionHeader?>">
         <meta name="twitter:image" content="https://1sowv82zxs703aps2323q73z-wpengine.netdna-ssl.com/wp-content/uploads/Brand-Cover.jpg">
         <meta name="twitter:card" content="<?echo $descriptionHeader?>">
         
-
+        <!-- 
+    	Developed by Anomoz Softwares. (Anomoz.com).
+    	Please dont remove any watermarks from the website, because this is what helps me get bread on my table.
+    	-->
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="css/bootstrap.css">

@@ -5,6 +5,8 @@
 if(isset($_GET['postRefId'])&&isset($_GET['itemId'])){
     $postRefId = $_GET['postRefId'];
     $itemIdURL = $_GET['itemId'];
+    $_SESSION['inCheckout_postRefId'] = $postRefId;
+    $_SESSION['inCheckout_itemId'] = $itemIdURL;
     //only have this item cart -delete rest
     if($postRefId!="none"){
         $sql="delete from fik_cart where object!='$itemIdURL' and userId='$session_userId'";
@@ -71,6 +73,10 @@ if(isset($_POST['condition'])){
         $identityNumber = $session_identityNumber;
     }else{$identityNumber= mb_htmlentities($_POST['identityNumber']);}
     
+    if(!isset($_POST['phoneNumber'])){
+        $phoneNumber = $session_phoneNumber;
+    }else{$phoneNumber= mb_htmlentities($_POST['phoneNumber']);}
+    
     $isAnon= mb_htmlentities($_POST['isAnon']);
     
     
@@ -84,7 +90,7 @@ if(isset($_POST['condition'])){
     echo"err";
     }
   
-    $sql="update fik_users set AgreeOption='$AgreeOption', isAnon='$isAnon',  country='$country', state='$state', city='$city', streetAddress='$streetAddress', identityNumber='$identityNumber'  where  id='$session_userId'";
+    $sql="update fik_users set AgreeOption='$AgreeOption', isAnon='$isAnon', phoneNumber='$phoneNumber', country='$country', state='$state', city='$city', streetAddress='$streetAddress', identityNumber='$identityNumber'  where  id='$session_userId'";
     if(!mysqli_query($con,$sql))
     {
     echo"err";
@@ -197,7 +203,6 @@ if(isset($_POST['condition'])){
 						<div class="progress-table-wrap">
 							<div class="progress-table">
 								<div class="table-head">
-									<div class="serial">#</div>
 									<div class="country" style="margin-left:4px;"><?translate("Image","Image")?></div>
 									<div class="country" style="margin-left:4px;"><?translate("Item","Madde")?></div>
 									<div class="country" style="margin-left:4px;"><?translate("Quantity","miktar")?></div>
@@ -211,14 +216,13 @@ if(isset($_POST['condition'])){
                                     { 
     								?>
     								    <div class="table-row">
-        									<div class="serial">-</div>
         									<div class="country" style="margin-left:4px;">
         									     <img  width="70" height="50"  src="./uploads/postImages/<?echo $row['image']?>" alt="flag">
         									</div>
         									<div class="country" style="margin-left:4px;"><?echo $row['name']?></div>
         									<div class="country" style="margin-left:4px;"><?echo $row['quantity']?></div>
         									<div class="country" style="margin-left:4px;">
-        										 &#8378; <?echo $row['quantity']* $row['price']?>
+        										  <?echo $row['quantity']* $row['price']?> &#8378;
         									</div>
         									<div class="country" style="margin-left:4px;">
         									    <a href="./checkout.php?removeItem=<?echo $row['id']?>" style="background-color:red;" class="btn btn-primary">
@@ -240,14 +244,21 @@ if(isset($_POST['condition'])){
     									<div class="country"></div>
     									<div class="visit"></div>
     									<div class="country">
-    										<b style="font-weight:bold;color:black;"> &#8378; <?echo $total?></b>
+    										<b style="font-weight:bold;color:black;"> <?echo $total?> &#8378;</b>
     									</div>
     							</div>
     							<br>
     							 
+    							 <?if(strlen($session_phoneNumber)<5){?>
+    							 <h4><?translate("Phone Number","Phone Number")?></h4>
+    							 <input style="width: 50vw;" maxlength="16" name="phoneNumber" type="text" class="form-control" value="<?echo $session_phoneNumber;?>" required>
+    							 <br>
+    							 <?}?>
+    							 
+    							 
     							 <?if(strlen($session_identityNumber)<3){?>
     							 <h4><?translate("Identity Number","Identity Number")?></h4>
-    							 <input style="width: 50vw;" maxlength="11" name="identityNumber" type="text" class="form-control" value="00000000000" required>
+    							 <input style="width: 50vw;" maxlength="11" name="identityNumber" type="text" class="form-control" value="11111111111" required>
     							 <br>
     							 <?}?>
     							 
@@ -280,12 +291,12 @@ if(isset($_POST['condition'])){
     							    </div>
     							</div>
     							<?}?>
-    							
+    	
     							<?if(strlen($session_streetAddress)<3){?>
     							<div class="row">
     							    <div class="col-md-12">
     							            <p>Street Address</p>
-                                                <textarea style="width: 50vw;height:20vh;" name="streetAddress" class="form-control" placeholder="Describe yourself here..."><?if($session_streetAddress!=''){echo $session_streetAddress;}else{echo 'Street Address...';}?></textarea>
+                                                <textarea style="width: 50vw;height:20vh;" name="streetAddress" class="form-control" placeholder="your address"><?if($session_streetAddress!=''){echo $session_streetAddress;}?></textarea>
 
     							        </div>
     							        </div>
@@ -345,7 +356,7 @@ if(isset($_POST['condition'])){
                                                 <a class="d-flex justify-content-between">
                                                     <p><?translate("Cost", "Maliyet")?></p>
                                                     <p>
-                                                       &#8378; <?echo $costWithoutKDV?>
+                                                       <?echo $costWithoutKDV?> &#8378;
                                                     </p>
                                                 </a>
                                     </li>
@@ -354,7 +365,7 @@ if(isset($_POST['condition'])){
                                                 <a class="d-flex justify-content-between">
                                                     <p>KDV</p>
                                                     <p>
-                                                       &#8378; <?echo $kdv?>
+                                                       <?echo $kdv?> &#8378;
                                                     </p>
                                                 </a>
                                     </li>
@@ -363,7 +374,7 @@ if(isset($_POST['condition'])){
                                                 <a class="d-flex justify-content-between">
                                                     <h4><?translate("Total","Genel Toplam")?></h4>
                                                     <h4>
-                                                        &#8378; <?echo $total?>
+                                                        <?echo $total?> &#8378;
                                                     </h4>
                                                 </a>
                                     </li>
@@ -389,7 +400,7 @@ if(isset($_POST['condition'])){
                                 </ul>
                                 <div class="form-group">
                                     <br>
-                              <p class="text-center"><span><input type="checkbox" id="scales" name="scales"  onchange="document.getElementById('sendNewSms').disabled = !this.checked;" required> I agree with the <a href="./tnc.php">terms and conditions</a></span></p>
+                              <p class="text-center"><span><input type="checkbox" id="scales" name="scales"  onchange="document.getElementById('sendNewSms').disabled = !this.checked;" required> I agree with the <a href="./agreements/distSalesCont.php" target="_blank">Distant Sales Contract</a> and <a href="./agreements/preliminaryInfo.php" target="_blank">Preliminary Information</a></span></p>
                            </div>
                             </aside>
             

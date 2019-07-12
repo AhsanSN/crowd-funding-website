@@ -1,0 +1,3 @@
+<?
+echo "it worked";
+?>

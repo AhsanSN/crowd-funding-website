@@ -32,7 +32,7 @@ if(isset($_GET['postRefId'])&&isset($_GET['itemId'])){
                 else{
                     //make donation
                     $timeNow = time();
-                    $sql="insert into fik_contributions(`postId`, `userId`, `timeDone`, `contribution`, `quantity`) values ('$id', '$session_userId', '$timeNow', '$itemId', '$quantity')";
+                    $sql="insert into fik_contributions(`postId`, `userId`, `timeDone`, `contribution`, `quantity`, `isAnon`) values ('$id', '$session_userId', '$timeNow', '$itemId', '$quantity', '$session_isAnon')";
                     if(!mysqli_query($con,$sql))
                     {
                         echo "err 1";
@@ -71,7 +71,7 @@ if(isset($_POST['itemSelect'])){
         else{
             //make donation
             $timeNow = time();
-            $sql="insert into fik_contributions(`postId`, `userId`, `timeDone`, `contribution`, `quantity`) values ('$id', '$session_userId', '$timeNow', '$item', '$quantity')";
+            $sql="insert into fik_contributions(`postId`, `userId`, `timeDone`, `contribution`, `quantity`, `isAnon`) values ('$id', '$session_userId', '$timeNow', '$item', '$quantity', '$session_isAnon')";
             if(!mysqli_query($con,$sql))
             {
                 echo "err 1";
@@ -108,7 +108,7 @@ if(isset($_GET['itemSelect'])){
         else{
             //make donation
             $timeNow = time();
-            $sql="insert into fik_contributions(`postId`, `userId`, `timeDone`, `contribution`, `quantity`) values ('$id', '$session_userId', '$timeNow', '$item', '$quantity')";
+            $sql="insert into fik_contributions(`postId`, `userId`, `timeDone`, `contribution`, `quantity`, `isAnon`) values ('$id', '$session_userId', '$timeNow', '$item', '$quantity', '$session_isAnon')";
             if(!mysqli_query($con,$sql))
             {
                 echo "err 1";
@@ -178,7 +178,7 @@ if(isset($_GET['id'])){
                 else{
                     //make donation
                     $timeNow = time();
-                    $sql="insert into fik_contributions(`postId`, `userId`, `timeDone`, `contribution`, `quantity`) values ('$id', '$session_userId', '$timeNow', '$item', '$quantity')";
+                    $sql="insert into fik_contributions(`postId`, `userId`, `timeDone`, `contribution`, `quantity`, `isAnon`) values ('$id', '$session_userId', '$timeNow', '$item', '$quantity', '$session_isAnon')";
                     if(!mysqli_query($con,$sql))
                     {
                         echo "err 1";
@@ -194,10 +194,10 @@ if(isset($_GET['id'])){
     }
     
 
-    $query_postParticipants= "select DISTINCT(IF(u.isAnon,'Anonymous', (u.name)))as 'name', s.name as itemName , s.image as itemImg, IF(u.isAnon,'profilePic.png',  u.userImg) as 'userImg' from fik_contributions c INNER join fik_users u on c.userId=u.id inner join fik_shopItems s on s.id=c.contribution where postId= '$id'"; 
+    $query_postParticipants= "select (IF(c.isAnon,'Anonymous', (u.name)))as 'name', s.name as itemName , s.image as itemImg, IF(c.isAnon,'profilePic.png',  u.userImg) as 'userImg' from fik_contributions c INNER join fik_users u on c.userId=u.id inner join fik_shopItems s on s.id=c.contribution where postId= '$id' order by c.id desc"; 
     $result_postParticipants = $con->query($query_postParticipants);
     
-    $query_rewards= "select * from fik_rewards r inner join fik_shopItems s on r.object=s.id where postRewardId= '$postRewardId'"; 
+    $query_rewards= "select * from fik_rewards r inner join fik_shopItems s on r.object=s.id where postRewardId= '$postRewardId' order by s.price asc"; 
     $result_rewards = $con->query($query_rewards);
     
     $query_reward0= "select * from fik_rewards r where object='item0' and postRewardId= '$postRewardId'"; 
@@ -541,7 +541,7 @@ else{
                                 	?>
                                 	    <div class="table-row">
                                 			<div class="country" style="margin-left:10px;">
-                                			    <img  width="70" height="50"  src="./uploads/postImages/<?echo $row['userImg']?>" alt="flag">
+                                			    <img  style="height:70px; width:70px;border-radius:50%;"  src="./uploads/postImages/<?echo $row['userImg']?>" alt="flag">
                                 			</div>
                                 			<div class="country" style="margin-left:10px;"><?echo $row['name']?></div>
                                 			<div class="country" style="margin-left:10px;"><?echo $row['itemName']?></div>
@@ -724,7 +724,6 @@ else{
                                                     
                                                     <div class="row" style="justify-content: center;" >
                                                         
-                                                        
                                                         <?if (!in_array('883caebaa0b94407e089f4c8f0406c9f', $rewardsInbucket)) {?>
                                                             <a <?if($logged==1){?>href="./<?echo $realShopName;?>.php?postRefId=<?echo $id?>&viewN=6"<?}?>>
                                                         <?}else{?>
@@ -811,7 +810,7 @@ else{
                                             
                                                       
                                                       <?if (!in_array('17', $rewardsInbucket)) {?>
-                                                            <a <?if($logged==1){?>href="./<?if($id==2){echo 'shopFikir';}else{echo 'shop';}?>.php?postRefId=<?echo $id?>&viewN=<?if($id==2){echo '3';}else{echo '6';}?>"<?}?>>
+                                                            <a <?if($logged==1){?>href="./<?if($id==2){echo 'shopFikir';}else{echo 'shop';}?>.php?postRefId=<?echo $id?>&item=17"<?}?>>
                                                         <?}else{?>
                                                             <a onclick='donateFromRewards("17")'>
                                                         <?}?>
@@ -824,7 +823,7 @@ else{
                                                              
                                                             ?>
 
-                                                            <a <? if($logged==1){echo 'href="./'.$realShopName.'.php?postRefId='.$id.'&viewN='.$viewNTemp.'"';}else{"onclick='showError()'";}?> class="myBtn" style="color:white;">
+                                                            <a <? if($logged==1){echo 'href="./'.$realShopName.'.php?postRefId='.$id.'&item=17"';}else{"onclick='showError()'";}?> class="myBtn" style="color:white;">
                                                         <?}else{?>
                                                             <a onclick='donateFromRewards("17")' class="myBtn" style="color:white;">
                                                         <?}?>
@@ -836,7 +835,7 @@ else{
                                                   <div class="column">
                                                       
                                                       <?if (!in_array('18', $rewardsInbucket)) {?>
-                                                            <a <?if($logged==1){?>href="./<?if($id==2){echo 'shopFikir';}else{echo 'shop';}?>.php?postRefId=<?echo $id?>&viewN=<?if($id==2){echo '3';}else{echo '6';}?>"<?}?>>
+                                                            <a <?if($logged==1){?>href="./<?if($id==2){echo 'shopFikir';}else{echo 'shop';}?>.php?postRefId=<?echo $id?>&item=18"<?}?>>
                                                         <?}else{?>
                                                             <a onclick='donateFromRewards("18")'>
                                                         <?}?>
@@ -846,7 +845,7 @@ else{
                                                     <?if (!in_array('18', $rewardsInbucket)) {?>
                                                     <?if($id==2){$redirectN = 3;}else{$redirectN = 6;}?>
                                                     
-                                                            <a <? if($logged==1){echo 'href="./'.$realShopName.'.php?postRefId='.$id.'&viewN='.$redirectN.'"';}else{"onclick='showError()'";}?> class="myBtn" style="color:white;">
+                                                            <a <? if($logged==1){echo 'href="./'.$realShopName.'.php?postRefId='.$id.'&item=18"';}else{"onclick='showError()'";}?> class="myBtn" style="color:white;">
                                                         <?}else{?>
                                                             <a onclick='donateFromRewards("18")' class="myBtn" style="color:white;">
                                                         <?}?>
@@ -857,7 +856,7 @@ else{
                                                   <div class="column" >
                                                       
                                                           <?if (!in_array('ec617144ff2c89736719d8b636dfe78a', $rewardsInbucket)) {?>
-                                                            <a <?if($logged==1){?>href="./<?if($id==2){echo 'shopFikir';}else{echo 'shop';}?>.php?postRefId=<?echo $id?>&viewN=<?if($id==2){echo '3';}else{echo '6';}?>"<?}?>>
+                                                            <a <?if($logged==1){?>href="./<?if($id==2){echo 'shopFikir';}else{echo 'shop';}?>.php?postRefId=<?echo $id?>&item=ec617144ff2c89736719d8b636dfe78a"<?}?>>
                                                         <?}else{?>
                                                             <a onclick='donateFromRewards("ec617144ff2c89736719d8b636dfe78a")'>
                                                         <?}?>
@@ -866,7 +865,7 @@ else{
                                                     </a>
                                                     <?if($id==2){$redirectN = 3;}else{$redirectN = 6;}?>
                                                     <?if (!in_array('ec617144ff2c89736719d8b636dfe78a', $rewardsInbucket)) {?>
-                                                            <a <? if($logged==1){echo 'href="./'.$realShopName.'.php?postRefId='.$id.'&viewN='.$redirectN.'"';}else{"onclick='showError()'";}?> class="myBtn" style="color:white;">
+                                                            <a <? if($logged==1){echo 'href="./'.$realShopName.'.php?postRefId='.$id.'&item=ec617144ff2c89736719d8b636dfe78a"';}else{"onclick='showError()'";}?> class="myBtn" style="color:white;">
                                                         <?}else{?>
                                                             <a onclick='donateFromRewards("ec617144ff2c89736719d8b636dfe78a")' class="myBtn" style="color:white;">
                                                         <?}?>
@@ -1151,6 +1150,21 @@ else{
         <script src="js/mail-script.js"></script>
         <script src="js/theme.js"></script>
         <script>
+        
+        
+
+            function escapeHtml(unsafe) {
+                return unsafe
+                     .replace(/&/g, "&amp;")
+                     .replace(/</g, "&lt;")
+                     .replace(/>/g, "&gt;")
+                     .replace(/"/g, "&quot;")
+                     .replace(/'/g, "&#039;");
+             }
+
+
+
+
         	$(function () {
         	    //for commenting
                 $('#formComment').on('submit', function (e) {
@@ -1164,7 +1178,7 @@ else{
                         //$('#comment').val('');
                     }
                   });
-                  var a=$("#new_comment").val();
+                  var a=escapeHtml($("#new_comment").val());
                   var b=new Date().toLocaleString();
                     if (a!=''){
             			var txt1 = '<div class="comment-list"><div class="single-comment justify-content-between d-flex"><div class="user justify-content-between d-flex"><div class="thumb"><img width="70" height="70" src="./uploads/postImages/<?echo $session_image?>" alt=""></div><div class="desc"><h5><a href="#"><?echo $session_name?></a></h5><p class="date">'+b+'</p><p class="comment">'+a+'</p></div></div></div></div>';

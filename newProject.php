@@ -70,7 +70,10 @@ if(isset($_POST["buttonAction"]))
     $reward5Price = mb_htmlentities($_POST['reward5Prize']);
     $reward6Price = mb_htmlentities($_POST['reward6Prize']);
     $reward7Price = mb_htmlentities($_POST['reward7Prize']);
-    
+    $reward8Price = mb_htmlentities($_POST['reward8Prize']);
+    $reward9Price = mb_htmlentities($_POST['reward9Prize']);
+    $reward10Price = mb_htmlentities($_POST['reward10Prize']);
+
     $reward0Price = mb_htmlentities($_POST['reward0Prize']);
     
     $reward1EstimatedTime = mb_htmlentities($_POST['reward1EstimatedTime']);
@@ -80,6 +83,9 @@ if(isset($_POST["buttonAction"]))
     $reward5EstimatedTime = mb_htmlentities($_POST['reward5EstimatedTime']);
     $reward6EstimatedTime = mb_htmlentities($_POST['reward6EstimatedTime']);
     $reward7EstimatedTime = mb_htmlentities($_POST['reward7EstimatedTime']);
+    $reward8EstimatedTime = mb_htmlentities($_POST['reward8EstimatedTime']);
+    $reward9EstimatedTime = mb_htmlentities($_POST['reward9EstimatedTime']);
+    $reward10EstimatedTime = mb_htmlentities($_POST['reward10EstimatedTime']);
     
     $reward0EstimatedTime = mb_htmlentities($_POST['reward0EstimatedTime']);
     
@@ -132,6 +138,21 @@ if(isset($_POST["buttonAction"]))
             if(!mysqli_query($con,$sql))
             {
                 echo "err 7";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', '18785a6e863d96882b67f51ec7f691d9', '$reward8Price', '$reward8EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 8";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', '53a90fd6bf517ec4341d25a76cd8de5f', '$reward9Price', '$reward9EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 9";
+            }
+            $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', 'f3edb77210254a26372998c3b4523327', '$reward10Price', '$reward10EstimatedTime')";
+            if(!mysqli_query($con,$sql))
+            {
+                echo "err 10";
             }
             $sql="insert into fik_rewards (`postRewardId`, `object`, `reward`, `deliveryTime`) values ('$postId', 'item0', '$reward0Price', '$reward0EstimatedTime')";
             if(!mysqli_query($con,$sql))
@@ -520,7 +541,7 @@ $result_categories = $con->query($query_categories);
                                     </div>
                                 </div>
                                 <br>
-                                
+                                <!--yonca-->
 								<div style="background-color:#c9ffc1;padding:10px;">
                                     <h4 style="padding:10px;text-align: center;">Yonca -  &#8378; 10</h4>
                                     <div style="text-align: center;">
@@ -536,9 +557,42 @@ $result_categories = $con->query($query_categories);
                                         <input type="text" class="form-control" id="reward1EstimatedTime" name="reward1EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[0]?>">
                                     </div>
                                 </div>
-                                
-                                
                                 <br>
+                                <!--hayat suyu-->
+                                <div style="background-color:#c9ffc1;padding:10px;">
+                                    <h4 style="padding:10px;text-align: center;">Hayat Suyu Ibrigi -  &#8378; 25</h4>
+                                    <div style="text-align: center;">
+                                        <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/hayatsuyuibrigi.png"   alt="post">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <h6><?translate("Reward","Reward")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward8Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[7]?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
+                                        <input type="text" class="form-control" id="reward8EstimatedTime" name="reward8EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[7]?>">
+                                    </div>
+                                </div>
+                                <br>
+                                <!--yasam saksisi-->
+                                <div style="background-color:#c9ffc1;padding:10px;">
+                                    <h4 style="padding:10px;text-align: center;">Yasam Saksisi -  &#8378; 50</h4>
+                                    <div style="text-align: center;">
+                                        <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/yasamsaksisi.png"   alt="post">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <h6><?translate("Reward","Reward")?></h6>
+                                        <textarea type="text" class="form-control" id="reward9Prize" name="reward9Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[8]?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
+                                        <input type="text" class="form-control" id="reward9EstimatedTime" name="reward9EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[8]?>">
+                                    </div>
+                                </div>
+                                <br>
+                                <!--demeti-->
                                 <div style="background-color:#c9ffc1;padding:10px;">
                                     <h4 style="padding:10px;text-align: center;">&Ccedil;i&ccedil;ek Demeti -  &#8378; 25</h4>
                                     <div style="text-align: center;">
@@ -555,6 +609,7 @@ $result_categories = $con->query($query_categories);
                                     </div>
                                 </div>
                                 <br>
+                                <!--budama makas-->
                                 <div style="background-color:#c9ffc1;padding:10px;">
                                     <h4 style="padding:10px;text-align: center;">Budama Makas&#305; -  &#8378; 50</h4>
                                     <div style="text-align: center;">
@@ -571,6 +626,7 @@ $result_categories = $con->query($query_categories);
                                     </div>
                                 </div>
                                 <br>
+                                <!--fidan-->
                                 <div style="background-color:#c9ffc1;padding:10px;">
                                     <h4 style="padding:10px;text-align: center;">Fidan -  &#8378; 100</h4>
                                     <div style="text-align: center;">
@@ -587,6 +643,24 @@ $result_categories = $con->query($query_categories);
                                     </div>
                                 </div>
                                 <br>
+                                <!--tohum sandigi-->
+                                <div style="background-color:#c9ffc1;padding:10px;">
+                                    <h4 style="padding:10px;text-align: center;">Tohum Sandigi -  &#8378; 1000</h4>
+                                    <div style="text-align: center;">
+                                        <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/tohumsandigi.png"   alt="post">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <h6><?translate("Reward","Reward")?></h6>
+                                        <textarea type="text" class="form-control" id="reward10Prize" name="reward10Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[9]?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
+                                        <input type="text" class="form-control" id="reward10EstimatedTime" name="reward10EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[9]?>">
+                                    </div>
+                                </div>
+                                <br>
+                                <!--el arabas-->
                                 <div style="background-color:#c9ffc1;padding:10px;">
                                     <h4 style="padding:10px;text-align: center;">El Arabas&#305; -  &#8378; 250</h4>
                                     <div style="text-align: center;">
@@ -603,6 +677,7 @@ $result_categories = $con->query($query_categories);
                                     </div>
                                 </div>
                                 <br>
+                                <!--meyve-->
                                 <div style="background-color:#c9ffc1;padding:10px;">
                                     <h4 style="padding:10px;text-align: center;">Meyve A&#287;ac&#305; -  &#8378; 500</h4>
                                     <div style="text-align: center;">
@@ -619,6 +694,7 @@ $result_categories = $con->query($query_categories);
                                     </div>
                                 </div>
                                 <br>
+                                <!--bah van ailesi-->
                                 <div style="background-color:#c9ffc1;padding:10px;">
                                     <h4 style="padding:10px;text-align: center;">Bah&ccedil;&#305;van Ailesi -  &#8378; 1000</h4>
                                     <div style="text-align: center;">
@@ -634,6 +710,7 @@ $result_categories = $con->query($query_categories);
                                         <input type="text" class="form-control" id="reward7EstimatedTime" name="reward7EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[6]?>">
                                     </div>
                                 </div>
+                                <br>
                                 
                             </div>
                             

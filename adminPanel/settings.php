@@ -220,7 +220,7 @@ $query_shopList = "select * from fik_shopItems";
                                     echo "<tr>";
                                     echo "<td>".$row['name']." (".$row['price']." Liras)</td>";
                                     echo "<td>".$row['description']."</td>";
-                                    //echo '<td><a href="./settings.php?removeOption='.$row['id'].'"><button class="btn btn-social btn-just-icon btn-google" style="background-color:red;"><i class="material-icons">cancel</i></button></a></td>';
+                                    echo '<td><a href="./editItem.php?id='.$row['id'].'"><button class="btn btn-social btn-just-icon btn-google" style="background-color:orange;"><i class="material-icons">edit</i></button></a></td>';
                                     echo "</tr>";
                                 }
                             }

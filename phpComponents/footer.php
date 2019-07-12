@@ -11,7 +11,7 @@
 							    ?>
 								
 							</p>
-							<a class="primary_btn mr-20" href="./postPage.php?id=2.php"><?translate("Donate us","B&#304;ze Destek Olun!")?></a>
+							<a class="primary_btn mr-20" href="./postPage.php?id=2"><?translate("Donate us","B&#304;ze Destek Olun!")?></a>
 
 							
 						</div>
@@ -25,6 +25,7 @@
 								<li><a href="./shop.php"><?translate("Shop","Manav")?></a></li>
 								<li><a href="./allBlogs.php"><?translate("Blogs","Bah&ccedil;e")?></a></li>
 								<li><a href="./about.php"><?translate("About","Hakk&#305;m&#305;zda")?></a></li>
+								<li><a href="./tnc.php"><?translate("Terms and Conditions","Terms and Conditions")?></a></li>
 							</ul>
 						</div>
 					</div>
@@ -76,3 +77,7 @@
 		</div>
 	</footer>
 	
+	<!-- 
+	Developed by Anomoz Softwares. (Anomoz.com).
+	Please dont remove any watermarks from the website, because this is what helps me get bread on my table.
+	-->

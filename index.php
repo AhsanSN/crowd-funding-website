@@ -119,7 +119,10 @@ $query_recent3Posts = "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(
 		</div>
 	</section>
 	
-	<!--================ Start Causes Area =================-->
+	<!-- 
+	Developed by Anomoz Softwares. (Anomoz.com).
+	Please dont remove any watermarks from the website, because this is what helps me get bread on my table.
+	-->
 	<section class="causes_area" style="padding:0px;">
 		<div class="container">
 			<div class="main_title">
@@ -188,6 +191,10 @@ $query_recent3Posts = "select p.id, p.title, p.excerpt, p.goal, p.image , COUNT(
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
     <script src="js/gmaps.min.js"></script>
     <script src="js/theme.js"></script>
+    <!-- 
+	Developed by Anomoz Softwares. (Anomoz.com).
+	Please dont remove any watermarks from the website, because this is what helps me get bread on my table.
+	-->
         
 
 </body>

@@ -31,8 +31,11 @@ $filenameLink = basename($_SERVER['PHP_SELF']);
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<!-- Collect the nav links, forms, and other content for toggling -->
-						<div class="collapse navbar-collapse offset" id="navbarSupportedContent" style="background-color:#008c7d">
+						<!-- 
+                    	Developed by Anomoz Softwares. (Anomoz.com).
+                    	Please dont remove any watermarks from the website, because this is what helps me get bread on my table.
+                    	-->
+						<div class="collapse navbar-collapse offset" id="navbarSupportedContent" style="background-color:#008c7d;max-height: 350px;">
 							<ul class="nav navbar-nav menu_nav ml-auto">
 								<li class="nav-item <?if($filenameLink=='index.php'){echo'active';}?>"><a class="nav-link" href="./"><?translate("Home","Ana sayfa")?></a></li> 
 								<li class="nav-item <?if($filenameLink=='allPosts.php'){echo'active';}?>"><a class="nav-link" href="allPosts.php"><?translate("Projects","Projeler")?></a></li> 
