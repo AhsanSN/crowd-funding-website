@@ -437,12 +437,12 @@ else{
                                 ?>
                                 <div class="col-lg-3  col-md-3">
                                 <div class="blog_info text-right">
-                                    <?if($logged==0){echo '<p style="color:red;">'.translateRet("Signup required to donate.","Ba&#287;&#305;&#351; yapmak i&#231;in kay&#305;t olman&#305;z gerekiyor.").'</p>';}?>
+                                    <?if($logged==0){echo '<p style="color:red;">'.translateRet("Signup required to donate.","Destek olmak i&#231;in kay&#305;t olman&#305;z gerekmektedir.").'</p>';}?>
                                     <!--
                                     <div class="col-lg-7">
                                         
                                         <button type="button" class="btn btn-primary primary_btn rounded" <?if($logged==1){echo 'data-toggle="modal"';}?>  data-target="#exampleModalCenter">
-                                          <?translate("Donate","ba&#287;&#305;&#351;lamak")?>
+                                          <?translate("Donate","Destekle")?>
                                         </button>
                                         
                                         
@@ -476,7 +476,7 @@ else{
                                          
                                         ?>
                                         <li><a href="#"><?echo $timeLeft?> days left<i class="lnr lnr-clock"></i></a></li>
-                                        <li><a href="#"><?echo $views?> <?translate("Views","G&#246;r&#252;n&#252;mler")?><i class="lnr lnr-eye"></i></a></li>
+                                        <li><a href="#"><?echo $views?> <?translate("Views","Görüntülemeler")?><i class="lnr lnr-eye"></i></a></li>
                                         <li><a href="#"><?echo $nComments?> <?translate("Comments","Yorumlar")?><i class="lnr lnr-bubble"></i></a></li>
                                     </ul>
                                     
@@ -526,7 +526,7 @@ else{
                                 { 
                                     ?>
                                     <hr>
-                                <h4><?translate("Contributors", "katk&#305;da")?></h4>
+                                <h4><?translate("Contributors", "Destekçiler")?></h4>
                                 <div class="progress-table">
                                 
                                 <div class="table-head">
@@ -593,7 +593,7 @@ else{
                                 <?}if($nextid!=null){?>
                                 <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
                                     <div class="detials">
-                                        <p><?translate("Next Post","Sonraki g&#246;nderi")?></p>
+                                        <p><?translate("Next Post","Sonraki Proje")?></p>
                                         <a href="./postPage.php?id=<?echo $nextid?>"><h4><?echo $nexttitle?></h4></a>
                                     </div>
                                     <div class="arrow">
@@ -658,9 +658,9 @@ else{
                             <form method="get" id="formComment">
                                 <input name="postId" hidden value="<?echo $id?>">
                                 <div class="form-group">
-                                    <textarea class="mb-10" style="width:100%" rows="5" name="new_comment" id="new_comment" placeholder="<?translate("Type your comment here.","Yorumunuzu buraya yaz&#305;n.")?>" required=""></textarea>
+                                    <textarea class="mb-10" style="width:100%" rows="5" name="new_comment" id="new_comment" placeholder="<?translate("Type your comment here.","Yorumunuzu buraya yazınız.")?>" required=""></textarea>
                                 </div>
-                                <button href="#" class="primary-btn primary_btn"><?translate("Post Comment","Yorum g&#246;nder")?></button>	
+                                <button href="#" class="primary-btn primary_btn"><?translate("Post Comment","Yorumu Gönder")?></button>	
                             </form>
                         </div>
                         <?}?>
@@ -680,7 +680,7 @@ else{
                             </aside>
                             <hr>
                             <aside class="single_sidebar_widget post_category_widget">
-                                <h4 class="widget_title"><?translate("Rewards","Rewards")?></h4>
+                                <h4 class="widget_title"><?translate("Rewards","Ödüller")?></h4>
                                     <?
                                     $myArr = array();
                                     
@@ -942,7 +942,7 @@ else{
                             </aside>
                             
                             <aside class="single_sidebar_widget post_category_widget">
-                                <h4 class="widget_title"><?translate("Donate","ba&#287;&#305;&#351;lamak")?></h4>
+                                <h4 class="widget_title"><?translate("Donate","Destekleyin)?></h4>
                                 <ul class="list cat-list">
                                     <style>
                                         #new_donation{
@@ -1042,14 +1042,14 @@ else{
                         { 
                             ?>
                             <hr>
-                        <h4><?translate("Contributors", "katk&#305;da")?></h4>
+                        <h4><?translate("Contributors", "Destekçiler")?></h4>
                         <div class="progress-table">
                         
                         <div class="table-head">
-                        	<div class="country" style="margin-left:10px;"><?translate("Pic","Pic")?></div>
-                        	<div class="country" style="margin-left:10px;"><?translate("Isim","Isim")?></div>
-                        	<div class="country" style="margin-left:10px;"><?translate("Item","Madde")?></div>
-                        	<div class="country" style="margin-left:10px;"><?translate("Img","Img")?></div>
+                        	<div class="country" style="margin-left:10px;"><?translate("Pic","Fotoğraf")?></div>
+                        	<div class="country" style="margin-left:10px;"><?translate("Isim","İsim")?></div>
+                        	<div class="country" style="margin-left:10px;"><?translate("Item","Destek")?></div>
+                        	<div class="country" style="margin-left:10px;"><?translate("","")?></div>
                         </div>
                             <?
                             while($row = $result_postParticipants->fetch_assoc()) 
@@ -1115,7 +1115,7 @@ else{
                                 <div class="form-group">
                                     <textarea class="mb-10" style="width:100%" rows="5" name="new_comment" id="new_comment" placeholder="<?translate("Type your comment here.","Yorumunuzu buraya yaz&#305;n.")?>" required=""></textarea>
                                 </div>
-                                <button href="#" class="primary-btn primary_btn"><?translate("Post Comment","Yorum g&#246;nder")?></button>	
+                                <button href="#" class="primary-btn primary_btn"><?translate("Post Comment","Yorumu gönder")?></button>	
                             </form>
                         </div>
                         <?}?>
