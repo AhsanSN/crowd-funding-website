@@ -95,7 +95,7 @@ $result_inventory = $con->query($query_inventory);
                                     <h2><?translate("Dashboard","Bah&ccedil;&#305;van Bilgileri")?></h2>
                                     <p><?translate("This is your personal dashboard where you can manage your projects and donations in the best possible way.","Kendi bah&ccedil;enize ho&#351; geldiniz. Bilgilerinizi d&uuml;zenleyebilir ya da neler yapt&#305;&#287;&#305;n&#305;z&#305; bu sayfada g&ouml;rebilirsiniz.")?></p>
                                     <?if(isset($_GET['pendingApproval'])){?>
-                                        <p style="color:orange"><?translate("Your post has been sent to the admins. Once its approved, it will be posted on the website.", "G&#246;nderiniz y&#246;neticilere g&#246;nderildi. Onayland&#305;ktan sonra, web sitesinde yay&#305;nlanacakt&#305;r.");?></p>
+                                        <p style="color:orange"><?translate("Your post has been sent to the admins. Once its approved, it will be posted on the website.", "Projeniz platforma gönderildi, en kısa sürede geri dönüş yapacağız.");?></p>
                                     <?}?>
                                    
                                 </div>
@@ -118,31 +118,31 @@ $result_inventory = $con->query($query_inventory);
                                         <h2><?translate("Dashboard","Bah&ccedil;&#305;van Bilgileri")?></h2>
                                         <p><?translate("This is your personal dashboard where you can manage your projects and donations in the best possible way.","Kendi bah&ccedil;enize ho&#351; geldiniz. Bilgilerinizi d&uuml;zenleyebilir ya da neler yapt&#305;&#287;&#305;n&#305;z&#305; bu sayfada g&ouml;rebilirsiniz.")?></p>
                                         <?if(isset($_GET['pendingApproval'])){?>
-                                            <p style="color:orange"><?translate("Your post has been sent to the admins. Once its approved, it will be posted on the website.", "G&#246;nderiniz y&#246;neticilere g&#246;nderildi. Onayland&#305;ktan sonra, web sitesinde yay&#305;nlanacakt&#305;r.");?></p>
+                                            <p style="color:orange"><?translate("Your post has been sent to the admins. Once its approved, it will be posted on the website.", "Projeniz platforma gönderildi en kısa sürede geri dönüş yapacağız.");?></p>
                                         <?}?>
                                         <?if($nPendingPosts>0){
                                     ?>
-                                    <p style="background-color:green;color:white;"><?translate("You have","Var")?> <?echo $nPendingPosts?> <?translate("pending posts","Bekleyen Mesajlar.")?> </p>
+                                    <p style="background-color:green;color:white;"><?translate("You have","Var")?> <?echo $nPendingPosts?> <?translate("pending posts","Bildirimler")?> </p>
                                     <?
                                     }?>
-                                        [<a href="./decisionHistory.php"><?translate("View post decision history","Karar verme ge&#231;mi&#351;ini g&#246;r&#252;nt&#252;le")?></a>]
+                                        <a href="./decisionHistory.php"><?translate("View post decision history","Gönderdiğiniz Projeler Hakkında Bilgilere Buradan Ulaşabilirsiniz.")?></a>
                                     </div>
 
                                     <div class="row justify-content-center">
                                         <?
                                             if($lang=='EN'){
                                                 ?>
-                                                  <h3>Start a [<a href="./newProject.php" class="rounded" style="color:green;">NEW PROJECT</a>]</h3>
+                                                  <h5>Start a [<a href="./newProject.php" class="rounded" style="color:green;">NEW PROJECT</a>]</h5>
                                                 <?
                                             }
                                             else{
                                                 ?>
-                                                  <h3>[<a href="./newProject.php" class="rounded" style="color:green;">Yeni proje</a>] ba&#351;lat </h3>
+                                                  <h5><a href="./newProject.php" class="rounded" style="color:green;">Proje Göndermek İçin Tıklayınız.</a></h5>
                                                 <?
                                             }
                                         ?>
                                         
-
+                                        
                                         <?
                                         if($session_userId==2){
                                             ?>
@@ -167,15 +167,15 @@ $result_inventory = $con->query($query_inventory);
                                         }
                                         ?>
 
-                                        <p><?translate("The best way to make your project a success is by telling more people about it. Post a new project and get people interested about your idea.","Projenizi ba&#351;ar&#305;ya ula&#351;t&#305;rman&#305;n en iyi yolu, daha fazla insana bunu anlatmakt&#305;r. Yeni bir proje yay&#305;nlay&#305;n ve insanlar&#305;n fikrinizle ilgilenmesini sa&#287;lay&#305;n.")?></p>
+                                        <p><?translate("The best way to make your project a success is by telling more people about it. Post a new project and get people interested about your idea.","Projenizi kitlelere duyurarak destek toplamak için, projenizi detaylı şekilde bize göndermeniz gerekmektedir.")?></p>
                                     </div>
 
                                     <div class="row justify-content-center">
-                                        <h1><?translate("Your Contributions","Senin Deste&#287;in")?></h1>
+                                        <h3><?translate("Your Contributions","Desteklediğiniz Projeler")?></h3>
                                        
                                     </div>
                                     <div class="row justify-content-center">
-                                         <h3><a href="./donationHistory.php"><?translate("Donation History","Ba&#287;&#305;&#351; Tarihi")?></a></h3>
+                                         <p><a href="./donationHistory.php"><?translate("Donation History","Desteklediğiniz Projeler Hakkında Bilgilere Buradan Ulaşabilirsiniz.")?></a></p>
                                         </div>
                                     <br>
 
@@ -210,7 +210,7 @@ $result_inventory = $con->query($query_inventory);
                                                                 <?echo $row['excerpt']?>
                                                             </p>
                                                             <div class="d-flex justify-content-between raised_goal">
-                                                                <p><span><?translate("You donated:", "Ba&#287;&#305;&#351;lad&#305;n:")?>  <?echo $row['name']?> (<?echo $row['quantity']?>)</span></p>
+                                                                <p><span><?translate("You donated:", "Desteğiniz")?>  <?echo $row['name']?> (<?echo $row['quantity']?>)</span></p>
                                                             </div>
                                                             <div class="d-flex justify-content-between donation align-items-center">
                                                                 <a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("View","g&#246;r&#252;n&#252;m")?></a>
@@ -295,7 +295,7 @@ $result_inventory = $con->query($query_inventory);
                                     </div>
 
                                     <div class="row justify-content-center">
-                                        <h1><?translate("Your Projects","Senin Projen")?></h1>
+                                        <h3><?translate("Your Projects","Projeleriniz")?></h3>
                                     </div>
                                     <br>
 
@@ -330,12 +330,12 @@ $result_inventory = $con->query($query_inventory);
                                                                 <?echo $row['excerpt']?>
                                                             </p>
                                                             <div class="d-flex justify-content-between raised_goal">
-                                                                <p><?translate("Raised","Biriken")?>:  &#8378; <?echo $row['amountEarned']?>
+                                                                <p><?translate("Raised","Toplanan")?>:  &#8378; <?echo $row['amountEarned']?>
                                                                 </p>
-                                                                <p><span><?translate("Goal","Hedef")?>:  &#8378; <?echo $row['goal']?></span></p>
+                                                                <p><span><?translate("Goal","Hedeflenen")?>:  &#8378; <?echo $row['goal']?></span></p>
                                                             </div>
                                                             <div class="d-flex justify-content-between donation align-items-center">
-                                                                <a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("View","g&#246;r&#252;n&#252;m")?></a>
+                                                                <a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("View","Görüntüle")?></a>
                                                                 <p><span class="lnr lnr-heart"></span>
                                                                     <?echo $row['nContributors']?> <?translate("Donors","Destek&#231;iler")?></p>
                                                             </div>
@@ -349,10 +349,7 @@ $result_inventory = $con->query($query_inventory);
 				?>
                                     </div>
                                     
-                                    <div class="row justify-content-center">
-                                        <h1><?translate("Your Blogs","Senin Blo&#287;un")?></h1>
-                                    </div>
-                                    <br>
+                                    
 
                                     <div class="row">
                                         <?
@@ -376,7 +373,7 @@ $result_inventory = $con->query($query_inventory);
                                                             </p>
                                                             
                                                             <div class="d-flex justify-content-between donation align-items-center">
-                                                                <a href="./blogPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("View","g&#246;r&#252;n&#252;m")?></a>
+                                                                <a href="./blogPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("View","Görüntüle")?></a>
                                                                 <p><span class="lnr lnr-heart"></span>
                                                                     <?echo $row['views']?> Views</p>
                                                             </div>
@@ -400,7 +397,7 @@ $result_inventory = $con->query($query_inventory);
                                                 <?echo $session_about?>
                                             </p>
                                             <a href="./settings.php" class="primary_btn" style="background-color:#22a7b1;"><?translate("Settings","Ayarlar")?></a>
-                                            <a href="./home.php?logout=true" class="primary_btn" style="background-color:orange;margin-top:10px;"><?translate("Logout","&Ccedil;&#305;k&#305;&#351; Yap")?></a>
+                                            <a href="./home.php?logout=true" class="primary_btn" style="background-color:orange;margin-top:10px;"><?translate("Logout","Çıkış Yapın")?></a>
 
                                         </aside>
                                         <hr>
@@ -434,3 +431,4 @@ $result_inventory = $con->query($query_inventory);
             </body>
 
         </html>
+                                    
