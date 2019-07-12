@@ -204,7 +204,7 @@ else{
                            </div>
                            
                             <div class="form-group">
-                              <p class="text-center"><span><input type="checkbox" id="scales" name="scales" required> I agree with the <a href="./tnc.php">terms and conditions</a></span></p>
+                              <p class="text-center"><span><input type="checkbox" id="scales" name="scales" required>  <a href="./tnc.php">Üyelik ve Destekçi Sözleşmesini</a>okudum ve kabul ediyorum.</span></p>
                            </div>
                         
                            <div class="col-md-12 text-center ">
