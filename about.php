@@ -5,9 +5,9 @@
     <?php include_once("./phpComponents/header.php")?>
 <body>
         
-	<!--================ Start Header Menu Area =================-->
-	<?php include_once("./phpComponents/navbar.php")?>
-	
+    <!--================ Start Header Menu Area =================-->
+    <?php include_once("./phpComponents/navbar.php")?>
+    
     <!--================ End Header Menu Area =================-->
         
     <!--================ Home Banner Area =================-->
@@ -31,11 +31,18 @@
     </section>
     <!--================ End Home Banner Area =================-->
 
-	<!--================ Start About Us Area =================-->
-	
-	<p>&nbsp;<strong>Sizden Gelen Sorularla Fikir Bah&ccedil;ıvanı&rsquo;nı Tanıyalım! </strong></p>
+    <!--================ Start About Us Area =================-->
+    <section class="team_area section_gap" style="background-color: #fff;margin-top:-60px;">
+        <div class="container">
+            
+            <br>
+            <h3>&nbsp;<strong>Sizden Gelen Sorularla Fikir Bah&ccedil;ıvanı&rsquo;nı Tanıyalım! </strong></h3>
 <p>&nbsp;</p>
-<p>&nbsp; &Ouml;ğrencilerin yaşadığı sorunları en yakından bilen, yaşayan ve bu durumu d&uuml;zeltmek i&ccedil;in <strong><em>Geleceğe Dokunmak İ&ccedil;in El Ele</em></strong> sloganı ile &uuml;niversite &ouml;ğrencileri <strong>Fikir Bah&ccedil;ıvanı Kitle Fonlama Platformu</strong>&rsquo;nu kurmuşlardır. Bu aşamada yaşadıkları sorunlar, engeller yine &ouml;ğrenci olmalarından kaynaklı ortaya &ccedil;ıkmış; bu durumu aşmaları i&ccedil;in onlara g&uuml;venen, bir şeyleri başarmalarını isteyen kişilerin yardımı ve desteği ile bug&uuml;n karşınızda diğer &ouml;ğrencilerin bu sorunlarını ortadan kaldırmak, başarılı olmalarını sağlamak ve bir değer &uuml;retmelerine yardımcı olmak amacı ile platform olarak karşınızdalar. Bu aşamada ilk olarak platformun daha iyi hale gelerek daha &ccedil;ok &ouml;ğrenciye ulaşabilmesi ve sistemin daha &ccedil;ok kişinin bilmesi i&ccedil;in ilk olarak kendileri i&ccedil;in sizlerden destek istiyorlar. Bunun i&ccedil;in ise ilk seslendikleri kişiler elbette onların yaşadığı sorunları en iyi tahmin edecek &ouml;ğrenci arkadaşları. Sloganımızın ger&ccedil;ek anlamına daha iyi b&uuml;r&uuml;nmesi ve amacımız doğrultusunda daha hızlı ilerlemesi i&ccedil;in daha fazla kişiye ulaşmak istiyoruz. Ne kadar &ccedil;ok kişiyi kitlemizde bulundurursak, o kadar g&uuml;&ccedil;l&uuml; ve başarılı oluruz. Ama&ccedil;larımızın ger&ccedil;ekleşebilmesi i&ccedil;in sizin desteğinize sonuna kadar ihtiyacımız var. Bunun i&ccedil;in tek yapmanız gereken Bize Destek Olun!&nbsp;&nbsp;</p>
+<p>&nbsp; &Ouml;ğrencilerin yaşadığı sorunları en yakından bilen, yaşayan ve bu durumu d&uuml;zeltmek i&ccedil;in <strong><em>"Geleceğe Dokunmak İ&ccedil;in El Ele"</em></strong> sloganı ile &uuml;niversite &ouml;ğrencileri <strong>Fikir Bah&ccedil;ıvanı Kitle Fonlama Platformu</strong>&rsquo;nu kurmuşlardır. Bu aşamada yaşadıkları sorunlar, engeller yine &ouml;ğrenci olmalarından kaynaklı ortaya &ccedil;ıkmış; bu durumu aşmaları i&ccedil;in onlara g&uuml;venen, bir şeyleri başarmalarını isteyen kişilerin yardımı ve desteği ile bug&uuml;n karşınızda diğer &ouml;ğrencilerin bu sorunlarını ortadan kaldırmak, başarılı olmalarını sağlamak ve bir değer &uuml;retmelerine yardımcı olmak amacı ile platform olarak karşınızdalar.
+
+<br><br>
+
+        &nbsp;Bu aşamada ilk olarak platformun daha iyi hale gelerek daha &ccedil;ok &ouml;ğrenciye ulaşabilmesi ve sistemin daha &ccedil;ok kişinin bilmesi i&ccedil;in ilk olarak kendileri i&ccedil;in sizlerden destek istiyorlar. Bunun i&ccedil;in ise ilk seslendikleri kişiler elbette onların yaşadığı sorunları en iyi tahmin edecek &ouml;ğrenci arkadaşları. Sloganımızın ger&ccedil;ek anlamına daha iyi b&uuml;r&uuml;nmesi ve amacımız doğrultusunda daha hızlı ilerlemesi i&ccedil;in daha fazla kişiye ulaşmak istiyoruz. Ne kadar &ccedil;ok kişiyi kitlemizde bulundurursak, o kadar g&uuml;&ccedil;l&uuml; ve başarılı oluruz. Ama&ccedil;larımızın ger&ccedil;ekleşebilmesi i&ccedil;in sizin desteğinize sonuna kadar ihtiyacımız var. Bunun i&ccedil;in tek yapmanız gereken <a href="./postPage.php?id=2"><i>Bize Destek Olmak!</i></a>&nbsp;&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp; Fikir Bah&ccedil;ıvanı &ouml;ğrenciler ve sosyal sorumluluk projeleri i&ccedil;in oluşturulmuş bir kitle fonlama platformudur. Yaptığımız işi daha iyi anlayabilmeniz i&ccedil;in kitle fonlamasından bahsetmek istiyoruz.</p>
 <p>&nbsp;</p>
@@ -44,9 +51,11 @@
 <p>&nbsp; 1) &Ouml;d&uuml;l bazlı kitle fonlama.</p>
 <p>&nbsp; 2) Bağış bazlı kitle fonlama.</p>
 <p>&nbsp;&nbsp;3) Yatırım bazlı kitle fonlama.</p>
+<br>
 <p>&nbsp; &nbsp;Bu ilk iki yapı T&uuml;rkiye&rsquo;de uygulanmaktadır. &Uuml;&ccedil;&uuml;nc&uuml; yapı i&ccedil;inse mevzuat hazırlık aşamasındadır. Mevzuatın SPK tarafından hazırlanarak onaylanması ile birlikte T&uuml;rkiye&rsquo;de yatırım bazlı kitle fonlama da karşımıza &ccedil;ıkacaktır.</p>
 <p>&nbsp;</p>
-<p>&nbsp; &nbsp;Kısaca kitle fonlamasından bahsettiğimize g&ouml;re şimdi sizden gelen sorularla Fikir Bah&ccedil;ıvanı&rsquo;nı daha iyi tanıyalım.</p>
+
+<p>&nbsp;Kısaca kitle fonlamasından bahsettiğimize g&ouml;re şimdi sizden gelen sorularla Fikir Bah&ccedil;ıvanı&rsquo;nı daha iyi tanıyalım.</p>
 <p>&nbsp;</p>
 <ul>
 <li><strong>Peki Fikir Bah&ccedil;ıvanı hangi modeli uygulamaktadır? </strong></li>
@@ -124,21 +133,28 @@
 </ul>
 <p>&nbsp; Kitle fonlamasına yeni bir soluk getirerek k&uuml;&ccedil;&uuml;k miktarlarda da fon toplamayı ama&ccedil;lamaktayız. Bu mantık doğrultusunda bir oyunlaştırma geliştirdik ve sistemi ona g&ouml;re hazırladık. Manav kısmında karşınıza &ccedil;ıkan t&uuml;m materyaller bu oyunlaştırmanın bir &uuml;r&uuml;n&uuml;d&uuml;r. &Ouml;rnek olarak projeye ya da projelere 10 kuruş değerinde destek olmak istiyorsunuz. Tek yapmanız gereken 10 kuruş değerindeki Toprak materyaline sahip olmanız fakat burada bazı nedenlerden dolayı 10 kuruş değerindeki Toprak materyalinden en az 10 tane sahip olabilirsiniz. &Ouml;deme işlemini tamamladıktan sonra 10 adet Toprak materyali saksınıza y&uuml;klenecektir. Bu 10 adet Toprak materyalini farklı projelere g&ouml;nderebilirsiniz ( Her biri 10 kuruş değerinde sayılacaktır.) Diğer bir yandan Tohum materyalinden (25 kuruş değerinde) en az 4 ve Su Damlası&rsquo;ndan (50 kuruş değerinde) &nbsp;en az 2 tane sahip olabilirsiniz, diğer materyallerde b&ouml;yle bir durum ge&ccedil;erli değildir. &nbsp;Materyaller t&uuml;m projeler i&ccedil;in ge&ccedil;erli olan destek miktarlarıdır. &Ouml;ğrenciler ya da sosyal sorumluluk projesini y&uuml;r&uuml;ten kişiler bu destek miktarları i&ccedil;in &ouml;d&uuml;llerini belirlerler. Yolladığınız materyalin &ouml;d&uuml;l&uuml; ne olarak belirlendiyse, belirlenen s&uuml;rede bu &ouml;d&uuml;le sahip olacaksınız. T&uuml;m mantığı ile sistemimiz bu noktalar doğrultusunda farklılık g&ouml;stermektedir.</p>
 <ul>
+<br>
 <li><strong>Fikir Bah&ccedil;ıvanı platformu hangi dillerde kullanılabilir? </strong></li>
 </ul>
 <p>&nbsp;İnternet sitemiz T&uuml;rk&ccedil;e ve İngilizce olarak yayımlanmıştır fakat İngilizce kısmı i&ccedil;in &ccedil;alışmalar hala devam etmektedir. Başlangı&ccedil; olarak internet sitesini T&uuml;rk&ccedil;e kullanmanız sistemi anlamanız a&ccedil;ısından daha iyi olacaktır.</p>
 <ul>
+    <br>
 <li><strong>Projem İngilizce dilinde de yayımlanabilir mi? </strong></li>
 </ul>
 <p>&nbsp;Projeniz denetim kurulu tarafından onaylandıktan sonra platformda projenizin bilgilerini İngilizce olarak g&ouml;nderirseniz, bu konu hakkında yardımcı olabiliriz.</p>
-	
-	
-	
-	
+
+            
+      <br>      
+            
+            
+        </div>
+    </section>
+            
+    
     <!--================ End About Us Area =================-->
 
-	<!--================Team Area =================-->
-	<section class="team_area section_gap">
+    <!--================Team Area =================-->
+    <section class="team_area section_gap" style="background-color: #fff;margin-top:-140px;" >
         <div class="container">
             <div class="main_title">
                 <h2>Ekibimizle Tan&#305;&#351;&#305;n!</h2>
@@ -154,10 +170,11 @@
                             <p>Kurucu Ortak</p>
                             
                             <div class="social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="active"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                
+                                <a href="#" style="margin:0px;"><i class="fa fa-facebook"></i></a>
+                                <a href="#" class="active" style="margin:0px;"><i class="fa fa-twitter"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-instagram"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-linkedin"></i></a>
                             </div>
                         </div>
                     </div>
@@ -173,10 +190,10 @@
                             <p>Kurucu Ortak</p>
                        
                             <div class="social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="active"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-facebook"></i></a>
+                                <a href="#" class="active" style="margin:0px;"><i class="fa fa-twitter"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-instagram"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-linkedin"></i></a>
                             </div>
                         </div>
                     </div>
@@ -188,14 +205,14 @@
                             <img class="img-fluid" style="border-radius: 50%;"src="img/voluteer/v3.jpg" alt="">
                         </div>
                         <div class="team_name">
-                            <h4>Ramazan Toprak</h4>
+                            <h4>Syed Ahsan Ahmed</h4>
                             <p>Yaz&#305;l&#305;m Geli&#351;tirici</p>
                             
                             <div class="social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="active"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-facebook"></i></a>
+                                <a href="#" class="active" style="margin:0px;"><i class="fa fa-twitter"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-instagram"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-linkedin"></i></a>
                             </div>
                         </div>
                     </div>
@@ -211,10 +228,10 @@
                             <p>Grafik Tasar&#305;mc&#305;</p>
                             
                             <div class="social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="active"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-facebook"></i></a>
+                                <a href="#" class="active" style="margin:0px;"><i class="fa fa-twitter"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-instagram"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-linkedin"></i></a>
                             </div>
                         </div>
                     </div>
@@ -233,10 +250,10 @@
                             <p>Oyun Geliştirici</p>
                            
                             <div class="social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="active"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-facebook"></i></a>
+                                <a href="#" class="active" style="margin:0px;"><i class="fa fa-twitter"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-instagram"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-linkedin"></i></a>
                             </div>
                         </div>
                     </div>
@@ -252,10 +269,10 @@
                             <p>Yönetmen</p>
 
                             <div class="social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="active"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-facebook"></i></a>
+                                <a href="#" class="active" style="margin:0px;"><i class="fa fa-twitter"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-instagram"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-linkedin"></i></a>
                             </div>
                         </div>
                     </div>
@@ -271,10 +288,10 @@
                             <p>Yazılım Geliştirici</p>
                            
                             <div class="social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="active"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-facebook"></i></a>
+                                <a href="#" class="active" style="margin:0px;"><i class="fa fa-twitter"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-instagram"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-linkedin"></i></a>
                             </div>
                         </div>
                     </div>
@@ -288,12 +305,13 @@
                         <div class="team_name">
                             <h4>Alperen Özdemir</h4>
                             <p>Oyun Geliştirici</p>
-                            
+                            <p class="mt-20">
+                            </p>
                             <div class="social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="active"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-facebook"></i></a>
+                                <a href="#" class="active" style="margin:0px;"><i class="fa fa-twitter"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-instagram"></i></a>
+                                <a href="#" style="margin:0px;"><i class="fa fa-linkedin"></i></a>
                             </div>
                         </div>
                     </div>
@@ -303,13 +321,13 @@
     </section>
     <!--================End Team Area =================-->
 
-	<!--================ Start CTA Area =================-->
-	
-	<!--================ Start CTA Area =================-->
-	<?php if($logged==0)include_once("./phpComponents/volunteer.php")?>
-	<!--================ End CTA Area =================-->
+    <!--================ Start CTA Area =================-->
+    
+    <!--================ Start CTA Area =================-->
+    <?php if($logged==0)include_once("./phpComponents/volunteer.php")?>
+    <!--================ End CTA Area =================-->
 
-	<!--================ Start footer Area  =================-->	
+    <!--================ Start footer Area  =================-->    
      <?php include_once("./phpComponents/footer.php")?>
     <!--================ End footer Area  =================-->  
         
