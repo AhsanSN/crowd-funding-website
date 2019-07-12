@@ -125,19 +125,19 @@ $result_inventory = $con->query($query_inventory);
                                     <p style="background-color:green;color:white;"><?translate("You have","Var")?> <?echo $nPendingPosts?> <?translate("pending posts","Bildirimler")?> </p>
                                     <?
                                     }?>
-                                        [<a href="./decisionHistory.php"><?translate("View post decision history","Gönderdiğiniz Projeler Hakkında Bilgilere Buradan Ulaşabilirsiniz.")?></a>]
+                                        <a href="./decisionHistory.php"><?translate("View post decision history","Gönderdiğiniz Projeler Hakkında Bilgilere Buradan Ulaşabilirsiniz.")?></a>
                                     </div>
 
                                     <div class="row justify-content-center">
                                         <?
                                             if($lang=='EN'){
                                                 ?>
-                                                  <h3>Start a [<a href="./newProject.php" class="rounded" style="color:green;">NEW PROJECT</a>]</h3>
+                                                  <h5>Start a [<a href="./newProject.php" class="rounded" style="color:green;">NEW PROJECT</a>]</h5>
                                                 <?
                                             }
                                             else{
                                                 ?>
-                                                  <h3>[<a href="./newProject.php" class="rounded" style="color:green;">Proje Göndermek İçin Tıklayınız.</a>]</h3>
+                                                  <h5><a href="./newProject.php" class="rounded" style="color:green;">Proje Göndermek İçin Tıklayınız.</a></h5>
                                                 <?
                                             }
                                         ?>
@@ -175,7 +175,7 @@ $result_inventory = $con->query($query_inventory);
                                        
                                     </div>
                                     <div class="row justify-content-center">
-                                         <h3><a href="./donationHistory.php"><?translate("Donation History","Desteklediğiniz Projeler Hakkında Bilgilere Buradan Ulaşabilirsiniz.")?></a></h3>
+                                         <p><a href="./donationHistory.php"><?translate("Donation History","Desteklediğiniz Projeler Hakkında Bilgilere Buradan Ulaşabilirsiniz.")?></a></p>
                                         </div>
                                     <br>
 
@@ -431,3 +431,4 @@ $result_inventory = $con->query($query_inventory);
             </body>
 
         </html>
+                                    
