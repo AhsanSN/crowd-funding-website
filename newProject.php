@@ -350,8 +350,8 @@ $result_categories = $con->query($query_categories);
                 <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
                 <div class="container">
                     <div class="banner_content text-center">
-                        <h2><?translate("New Project","Yeni proje")?></h2>
-                        <p><?translate("Tell the world about your idea and gain a huge community support","D&#252;nyaya fikrinizden bahsedin ve b&#252;y&#252;k bir topluluk deste&#287;i edinin")?></p>
+                        <h2><?translate("New Project","Proje Oluştur")?></h2>
+                        <p><?translate("Tell the world about your idea and gain a huge community support","Projenizi kitleye duyurarak destek toplayın ve başarıya bir adım yaklaşın.")?></p>
                     </div>
                 </div>
             </div>
@@ -377,7 +377,7 @@ $result_categories = $con->query($query_categories);
                                         <?if(($title=="")||($excerpt=="")||($description=="")||($coverPhoto=="")){
                                         }else{?>
                                         <button type="submit" name="buttonAction" value="post" class="btn btn-primary primary_btn rounded" data-toggle="modal" >
-                                          <?translate("Post","g&#246;nderi")?>
+                                          <?translate("Post","Gönder")?>
                                         </button>
                                         <?}?>
                                         
@@ -404,7 +404,7 @@ $result_categories = $con->query($query_categories);
                                         </select>
                                     <br>
                                     <p><?translate("Goal?","Hedef")?></p>
-                                    <input class="form-control mb-10" type="number" rows="5" name="project_goal" value="<?echo $goal?>" placeholder="<?translate('Cash goal?','Nakit hedefi?')?> (&#8378;)"  required="">
+                                    <input class="form-control mb-10" type="number" rows="5" name="project_goal" value="<?echo $goal?>" placeholder="<?translate('Cash goal?','Hedeflenen Miktar')?> (&#8378;)"  required="">
                                     <hr>
                                     <ul class="blog_meta list">
                                         <li><a href="#"><?echo $session_name?><i class="lnr lnr-user"></i></a></li>
@@ -438,7 +438,7 @@ $result_categories = $con->query($query_categories);
                                     <?}?>
                                     <hr>
                                 <h2>
-                                    <input class="form-control mb-10" rows="5" name="project_title"  maxlength="65" value="<?echo $title?>" placeholder="<?translate('Title of your project?','projenin ba&#351;l&#305;&#287;&#305;?')?>"  required="">
+                                    <input class="form-control mb-10" rows="5" name="project_title"  maxlength="65" value="<?echo $title?>" placeholder="<?translate('Title of your project?','Proje Adı')?>"  required="">
                                 </h2>
                                 <style>
                                     .excerpt-textarea {
@@ -446,17 +446,17 @@ $result_categories = $con->query($query_categories);
                                     }
                                 </style>
                                 <p class="excert">
-                                   <textarea class="form-control mb-10 excerpt-textarea" rows="5" maxlength="93" name="project_excerpt" placeholder="<?translate('Describe your project in few words for the readers.','okuyucular i&#231;in bir ka&#231; kelimeyle blo&#287;unu tan&#305;mla')?>"  required=""><?echo $excerpt?></textarea>
+                                   <textarea class="form-control mb-10 excerpt-textarea" rows="5" maxlength="93" name="project_excerpt" placeholder="<?translate('Describe your project in few words for the readers.','Projenizi birkaç cümle ile tanımlayınız.')?>"  required=""><?echo $excerpt?></textarea>
                                 </p>
                                 
                                 <p style="width=130%" >
-                                        <?translate('Describe your project in detail.','Projenizi ayr&#305;nt&#305;l&#305; olarak tan&#305;mlay&#305;n.')?>
+                                        <?translate('Describe your project in detail.','Projenizi ayrıntılı olarak anlatın.')?>
                                     <textarea style="width=130%" class="form-control mb-10" rows="5" name="project_description" id="textarea2" ><?echo $description?></textarea>
                                 </p>
                                 
                                 <hr>
                                 
-                                <h4 class="card-title">Rewards</h4>
+                                <h4 class="card-title">Ödülleriniz</h4>
                                 <style>
                                          /* Three image containers (use 25% for four, and 50% for two, etc) */
                                         .column {
@@ -483,7 +483,7 @@ $result_categories = $con->query($query_categories);
                                     </style>
                                 
                                 <div style="background-color:#c9ffc1;padding:10px;">
-                                    <h4 style="padding:10px;text-align: center;">Yonca -  &#8378; 10</h4>
+                                    <h4 style="padding:10px;text-align: center;">10 &#8378; Altı İçin Ödülünüz</h4>
                                     <div style="text-align: center;">
                                         
                                         <div class="row" style="justify-content: center;" >
@@ -532,182 +532,182 @@ $result_categories = $con->query($query_categories);
                                     </div>
 
                                     <div class="form-group">
-                                        <h6><?translate("Reward","Reward")?></h6>
-                                        <textarea type="text" class="form-control" id="reward0Prize" name="reward0Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[7]?></textarea>
+                                        <h6><?translate("Reward","Ödül")?></h6>
+                                        <textarea type="text" class="form-control" id="reward0Prize" name="reward0Prize" placeholder="<?translate("Reward","Göndereceğiniz Ödülü Yazınız.")?>"><?echo $arr_prize[7]?></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
-                                        <input type="text" class="form-control" id="reward0EstimatedTime" name="reward0EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[7]?>">
+                                        <h6><?translate("Estimated Time","Gönderilecek Tarih")?></h6>
+                                        <input type="text" class="form-control" id="reward0EstimatedTime" name="reward0EstimatedTime" placeholder="<?translate("Estimated Time","Ödülü Göndereceğiniz Tarihi Yazınız.")?>" value="<?echo $arr_deliveryTime[7]?>">
                                     </div>
                                 </div>
                                 <br>
                                 <!--yonca-->
 								<div style="background-color:#c9ffc1;padding:10px;">
-                                    <h4 style="padding:10px;text-align: center;">Yonca -  &#8378; 10</h4>
+                                    <h4 style="padding:10px;text-align: center;">Yonca - 10  &#8378;</h4>
                                     <div style="text-align: center;">
                                         <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/yonca.png"   alt="post">
                                     </div>
 
                                     <div class="form-group">
-                                        <h6><?translate("Reward","Reward")?></h6>
-                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward1Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[0]?></textarea>
+                                        <h6><?translate("Reward","Ödül")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward1Prize" placeholder="<?translate("Reward","Göndereceğiniz Ödülü Yazınız.")?>"><?echo $arr_prize[0]?></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
-                                        <input type="text" class="form-control" id="reward1EstimatedTime" name="reward1EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[0]?>">
+                                        <h6><?translate("Estimated Time","Gönderilecek Tarih")?></h6>
+                                        <input type="text" class="form-control" id="reward1EstimatedTime" name="reward1EstimatedTime" placeholder="<?translate("Estimated Time","Ödülü Göndereceğiniz Tarihi Yazınız.")?>" value="<?echo $arr_deliveryTime[0]?>">
                                     </div>
                                 </div>
                                 <br>
                                 <!--hayat suyu-->
                                 <div style="background-color:#c9ffc1;padding:10px;">
-                                    <h4 style="padding:10px;text-align: center;">Hayat Suyu Ibrigi -  &#8378; 25</h4>
+                                    <h4 style="padding:10px;text-align: center;">Hayat Suyu İbriği - 25 &#8378;</h4>
                                     <div style="text-align: center;">
                                         <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/hayatsuyuibrigi.png"   alt="post">
                                     </div>
                                     
                                     <div class="form-group">
-                                        <h6><?translate("Reward","Reward")?></h6>
-                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward8Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[7]?></textarea>
+                                        <h6><?translate("Reward","Ödül")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward8Prize" placeholder="<?translate("Reward","Göndereceğiniz Ödülü Yazınız.")?>"><?echo $arr_prize[7]?></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
-                                        <input type="text" class="form-control" id="reward8EstimatedTime" name="reward8EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[7]?>">
+                                        <h6><?translate("Estimated Time","Gönderilecek Tarih")?></h6>
+                                        <input type="text" class="form-control" id="reward8EstimatedTime" name="reward8EstimatedTime" placeholder="<?translate("Estimated Time","Ödülü Göndereceğiniz Tarihi Yazınız.")?>" value="<?echo $arr_deliveryTime[7]?>">
                                     </div>
                                 </div>
                                 <br>
                                 <!--yasam saksisi-->
                                 <div style="background-color:#c9ffc1;padding:10px;">
-                                    <h4 style="padding:10px;text-align: center;">Yasam Saksisi -  &#8378; 50</h4>
+                                    <h4 style="padding:10px;text-align: center;">Yaşam Saksısı - 50 &#8378;</h4>
                                     <div style="text-align: center;">
                                         <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/yasamsaksisi.png"   alt="post">
                                     </div>
                                     
                                     <div class="form-group">
-                                        <h6><?translate("Reward","Reward")?></h6>
-                                        <textarea type="text" class="form-control" id="reward9Prize" name="reward9Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[8]?></textarea>
+                                        <h6><?translate("Reward","Ödül")?></h6>
+                                        <textarea type="text" class="form-control" id="reward9Prize" name="reward9Prize" placeholder="<?translate("Reward","Göndereceğiniz Ödülü Yazınız.")?>"><?echo $arr_prize[8]?></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
-                                        <input type="text" class="form-control" id="reward9EstimatedTime" name="reward9EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[8]?>">
+                                        <h6><?translate("Estimated Time","Gönderilecek Tarih")?></h6>
+                                        <input type="text" class="form-control" id="reward9EstimatedTime" name="reward9EstimatedTime" placeholder="<?translate("Estimated Time","Ödülü Göndereceğiniz Tarihi Yazınız.")?>" value="<?echo $arr_deliveryTime[8]?>">
                                     </div>
                                 </div>
                                 <br>
                                 <!--demeti-->
                                 <div style="background-color:#c9ffc1;padding:10px;">
-                                    <h4 style="padding:10px;text-align: center;">&Ccedil;i&ccedil;ek Demeti -  &#8378; 25</h4>
+                                    <h4 style="padding:10px;text-align: center;">Çiçek Demeti - 100 &#8378;</h4>
                                     <div style="text-align: center;">
                                         <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/demet.png"   alt="post">
                                     </div>
                                     
                                     <div class="form-group">
-                                        <h6><?translate("Reward","Reward")?></h6>
-                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward2Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[1]?></textarea>
+                                        <h6><?translate("Reward","Ödül")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward2Prize" placeholder="<?translate("Reward","Göndereceğiniz Ödülü Yazınız.")?>"><?echo $arr_prize[1]?></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
-                                        <input type="text" class="form-control" id="reward2EstimatedTime" name="reward2EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[1]?>">
+                                        <h6><?translate("Estimated Time","Gönderilecek Tarih")?></h6>
+                                        <input type="text" class="form-control" id="reward2EstimatedTime" name="reward2EstimatedTime" placeholder="<?translate("Estimated Time","Ödülü Göndereceğiniz Tarihi Yazınız.")?>" value="<?echo $arr_deliveryTime[1]?>">
                                     </div>
                                 </div>
                                 <br>
                                 <!--budama makas-->
                                 <div style="background-color:#c9ffc1;padding:10px;">
-                                    <h4 style="padding:10px;text-align: center;">Budama Makas&#305; -  &#8378; 50</h4>
+                                    <h4 style="padding:10px;text-align: center;">Budama Makas&#305; - 250 &#8378;</h4>
                                     <div style="text-align: center;">
                                         <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/budamamakasi.png"   alt="post">
                                     </div>
                                     
                                     <div class="form-group">
-                                        <h6><?translate("Reward","Reward")?></h6>
-                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward3Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[2]?></textarea>
+                                        <h6><?translate("Reward","Ödül")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward3Prize" placeholder="<?translate("Reward","Göndereceğiniz Ödülü Yazınız.")?>"><?echo $arr_prize[2]?></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
-                                        <input type="text" class="form-control" id="reward3EstimatedTime" name="reward3EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[2]?>">
+                                        <h6><?translate("Estimated Time","Gönderilecek Tarih")?></h6>
+                                        <input type="text" class="form-control" id="reward3EstimatedTime" name="reward3EstimatedTime" placeholder="<?translate("Estimated Time","Ödülü Göndereceğiniz Tarihi Yazınız.")?>" value="<?echo $arr_deliveryTime[2]?>">
                                     </div>
                                 </div>
                                 <br>
                                 <!--fidan-->
                                 <div style="background-color:#c9ffc1;padding:10px;">
-                                    <h4 style="padding:10px;text-align: center;">Fidan -  &#8378; 100</h4>
+                                    <h4 style="padding:10px;text-align: center;">Fidan - 500 &#8378;</h4>
                                     <div style="text-align: center;">
                                         <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/fidan.png"   alt="post">
                                     </div>
                                     
                                     <div class="form-group">
-                                        <h6><?translate("Reward","Reward")?></h6>
-                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward4Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[3]?></textarea>
+                                        <h6><?translate("Reward","Ödül")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward4Prize" placeholder="<?translate("Reward","Göndereceğiniz Ödülü Yazınız.")?>"><?echo $arr_prize[3]?></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
-                                        <input type="text" class="form-control" id="reward4EstimatedTime" name="reward4EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[3]?>">
+                                        <h6><?translate("Estimated Time","Gönderilecek Tarih")?></h6>
+                                        <input type="text" class="form-control" id="reward4EstimatedTime" name="reward4EstimatedTime" placeholder="<?translate("Estimated Time","Ödülü Göndereceğiniz Tarihi Yazınız.")?>" value="<?echo $arr_deliveryTime[3]?>">
                                     </div>
                                 </div>
                                 <br>
                                 <!--tohum sandigi-->
                                 <div style="background-color:#c9ffc1;padding:10px;">
-                                    <h4 style="padding:10px;text-align: center;">Tohum Sandigi -  &#8378; 1000</h4>
+                                    <h4 style="padding:10px;text-align: center;">Tohum Sandığı - 1000 &#8378;</h4>
                                     <div style="text-align: center;">
                                         <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/tohumsandigi.png"   alt="post">
                                     </div>
                                     
                                     <div class="form-group">
-                                        <h6><?translate("Reward","Reward")?></h6>
-                                        <textarea type="text" class="form-control" id="reward10Prize" name="reward10Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[9]?></textarea>
+                                        <h6><?translate("Reward","Ödül")?></h6>
+                                        <textarea type="text" class="form-control" id="reward10Prize" name="reward10Prize" placeholder="<?translate("Reward","Göndereceğiniz Ödülü Yazınız.")?>"><?echo $arr_prize[9]?></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
-                                        <input type="text" class="form-control" id="reward10EstimatedTime" name="reward10EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[9]?>">
+                                        <h6><?translate("Estimated Time","Gönderilecek Tarih")?></h6>
+                                        <input type="text" class="form-control" id="reward10EstimatedTime" name="reward10EstimatedTime" placeholder="<?translate("Estimated Time","Ödülü Göndereceğiniz Tarihi Yazınız.")?>" value="<?echo $arr_deliveryTime[9]?>">
                                     </div>
                                 </div>
                                 <br>
                                 <!--el arabas-->
                                 <div style="background-color:#c9ffc1;padding:10px;">
-                                    <h4 style="padding:10px;text-align: center;">El Arabas&#305; -  &#8378; 250</h4>
+                                    <h4 style="padding:10px;text-align: center;">El Arabas&#305; - 2500 &#8378;</h4>
                                     <div style="text-align: center;">
                                         <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/elarabasi.png"   alt="post">
                                     </div>
                                     
                                     <div class="form-group">
-                                        <h6><?translate("Reward","Reward")?></h6>
-                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward5Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[4]?></textarea>
+                                        <h6><?translate("Reward","Ödül")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward5Prize" placeholder="<?translate("Reward","Göndereceğiniz Ödülü Yazınız.")?>"><?echo $arr_prize[4]?></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
-                                        <input type="text" class="form-control" id="reward5EstimatedTime" name="reward5EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[4]?>">
+                                        <h6><?translate("Estimated Time","Gönderilecek Tarih")?></h6>
+                                        <input type="text" class="form-control" id="reward5EstimatedTime" name="reward5EstimatedTime" placeholder="<?translate("Estimated Time","Ödülü Göndereceğiniz Tarihi Yazınız.")?>" value="<?echo $arr_deliveryTime[4]?>">
                                     </div>
                                 </div>
                                 <br>
                                 <!--meyve-->
                                 <div style="background-color:#c9ffc1;padding:10px;">
-                                    <h4 style="padding:10px;text-align: center;">Meyve A&#287;ac&#305; -  &#8378; 500</h4>
+                                    <h4 style="padding:10px;text-align: center;">Meyve A&#287;ac&#305; - 5000 &#8378;</h4>
                                     <div style="text-align: center;">
                                         <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/agac.png"   alt="post">
                                     </div>
                                     
                                     <div class="form-group">
-                                        <h6><?translate("Reward","Reward")?></h6>
-                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward6Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[5]?></textarea>
+                                        <h6><?translate("Reward","Ödül")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward6Prize" placeholder="<?translate("Reward","Göndereceğiniz Ödülü Yazınız.")?>"><?echo $arr_prize[5]?></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
-                                        <input type="text" class="form-control" id="reward6EstimatedTime" name="reward6EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[5]?>">
+                                        <h6><?translate("Estimated Time","Gönderilecek Tarih")?></h6>
+                                        <input type="text" class="form-control" id="reward6EstimatedTime" name="reward6EstimatedTime" placeholder="<?translate("Estimated Time","Ödülü Göndereceğiniz Tarihi Yazınız.")?>" value="<?echo $arr_deliveryTime[5]?>">
                                     </div>
                                 </div>
                                 <br>
                                 <!--bah van ailesi-->
                                 <div style="background-color:#c9ffc1;padding:10px;">
-                                    <h4 style="padding:10px;text-align: center;">Bah&ccedil;&#305;van Ailesi -  &#8378; 1000</h4>
+                                    <h4 style="padding:10px;text-align: center;">Bah&ccedil;&#305;van Ailesi - 10.000 &#8378;</h4>
                                     <div style="text-align: center;">
                                         <img style="padding-top:15px;padding-bottom:15px; margin: 0 auto;"  width="130" height="130" src="./uploads/postImages/gelecek.png"   alt="post">
                                     </div>
                                     
                                     <div class="form-group">
-                                        <h6><?translate("Reward","Reward")?></h6>
-                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward7Prize" placeholder="<?translate("Reward","Reward")?>"><?echo $arr_prize[6]?></textarea>
+                                        <h6><?translate("Reward","Ödül")?></h6>
+                                        <textarea type="text" class="form-control" id="reward1Prize" name="reward7Prize" placeholder="<?translate("Reward","Göndereceğiniz Ödülü Yazınız.")?>"><?echo $arr_prize[6]?></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <h6><?translate("Estimated Time","Estimated Time")?></h6>
-                                        <input type="text" class="form-control" id="reward7EstimatedTime" name="reward7EstimatedTime" placeholder="<?translate("Estimated Time","Estimated Time")?>" value="<?echo $arr_deliveryTime[6]?>">
+                                        <h6><?translate("Estimated Time","Gönderilecek Tarih")?></h6>
+                                        <input type="text" class="form-control" id="reward7EstimatedTime" name="reward7EstimatedTime" placeholder="<?translate("Estimated Time","Ödülü Göndereceğiniz Tarihi Yazınız.")?>" value="<?echo $arr_deliveryTime[6]?>">
                                     </div>
                                 </div>
                                 <br>
@@ -727,7 +727,7 @@ $result_categories = $con->query($query_categories);
                             </aside>
                             <hr>
                             <div class="form-group">
-                                <textarea class="form-control mb-10" rows="5"  name="project_aboutMe" maxlength="200" placeholder="<?translate('Tell people about yourself.','İnsanlara kendinden bahset.')?>" required=""><?echo $aboutMe?></textarea>
+                                <textarea class="form-control mb-10" rows="5"  name="project_aboutMe" maxlength="200" placeholder="<?translate('Tell people about yourself.','Kendinizden bahsedin.')?>" required=""><?echo $aboutMe?></textarea>
                             </div>
                         </div>
                     </div>
