@@ -30,7 +30,7 @@ $result_cartItemsCheckout = $con->query($query_cartItemsCheckout);
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
             <div class="container">
                 <div class="banner_content text-center">
-                    <h2><?translate("Posts","Mesajlar")?></h2>
+                    <h2><?translate("Posts","Projelerinizin Durumları")?></h2>
                 </div>
             </div>
         </div>
@@ -48,9 +48,9 @@ $result_cartItemsCheckout = $con->query($query_cartItemsCheckout);
 							<div class="progress-table">
 								<div class="table-head">
 									<div class="serial">#</div>
-									<div class="country"><?translate("Title","Ba&#351;l&#305;k")?></div>
+									<div class="country"><?translate("Title","Proje Adı")?></div>
 									<div class="visit"><?translate("Goal","Hedef")?></div>
-									<div class="percentage"><?translate("Excerpt","Al&#305;nt&#305;")?></div>
+									<div class="percentage"><?translate("Excerpt","Kısa açıklama")?></div>
 									<div class="percentage"><?translate("Decision","Karar")?></div>
 								</div>
 								<?
@@ -69,19 +69,19 @@ $result_cartItemsCheckout = $con->query($query_cartItemsCheckout);
         									<div class="percentage">
         									    <?if ($row['decision']==''){
         									        ?>
-        									        <p style="color:orange;"><?translate("Pending","kadar")?></p>
+        									        <p style="color:orange;"><?translate("Pending","Bekleniyor")?></p>
         									        <?
         									    }
         									    ?>
         									    <?if ($row['decision']=='rejected'){
         									        ?>
-        									        <p style="color:red;"><?translate("Rejected","Reddedilen")?></p>
+        									        <p style="color:red;"><?translate("Rejected","Reddedildi")?></p>
         									        <?
         									    }
         									    ?>
         									    <?if ($row['decision']=='posted'){
         									        ?>
-        									        <p style="color:green;"><?translate("Approved","onayl&#305;")?></p>
+        									        <p style="color:green;"><?translate("Approved","Onaylandı")?></p>
         									        <?
         									    }
         									    ?>
