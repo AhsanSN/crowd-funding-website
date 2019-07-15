@@ -25,7 +25,7 @@
 								<li><a href="./shop.php"><?translate("Shop","Manav")?></a></li>
 								<li><a href="./allBlogs.php"><?translate("Blogs","Bah&ccedil;e")?></a></li>
 								<li><a href="./about.php"><?translate("About","Hakk&#305;m&#305;zda")?></a></li>
-								<li><a href="./tnc.php"><?translate("Terms and Conditions","Terms and Conditions")?></a></li>
+								<li><a href="./tnc.php"><?translate("Terms and Conditions","Üyelik ve Destekçi Sözleşmesi")?></a></li>
 							</ul>
 						</div>
 					</div>
@@ -37,6 +37,7 @@
 								<li><a href="https://www.youtube.com/channel/UC63e806iMCln-fRA5cz-Mgw"><?translate("Youtube","Youtube")?></a></li>
 								<li><a href="https://www.instagram.com/fikirbahcivani/"><?translate("Instagram","Instagram")?></a></li>
 								<li><a href="https://twitter.com/fikirbahcivani"><?translate("Twitter","Twitter")?></a></li>
+								<li><a href="https://www.linkedin.com/in/fikir-bah%C3%A7ivani-a24309185/"><?translate("Linkedin","Linkedin")?></a></li>
 							</ul>
 						</div>
 					</div>
