@@ -45,13 +45,13 @@ $filenameLink = basename($_SERVER['PHP_SELF']);
             
         }
         else if($filenameLink=='donationHistory.php'){
-            $titleHeader = 'Ba&#287;&#305;&#351; de&#287;er - Fikir Bah&#231;&#305;van&#305;';
+            $titleHeader = 'Destekleriniz - Fikir Bah&#231;&#305;van&#305;';
             $keywords = "ev, g&#246;sterge paneli, Kontrol Paneli, Fikir Bah&#231;&#305;van&#305;";
             $descriptionHeader = "&Ouml;nceki t&uuml;m ba&#287;&#305;&#351;lar&#305;na eri&#351;.";
             
         }
         else if($filenameLink=='donateUs.php'){
-            $titleHeader = 'Bize ba&#287;&#305;&#351; yap&#305;n - Fikir Bah&#231;&#305;van&#305;';
+            $titleHeader = 'Bizi Destekleyin - Fikir Bah&#231;&#305;van&#305;';
             $keywords = "ev, g&#246;sterge paneli, Kontrol Paneli, Fikir Bah&#231;&#305;van&#305;";
             $descriptionHeader = "Bizi ba&#287;&#305;&#351;lay&#305;n ve size daha iyi hizmet etmemize yard&#305;mc&#305; olun.";
             
@@ -116,19 +116,19 @@ $filenameLink = basename($_SERVER['PHP_SELF']);
             
         }
         else if($filenameLink=='newProject.php'){
-            $titleHeader = 'Proje g&#246;nder - Fikir Bah&#231;&#305;van&#305;';
+            $titleHeader = 'Proje Gönder - Fikir Bah&#231;&#305;van&#305;';
             $keywords = "fikirleri Payla&#351;, proje, yeni proje, Kitle fonlamas&#305;, &#351;irket kurmak, Ba&#287;&#305;&#351;, Fikir Bah&#231;&#305;van&#305;";
             $descriptionHeader = "Bir proje g&#246;nderin ve fikirlerinizi etraf&#305;n&#305;zdaki global toplulukla payla&#351;maya ba&#351;lay&#305;n.";
             
         }
         else if($filenameLink=='settings.php'){
-            $titleHeader = 'Ayarlar - Proje g&#246;nder - Fikir Bah&#231;&#305;van&#305;';
+            $titleHeader = 'Ayarlar-Fikir Bah&#231;&#305;van&#305;';
             $keywords = "ayarlar, seçenekleri, şifre değiştir, ismini değiştir, resmi değiştir";
             $descriptionHeader = "Change your account settings. Change your name, password, picture or anything you want.";
             
         }
         else{
-            $titleHeader = 'En iyi fikirlere ba&#287;&#305;&#351; yap&#305;n - Fikir Bah&#231;&#305;van&#305;';
+            $titleHeader = 'Fikir Bah&#231;&#305;van&#305;';
             $keywords = 'Fikir Bah&#231;&#305;van&#305;, fikirler, ba&#351;lamak, ba&#287;&#305;&#351;lamak, projeler, Ba&#287;&#305;&#351;, Kitle fonlamas&#305;';
             $descriptionHeader = "&#199;evrenizdeki t&#252;m harika projeleri bulun ve ba&#351;ar&#305;l&#305; olmalar&#305; i&#199;in ba&#287;&#305;&#351; yap&#305;n.";
         }
