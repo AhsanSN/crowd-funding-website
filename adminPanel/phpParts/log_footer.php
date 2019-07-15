@@ -5,7 +5,7 @@
             <script>
               document.write(new Date().getFullYear())
             </script>, made with <i class="material-icons">favorite</i> by
-            <a href="https://www.anomoz.com" target="_blank">Anomoz</a>.
+            <a href="https://www.fikirbahcivani.com" target="_blank">Dijital Bahçıvan</a>.
           </div>
         </div>
       </footer>
