@@ -125,7 +125,8 @@ $result_inventory = $con->query($query_inventory);
                                     <p style="background-color:green;color:white;"><?translate("You have","Mesajınız")?> <?echo $nPendingPosts?> <?translate("pending posts","var.")?> </p>
                                     <?
                                     }?>
-                                        <a href="./decisionHistory.php"><?translate("View post decision history","Gönderdiğiniz Projeler Hakkında Bilgilere Buradan Ulaşabilirsiniz.")?></a>
+                                      <br><br>
+					    <a href="./decisionHistory.php"><?translate("View post decision history","Gönderdiğiniz Projeler Hakkında Bilgilere Ulaşmak İçin Tıklayınız.")?></a>
                                     </div>
 
                                     <div class="row justify-content-center">
@@ -137,7 +138,7 @@ $result_inventory = $con->query($query_inventory);
                                             }
                                             else{
                                                 ?>
-                                                  <h5><a href="./newProject.php" class="rounded" style="color:green;">Proje Göndermek İçin Tıklayınız.</a></h5>
+                                                  <h4><a href="./newProject.php" class="rounded" style="color:green;">Proje Göndermek İçin Tıklayınız.</a></h4>
                                                 <?
                                             }
                                         ?>
@@ -151,7 +152,7 @@ $result_inventory = $con->query($query_inventory);
                                             <hr>
                                             <h4><?translate("OR","VEYA")?></h4>
                                             <hr>
-                                            <br>
+                                            
                                         
                                             <?
                                             if($lang=='EN'){
@@ -169,7 +170,7 @@ $result_inventory = $con->query($query_inventory);
 
                                         <p><?translate("The best way to make your project a success is by telling more people about it. Post a new project and get people interested about your idea.","Projenizi kitlelere duyurarak destek toplamak için, projenizi detaylı şekilde bize göndermeniz gerekmektedir.")?></p>
                                     </div>
-
+					<br><br>
                                     <div class="row justify-content-center">
                                         <h3><?translate("Your Contributions","Desteklediğiniz Projeler")?></h3>
                                        
