@@ -142,24 +142,24 @@ else{
                 <div class="myform form ">
                      <div class=" mb-3">
                          <div class="col-md-12 text-center">
-                            <h1><?translate("Change Password", "Change Password")?>
+                            <h1><?translate("Change Password", "Şifreyi Değiştir")?>
                             
                             </h1>
-                            <p style="background-color:red;color:white;"><?if(isset($_GET['fail'])){translate("Email not found", "Email not found");}?></p>
-                            <p style="background-color:green;color:white;"><?if(isset($_GET['suc'])){translate("Email sent successfull.", "Email sent successfull.");}?></p>
+                            <p style="background-color:red;color:white;"><?if(isset($_GET['fail'])){translate("Email not found", "Emaile ait kullanıcı bulunamadı.");}?></p>
+                            <p style="background-color:green;color:white;"><?if(isset($_GET['suc'])){translate("Email sent successfull.", "Mailinizi Lütfen Kontrol Ediniz.");}?></p>
                          </div>
                     </div>
                    <form action="" method="post" name="login">
                            <div class="form-group">
-                              <label for="exampleInputEmail1">Password</label>
-                              <input type="password" name="password1"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="password" required>
+                              <label for="exampleInputEmail1">Şifre</label>
+                              <input type="password" name="password1"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="Şifre" required>
                            </div>
                            <div class="form-group">
-                              <label for="exampleInputEmail1">Password</label>
-                              <input type="password" name="password2"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="Retype Password" required>
+                              <label for="exampleInputEmail1">Şifreyi Tekrar Giriniz.</label>
+                              <input type="password" name="password2"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="Şifreyi Tekrar Giriniz." required>
                            </div>
                            <div class="col-md-12 text-center ">
-                              <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm"><?translate("Change Password", "Change Password")?></button>
+                              <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm"><?translate("Change Password", "Şifreyi Değiştir")?></button>
                            </div>
                         </form>
                 </div>
