@@ -173,7 +173,7 @@ else{
                 <div class="myform form ">
                      <div class=" mb-3">
                          <div class="col-md-12 text-center">
-                            <h1><?translate("Forget Password", "Şifremi Unuttum")?>
+                            <h1><?translate("Forget Password", "Parolamı Unuttum")?>
                             
                             </h1>
                             <p style="background-color:red;color:white;"><?if(isset($_GET['fail'])){translate("Email not found", "Email'e ait kullanıcı bulunamadı.");}?></p>
