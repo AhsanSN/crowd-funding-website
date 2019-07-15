@@ -13,12 +13,12 @@ if ($logged==1){
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="HU - Library just got a major upgrade. Built by Anomoz.">
+    <meta name="description" content="Dijital Bahçıvan tarafından oluşturulmuştur.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title -->
-    <title>Fikir Bahcivani</title>
+    <title>Fikir Bahçıvanı-Admin</title>
 
     <!-- Favicon -->
     <link rel="icon" href="./img/core-img/favicon.ico">
@@ -53,8 +53,8 @@ if ($logged==1){
                             <!-- Welcome Text -->
                             <div class="col-12 col-md-6">
                                 <div class="welcome-text">
-                                    <h2 data-animation="fadeInUp" >Fikir Bahcivani<br><span>Admin Panel</span></h2>
-                                    <a href="./login.php" class="btn uza-btn btn-2" data-animation="fadeInUp" data-delay="700ms">Login</a>
+                                    <h3 data-animation="fadeInUp" >Fikir Bahçıvanı<br><span>Admin</span></h3>
+                                    <a href="./login.php" class="btn uza-btn btn-2" data-animation="fadeInUp" data-delay="700ms">Giriş Yap</a>
                                 </div>
                             </div>
                             
@@ -72,18 +72,7 @@ if ($logged==1){
     <!-- ***** Newsletter Area End ***** -->
 
     <!-- ***** Footer Area Start ***** -->
-    <footer class="footer-area section-padding-80-0">
-        <div class="container">
-           
- <div class="row" style="margin-bottom: 30px;">
-                
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Created by  <a href="https://anomoz.com" target="_blank"> Anomoz</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            </div>
-
-        </div>
-    </footer>
+ 
     <!-- ***** Footer Area End ***** -->
 
     <!-- ******* All JS Files ******* -->
