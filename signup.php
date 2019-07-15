@@ -194,7 +194,7 @@ else{
                               
                            <div class="form-group">
                               <p class="text-center"><?translate("Don't have account?", "Hesab&#305;n&#305;z yok mu?")?> <a href="./createAccount.php" id="signup"><?translate("Sign up here", "Buradan kaydolun")?></a></p>
-                              <p class="text-center"><?translate("Forgot your password?", "Parolan&#305;z&#305; m&#305; unuttunuz?")?> <a href="./forgetPassword.php" id="signup"><?translate("Change password", "&#350;ifre de&#287;i&#351;tir")?></a></p>
+                              <p class="text-center"><?translate("Forgot your password?", "Parolan&#305;z&#305; m&#305; unuttunuz?")?> <a href="./forgetPassword.php" id="signup"><?translate("Change password", "Parolayı de&#287;i&#351;tir")?></a></p>
                            
                            </div>
                         </form>
