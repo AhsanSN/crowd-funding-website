@@ -122,7 +122,7 @@ $result_inventory = $con->query($query_inventory);
                                         <?}?>
                                         <?if($nPendingPosts>0){
                                     ?>
-                                    <p style="background-color:green;color:white;"><?translate("You have","Var")?> <?echo $nPendingPosts?> <?translate("pending posts","Bildirimler")?> </p>
+                                    <p style="background-color:green;color:white;"><?translate("You have","Mesajınız")?> <?echo $nPendingPosts?> <?translate("pending posts","var.")?> </p>
                                     <?
                                     }?>
                                         <a href="./decisionHistory.php"><?translate("View post decision history","Gönderdiğiniz Projeler Hakkında Bilgilere Buradan Ulaşabilirsiniz.")?></a>
@@ -213,7 +213,7 @@ $result_inventory = $con->query($query_inventory);
                                                                 <p><span><?translate("You donated:", "Desteğiniz")?>  <?echo $row['name']?> (<?echo $row['quantity']?>)</span></p>
                                                             </div>
                                                             <div class="d-flex justify-content-between donation align-items-center">
-                                                                <a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("View","g&#246;r&#252;n&#252;m")?></a>
+                                                                <a href="./postPage.php?id=<?echo $row['id']?>" class="primary_btn"><?translate("View","G&#246;r&#252;n&#252;m")?></a>
                                                                 <?
                                                             if(((time() - $row['datePosted']) >= 7776000 )&&( $session_AgreeOption=='moneyToFikir')){
                                                                 //transfer everythonig to fikir
