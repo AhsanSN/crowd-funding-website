@@ -52,8 +52,7 @@ if ($logged==1){
                         <div class="row h-100 align-items-center">
                             <!-- Welcome Text -->
                             <div class="col-12 col-md-6">
-                                <div class="welcome-text">
-                                    <h3 data-animation="fadeInUp" >Fikir Bahçıvanı<br><span>Admin</span></h3>
+                                <div class="welcome-text">                                  
                                     <a href="./login.php" class="btn uza-btn btn-2" data-animation="fadeInUp" data-delay="700ms">Giriş Yap</a>
                                 </div>
                             </div>
