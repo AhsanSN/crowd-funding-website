@@ -942,7 +942,7 @@ else{
                             </aside>
                             
                             <aside class="single_sidebar_widget post_category_widget">
-                                <h4 class="widget_title"><?translate("Donate","Destekleyin)?></h4>
+                                <h4 class="widget_title"><?translate("Donate","Destekleyin")?></h4>
                                 <ul class="list cat-list">
                                     <style>
                                         #new_donation{
